@@ -1,9 +1,9 @@
-name: Upload til Simply
+name: Byg og upload til Simply
 on:
   push:
     branches: [main]
   schedule:
-    - cron: "15 3 * * *"   # hver nat kl. 05:15 dansk tid – henter feeds og deployer nye priser
+    - cron: "15 3 * * *"   # hver nat ca. kl. 05:15 dansk tid
   workflow_dispatch:
 concurrency:
   group: deploy
@@ -17,7 +17,7 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Hent feeds og byg priser
+      - name: Hent feeds, byg priser og sider
         env:
           FEED_RITO: ${{ secrets.FEED_RITO }}
           FEED_BROENGARN: ${{ secrets.FEED_BROENGARN }}
@@ -26,29 +26,22 @@ jobs:
           python3 _build/feeds.py
           python3 _build/pages.py
 
-      - name: Upload med lftp
+      - name: Upload med rsync over SSH (adgangskode)
         env:
-          SERVER: ${{ secrets.FTP_SERVER }}
-          BRUGER: ${{ secrets.FTP_USERNAME }}
-          KODE: ${{ secrets.FTP_PASSWORD }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
         run: |
-          sudo apt-get update -qq && sudo apt-get install -y lftp
-          lftp -c "
-            set ftp:ssl-allow true;
-            set ssl:verify-certificate no;
-            set ftp:passive-mode true;
-            set net:max-retries 6;
-            set net:timeout 120;
-            set net:reconnect-interval-base 20;
-            set net:reconnect-interval-multiplier 1.5;
-            set mirror:parallel-directories false;
-            set mirror:parallel-transfer-count 1;
-            open -u '$BRUGER','$KODE' '$SERVER';
-            mirror --reverse --only-newer --continue --verbose=1 \
-              --exclude-glob .git/ \
-              --exclude-glob .github/ \
-              --exclude-glob _build/ \
-              --exclude-glob feeds/ \
-              --exclude-glob '*.md' \
-              ./ public_html/;
-          "
+          sudo apt-get update -qq && sudo apt-get install -y -qq sshpass rsync
+          mkdir -p ~/.ssh
+          ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          export SSHPASS="$SSH_PASSWORD"
+          sshpass -e rsync -az --delete --stats \
+            --exclude '.git/' \
+            --exclude '.github/' \
+            --exclude '_build/' \
+            --exclude 'feeds/' \
+            --exclude '*.md' \
+            --exclude '.gitignore' \
+            -e "ssh -o StrictHostKeyChecking=yes" \
+            ./ "$SSH_USER@$SSH_HOST:public_html/"
