@@ -157,7 +157,7 @@
     cards.forEach((c,i)=>{ const o=pick[i]; if(!o) return;
       c.href=o.page||o.url; if(!o.page){ c.rel='sponsored nofollow'; c.target='_blank'; }
       c.querySelector('.img').style.background=`center/cover url('${o.image}')`; c.querySelector('.img').innerHTML='<span class="badge">gratis</span>';
-      c.querySelector('b').textContent=o.name; c.querySelector('span').textContent=`${o.designer} · gratis opskrift`;
+      c.querySelector('b').textContent=o.name; c.querySelector(':scope > span').textContent=`${o.designer} · gratis opskrift`;
       c.querySelector('.price').textContent=`Garnpakke ${o.price.toLocaleString('da-DK')} kr.`; });
   });
 })();
@@ -167,6 +167,9 @@
 (function(){
   const b=document.querySelector('.burger'), n=document.getElementById('mainnav'); if(!b||!n) return;
   b.addEventListener('click',()=>{const o=n.classList.toggle('open'); b.setAttribute('aria-expanded',o?'true':'false');});
-  document.querySelectorAll('.sub-toggle').forEach(t=>t.addEventListener('click',e=>{e.preventDefault(); t.closest('.has-sub').classList.toggle('open');}));
+  document.querySelectorAll('.sub-toggle').forEach(t=>t.addEventListener('click',e=>{e.preventDefault(); e.stopPropagation(); t.closest('.has-sub').classList.toggle('open');}));
+  document.querySelectorAll('.has-sub > a').forEach(a=>a.addEventListener('click',e=>{
+    if(window.matchMedia('(max-width:860px)').matches){ const li=a.closest('.has-sub'); if(!li.classList.contains('open')){ e.preventDefault(); li.classList.add('open'); } }
+  }));
   if(document.querySelector('.sticky-cta')) document.body.classList.add('has-sticky');
 })();
