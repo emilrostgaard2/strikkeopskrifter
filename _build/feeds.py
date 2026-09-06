@@ -28,7 +28,12 @@ def clean(s):
 def cut(text, n):
     """Klip ved sætningsgrænse i stedet for midt i et ord."""
     text = (text or "").strip()
-    if len(text) <= n: return text
+    if len(text) <= n:
+        # Partner-ads klipper beskrivelser ved 255 tegn – fjern en afklippet sidste sætning
+        if text and text[-1] not in ".!?" and len(text) >= 200:
+            i = max(text.rfind(". "), text.rfind("! "), text.rfind("? "))
+            return text[:i+1] if i > len(text)*0.4 else text.rsplit(" ",1)[0] + " …"
+        return text
     head = text[:n]
     i = max(head.rfind(". "), head.rfind("! "), head.rfind("? "))
     return (head[:i+1] if i > n*0.5 else head.rsplit(" ",1)[0] + " …").strip()
@@ -114,6 +119,9 @@ seen_pakke = set()
 TYPES = [("sweater",r"sweater|trøje|bluse|genser|pullover|tee\b|top\b"),("cardigan",r"cardigan|jakke|bolero"),("vest",r"vest|slipover"),
          ("hue",r"hue|pandebånd|balaclava"),("sjal",r"sjal|tørklæde|halsrør|poncho"),("sokker",r"strømpe|sok"),("vanter",r"vante|luffe|handske"),
          ("baby",r"baby|dåb|body|dragt"),("børn",r"junior|børn|barn"),("kjole",r"kjole|nederdel"),("hjem",r"pude|tæppe|plaid|dukke")]
+def find_needles(text):
+    return sorted({m.group(1).replace(",", ".").rstrip(".0") if m.group(1) not in ("10",) else "10" for m in re.finditer(r"(?:rund)?pind(?:e)?\s*(?:nr\.?\s*)?(\d{1,2}(?:[.,]5)?)\s*(?:mm)?\b", text, re.I)}, key=float)
+
 def guess_target(text):
     t=text.lower()
     if re.search(r"\bbaby\b|0-3 mdr|1-3 mdr|præmatur|dåb", t): return "baby"
@@ -150,7 +158,7 @@ for shop in CFG["shops"]:
             m = re.match(r"(.+?) by DROPS Design\s*-\s*(.+?)\s+Strikkeopskrift\s*(?:str\.?\s*(.+))?$", name, re.I)
             pakker.append({"shop": shop["key"], "shop_name": shop["name"], "kind": "pakke", "designer": "DROPS Design",
                            "name": m.group(1) if m else name, "type": guess_type(m.group(2) if m else name), "type_label": m.group(2) if m else "",
-                           "target": guess_target(name+" "+it.get("kategorinavn","")+" "+it.get("beskrivelse","")[:300]), "level": guess_level(it.get("beskrivelse","")), "free": True,
+                           "target": guess_target(name+" "+it.get("kategorinavn","")+" "+it.get("beskrivelse","")[:300]), "level": guess_level(it.get("beskrivelse","")), "free": True, "needles": find_needles(it.get("beskrivelse","")),
                            "sizes": (m.group(3) or "").strip() if m else "", "price": num(it.get("nypris")),
                            "stock": stock(it.get("lagerantal")), "image": it.get("billedurl"),
                            "url": it.get("vareurl"), "desc": cut(it.get("beskrivelse"), 700)})
@@ -159,7 +167,7 @@ for shop in CFG["shops"]:
         if "strikkeopskrift" in it.get("kategorinavn","").lower() and not is_garn(it):
             opskrifter.append({"shop": shop["key"], "shop_name": shop["name"], "kind": "opskrift",
                                "name": re.sub(r"\s*-\s*(dansk|engelsk|english)\s*$","",name,flags=re.I),
-                               "designer": it.get("brand") or "", "type": guess_type(name), "target": guess_target(name+" "+it.get("beskrivelse","")), "level": guess_level(it.get("beskrivelse","")), "free": False,
+                               "designer": it.get("brand") or "", "type": guess_type(name), "target": guess_target(name+" "+it.get("beskrivelse","")), "level": guess_level(it.get("beskrivelse","")), "free": False, "needles": find_needles(it.get("beskrivelse","")),
                                "price": num(it.get("nypris")), "stock": stock(it.get("lagerantal")),
                                "image": it.get("billedurl"), "url": it.get("vareurl")})
             continue
@@ -206,6 +214,13 @@ os.makedirs(f"{ROOT}/data", exist_ok=True)
 json.dump(priser, open(f"{ROOT}/data/priser.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 json.dump(pakker, open(f"{ROOT}/data/drops-pakker.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 alle = [o for o in opskrifter + pakker if o.get("stock") != "out_of_stock"]
+for o in alle:  # pinde: fra beskrivelsen + fra garntabellen for de garner, opskriften nævner
+    ns = set(o.get("needles") or [])
+    for m in re.finditer(r"Drops\s+([A-ZÆØÅ][\w-]*(?:\s+[A-ZÆØÅ][\w-]*){0,2})", o.get("desc","")):
+        for g in GARN:
+            if g["_re"].search("Drops " + m.group(1)):
+                ns.update(re.findall(r"\d+(?:\.\d)?", g["needle"].replace(",", ".")))
+    o["needles"] = sorted(ns, key=float)
 json.dump(alle, open(f"{ROOT}/data/opskrifter.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 json.dump(status, open(f"{ROOT}/data/feed-status.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 print(f"\nSkrev {sum(1 for g in priser.values() if g['shops'])} garner med priser, {len(pakker)} Drops-pakker, {len(opskrifter)} løsopskrifter.")

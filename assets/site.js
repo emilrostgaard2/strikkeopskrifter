@@ -98,7 +98,7 @@
   const kr=n=>n.toLocaleString('da-DK');
   const $=id=>document.getElementById(id);
   const q=$('f-q'), cat=$('f-kat'), tgt=$('f-target'), des=$('f-des'), free=$('f-free'), sort=$('f-sort'), count=$('f-count');
-  const P={type:grid.dataset.type||'', target:grid.dataset.target||'', designer:grid.dataset.designer||'', free:grid.dataset.free||'', level:grid.dataset.level||'', q:(grid.dataset.q||'').toLowerCase()};
+  const P={type:grid.dataset.type||'', target:grid.dataset.target||'', designer:grid.dataset.designer||'', free:grid.dataset.free||'', level:grid.dataset.level||'', q:(grid.dataset.q||'').toLowerCase(), needle:grid.dataset.needle||''};
   const params=new URLSearchParams(location.search);
   if(q&&params.get('q')) q.value=params.get('q'); if(cat&&params.get('kategori')) cat.value=params.get('kategori'); if(des&&params.get('des')) des.value=params.get('des'); if(tgt&&params.get('til')) tgt.value=params.get('til');
   let ALL=[];
@@ -111,6 +111,7 @@
     if(P.free) list=list.filter(o=>o.free);
     if(P.level) list=list.filter(o=>o.level===P.level);
     if(P.q) list=list.filter(o=>(o.desc||'').toLowerCase().includes(P.q));
+    if(P.needle) list=list.filter(o=>(o.needles||[]).includes(P.needle));
     const t=(q&&q.value||'').toLowerCase().trim();
     if(t) list=list.filter(o=>(o.name+' '+o.designer+' '+(o.desc||'')).toLowerCase().includes(t));
     if(cat&&cat.value) list=list.filter(o=>o.type===cat.value);
@@ -141,10 +142,10 @@
   const cards=[...document.querySelectorAll('[data-opskrift]')]; if(!cards.length) return;
   const s=document.querySelector('script[src*="assets/site.js"]'); const ROOT=s.getAttribute('src').startsWith('/')?'/':s.getAttribute('src').replace('assets/site.js','');
   fetch(ROOT+'data/opskrifter.json').then(r=>r.json()).then(d=>{
-    const pick=['sweater','cardigan','hue'].map(t=>d.find(o=>o.type===t&&o.image&&o.kind==='pakke'));
+    const pick=['sweater','cardigan','hue','vest'].map(t=>d.find(o=>o.type===t&&o.image&&o.kind==='pakke'));
     cards.forEach((c,i)=>{ const o=pick[i]; if(!o) return;
       c.href=o.page||o.url; if(!o.page){ c.rel='sponsored nofollow'; c.target='_blank'; }
-      c.querySelector('.img').style.background=`center/cover url('${o.image}')`;
+      c.querySelector('.img').style.background=`center/cover url('${o.image}')`; c.querySelector('.img').innerHTML='<span class="badge">gratis</span>';
       c.querySelector('b').textContent=o.name; c.querySelector('span').textContent=`${o.designer} · gratis opskrift`;
       c.querySelector('.price').textContent=`Garnpakke ${o.price.toLocaleString('da-DK')} kr.`; });
   });

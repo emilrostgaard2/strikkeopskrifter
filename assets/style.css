@@ -12,7 +12,7 @@
   --line:rgba(43,37,33,.10);
   --shadow:0 1px 2px rgba(43,37,33,.06),0 8px 24px -12px rgba(43,37,33,.18);
   --r:14px;
-  --serif:"Fraunces",Georgia,serif;--sans:"Instrument Sans",system-ui,sans-serif;
+  --serif:"Fraunces",Georgia,serif;--sans:"Instrument Sans",system-ui,sans-serif;--hand:"Caveat","Bradley Hand",cursive;
   /* strikkemønster – to rækker "V" masker, meget svagt */
   --knit:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='24' viewBox='0 0 28 24'%3E%3Cg fill='none' stroke='%232B2521' stroke-opacity='.07' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 3l6 8 6-8'/%3E%3Cpath d='M15 3l6 8 6-8'/%3E%3Cpath d='M8 15l6 8 6-8'/%3E%3Cpath d='M-6 15l6 8 6-8'/%3E%3Cpath d='M22 15l6 8 6-8'/%3E%3C/g%3E%3C/svg%3E");
 }
@@ -149,4 +149,37 @@ th{font-weight:500;color:var(--ink-2);width:42%}
   .shop{grid-template-columns:auto 1fr auto;gap:10px 12px}.shop .go{grid-column:1/-1;text-align:center}
   .faq{padding:20px}
   .panel{padding:20px}
+}
+
+/* ---------- Hygge-detaljer ---------- */
+.eyebrow{font-family:var(--hand);font-size:22px;color:var(--denim);line-height:1;display:block;margin-bottom:6px;transform:rotate(-1.5deg);transform-origin:left}
+.knit-rule{height:14px;background:var(--knit);background-size:28px 24px;opacity:.9;margin:8px 0 18px;max-width:180px}
+.sec-head h2{position:relative}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px}
+.tile{display:flex;align-items:center;gap:14px;padding:16px 18px;background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow);text-decoration:none;color:var(--ink);transition:transform .15s,box-shadow .15s}
+.tile:hover{transform:translateY(-2px);box-shadow:0 14px 30px -16px rgba(43,37,33,.35)}
+.tile .ic{width:44px;height:44px;border-radius:12px;background:var(--oat-2);display:grid;place-items:center;flex:none;font-size:22px}
+.tile b{display:block;font-weight:600;line-height:1.2}.tile span{font-size:13px;color:var(--ink-2)}
+.trust{display:flex;gap:28px;flex-wrap:wrap;margin:26px 0 0;font-size:14px;color:var(--ink-2)}
+.trust span::before{content:"✓";color:var(--moss);font-weight:700;margin-right:6px}
+.colors{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;margin:12px 0 4px}
+.colors a{aspect-ratio:1;border-radius:8px;display:block;background:var(--oat-2) center/cover;box-shadow:inset 0 0 0 1px rgba(43,37,33,.08);transition:transform .12s}
+.colors a:hover{transform:scale(1.12);z-index:1}
+.colors a.out{opacity:.3}
+.pricebox{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:6px 0 20px}
+.pricebox .big{font-family:var(--serif);font-size:34px;font-weight:600;color:var(--ink);line-height:1}
+.pricebox .from{font-size:14px;color:var(--ink-2)}
+.pricebox .save{font-family:var(--hand);font-size:22px;color:var(--moss);transform:rotate(-2deg)}
+.sticky-cta{display:none}
+.swatch{position:relative}
+.swatch::after{content:"";position:absolute;inset:10px;border:1px solid rgba(255,255,255,.55);border-radius:calc(var(--r) - 6px);pointer-events:none}
+.card .img{position:relative}
+.card .img .badge{position:absolute;left:10px;top:10px;font-family:var(--hand);font-size:19px;background:var(--paper);color:var(--ink);padding:2px 10px;border-radius:999px;box-shadow:var(--shadow);transform:rotate(-3deg)}
+footer.site{position:relative}
+footer.site::before{content:"";position:absolute;left:0;right:0;top:-1px;height:12px;background:var(--knit);background-size:28px 24px;opacity:.35}
+@media (max-width:860px){
+  .tiles{grid-template-columns:repeat(2,1fr)}.colors{grid-template-columns:repeat(8,1fr)}
+  .sticky-cta{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(251,249,245,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:10px 16px;gap:10px;align-items:center;justify-content:space-between}
+  .sticky-cta .big{font-family:var(--serif);font-size:20px;font-weight:600}
+  body.has-sticky{padding-bottom:70px}
 }

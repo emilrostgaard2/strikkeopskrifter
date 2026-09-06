@@ -26,14 +26,14 @@ TYPE_LABEL = {"sweater":"Sweatre & bluser","cardigan":"Cardigans","vest":"Veste"
 TARGET_LABEL = {"dame":"damer","herre":"herrer","børn":"børn","baby":"baby"}
 
 HEAD = '''<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400;9..144,600;9..144,700,100&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400;9..144,600;9..144,700,100&family=Instrument+Sans:wght@400;500;600&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/style.css">'''
 def nav(current=""):
     def a(href, label, key): return f'<li><a href="{href}"{" aria-current=page" if key==current else ""}>{label}</a></li>'
     return f'''<header class="site"><div class="wrap nav"><a class="logo" href="/">strikke<span>opskrifter</span>.dk</a>
 <ul>{a("/opskrifter/","Opskrifter","opskrifter")}{a("/gratis/","Gratis","gratis")}{a("/garn/","Garn","garn")}{a("/garn/drops/","DROPS","drops")}{a("/guides/","Guides","guides")}</ul></div></header>'''
-FOOT = f'''<footer class="site"><div class="wrap"><div>strikkeopskrifter.dk · Find opskriften, regn garnet ud, og køb det hvor det er billigst.<br><span style="opacity:.7">Opskrifter: <a href="/opskrifter/dame/">Damer</a> · <a href="/opskrifter/boern/">Børn</a> · <a href="/opskrifter/baby/">Baby</a> · <a href="/opskrifter/herre/">Herrer</a> · <a href="/opskrifter/begynder/">Begyndere</a> · <a href="/gratis/">Gratis</a> · <a href="/garn/drops/">DROPS</a></span></div>
+FOOT = f'''<footer class="site"><div class="wrap"><div>strikkeopskrifter.dk · Find opskriften, regn garnet ud, og køb det hvor det er billigst.<br><span style="opacity:.7">Opskrifter: <a href="/opskrifter/dame/">Damer</a> · <a href="/opskrifter/boern/">Børn</a> · <a href="/opskrifter/baby/">Baby</a> · <a href="/opskrifter/herre/">Herrer</a> · <a href="/opskrifter/begynder/">Begyndere</a> · <a href="/gratis/">Gratis</a> · <a href="/garn/drops/">DROPS</a><br>Typer: <a href="/opskrifter/sweater/">Sweatre</a> · <a href="/opskrifter/cardigan/">Cardigans</a> · <a href="/opskrifter/vest/">Veste</a> · <a href="/opskrifter/hue/">Huer</a> · <a href="/opskrifter/sjal/">Sjaler</a> · <a href="/opskrifter/sokker/">Sokker</a><br>Pinde: <a href="/opskrifter/pind-3/">3</a> · <a href="/opskrifter/pind-4/">4</a> · <a href="/opskrifter/pind-5/">5</a> · <a href="/opskrifter/pind-7/">7</a> · <a href="/opskrifter/pind-8/">8</a></span></div>
 <div><a href="/om/">Om siden</a> · <a href="/om/#provision">Sådan tjener vi penge</a> · <a href="/om/#kontakt">Kontakt</a></div></div></footer>'''
 
 def breadcrumbs(items):
@@ -55,7 +55,7 @@ def shell(title, meta, path, body, lds, current="", og_image=None):
 <html lang="da"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{e(title)} | strikkeopskrifter.dk</title><meta name="description" content="{e(meta)}">
 <link rel="canonical" href="{BASE}{path}"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(meta)}">{og}
-{HEAD}{ld_html}</head><body>{nav(current)}<main class="wrap">{body}</main>{FOOT}<script src="/assets/site.js"></script></body></html>'''
+{HEAD}{ld_html}</head><body>{nav(current)}<main class="wrap">{body}</main>{FOOT}<script src="/assets/site.js"></script><script>if(document.querySelector('.sticky-cta'))document.body.classList.add('has-sticky');</script></body></html>'''
 
 # ---------------- Drops-opskriftssider ----------------
 def find_yarns(text):
@@ -152,6 +152,22 @@ def drops_page(o, related):
      (f"Kan jeg strikke {o['name']} i et andet garn?", f"Ja, hvis du rammer samme strikkefasthed som opskriften angiver. Regn mængden om i meter frem for gram. Se vores guide til at vælge alternativt garn."),
      (f"Hvad koster det at strikke {o['name']}?", f"Garnpakken med alt garn koster {kr(o['price'])} kr. hos {o['shop_name']}. Køber du nøglerne enkeltvis, kan det være billigere – sammenlign priserne ovenfor."),
     ]
+    # Prisboks: billigste samlede garnpris vs. garnpakke
+    cheapest_total = o["price"]; save = 0
+    if len(yarns) == 1 and yarns[0][1] and PRIS.get(yarns[0][1], {}).get("shops"):
+        p1 = PRIS[yarns[0][1]]; ref = p1["shops"].get("rito") or next(iter(p1["shops"].values()))
+        if ref.get("price"):
+            b = max(1, round(o["price"] / ref["price"])); ch = next((v for v in p1["shops"].values() if v["price"]), None)
+            if ch: cheapest_total = round(b * ch["price"], 2); save = round(o["price"] - cheapest_total, 2)
+    pricebox = f'<div class="pricebox"><span class="big">{kr(cheapest_total)} kr.</span><span class="from">garn til mindste str., billigste butik</span>' + (f'<span class="save">spar {kr(save)} kr. vs. pakken</span>' if save >= 5 else '') + '</div>'
+    # Farvekort fra billigste butik (mere billedmateriale + CRO)
+    colors_html = ""
+    if len(yarns) == 1 and yarns[0][1] and PRIS.get(yarns[0][1], {}).get("shops"):
+        ch = next((v for v in PRIS[yarns[0][1]]["shops"].values() if v["price"]), None)
+        sw = [v for v in ch["variants"] if v.get("image")][:24] if ch else []
+        if sw:
+            colors_html = f'<p class="small muted" style="margin:14px 0 0">Farver hos {e(ch["shop"])} – klik på en farve for at gå direkte til den:</p><div class="colors">' + "".join(
+                f'<a href="{e(v.get("cart") or v["url"])}" rel="sponsored nofollow" target="_blank" title="{e(v["nr"])} {e(v["color"])}{"" if v["stock"]=="in_stock" else " (udsolgt)"}" class="{"" if v["stock"]=="in_stock" else "out"}" style="background-image:url(\'{e(v["image"])}\')"></a>' for v in sw) + "</div>"
     faq_html, faq_ld = faq_block(faq, f"Spørgsmål om {o['name']}")
     crumbs, crumb_ld = breadcrumbs([("Forside","/"),("Opskrifter","/opskrifter/"),("DROPS","/garn/drops/"),(TYPE_LABEL.get(o['type'],'Andet'), f"/opskrifter/?kategori={o['type']}"),(o['name'],None)])
     rel_html = "".join(f'''<a class="card" href="{r['page']}"><div class="img" style="background:center/cover url('{e(r['image'])}')"></div><b>{e(r['name'])}</b><span>DROPS Design · gratis · {TARGET_LABEL.get(r.get('target',''),'')}</span><em class="price">Garnpakke {kr(r['price'])} kr.</em></a>''' for r in related)
@@ -161,11 +177,13 @@ def drops_page(o, related):
 <style>.hero{{display:grid;grid-template-columns:5fr 6fr;gap:48px;padding:24px 0 40px;align-items:start}}.swatch{{aspect-ratio:4/5;background:var(--oat-2) center/cover;border-radius:var(--r);box-shadow:var(--shadow)}}
 .byline{{color:var(--ink-2);margin:10px 0 18px}}.lead{{font-size:17px;max-width:56ch;margin:0 0 24px}}.cta-row{{display:flex;gap:12px;flex-wrap:wrap}}.two{{display:grid;grid-template-columns:7fr 4fr;gap:40px;margin-bottom:48px;align-items:start}}@media(max-width:860px){{.hero,.two{{grid-template-columns:1fr}}}}</style>
 <section class="hero"><div class="swatch" role="img" aria-label="{e(o['name'])}" style="background-image:url('{e(o['image'])}')"></div>
-<div><h1>{e(o['name'])}</h1><p class="byline">Design af DROPS Design · Gratis opskrift · Til {tgt}{(' · Str. '+e(o['sizes'])) if o.get('sizes') else ''} · Niveau: {e(o.get('level','let øvet'))}</p>
+<div><span class="eyebrow">Gratis opskrift · til {tgt}</span><h1>{e(o['name'])}</h1><p class="byline">Design af DROPS Design{(' · Str. '+e(o['sizes'])) if o.get('sizes') else ''} · Niveau: {e(o.get('level','let øvet'))}</p>
+{pricebox}
 <p class="lead">{e(o.get('desc',''))}</p>
 <div class="cta-row"><a class="btn btn-primary" href="#garn">Se garn og pris</a><a class="btn btn-ghost" href="{e(o['url'])}" rel="sponsored nofollow" target="_blank">Hent opskriften gratis</a></div>
 <p class="small muted" style="margin-top:12px">Opskriften er gratis hos DROPS. Garnet køber du hvor det er billigst – eller som samlet pakke.</p></div></section>
-<section id="garn" class="two"><div><h2 style="margin-bottom:8px">Garnet til {e(o['name'])}</h2><p class="muted" style="margin:0 0 18px;max-width:60ch">{e(TYPE_SENT.get(o['type'],''))} Priserne herunder hentes hver nat fra butikkernes egne feeds.</p>{materials_panel(o, yarns)}{yarn_html}
+<div class="sticky-cta"><div><div class="small muted">Garn fra</div><div class="big">{kr(cheapest_total)} kr.</div></div><a class="btn btn-primary btn-sm" href="#garn">Se garn og pris</a></div>
+<section id="garn" class="two"><div><h2 style="margin-bottom:8px">Garnet til {e(o['name'])}</h2><p class="muted" style="margin:0 0 18px;max-width:60ch">{e(TYPE_SENT.get(o['type'],''))} Priserne herunder hentes hver nat fra butikkernes egne feeds.</p>{materials_panel(o, yarns)}{yarn_html}{colors_html}
 <p class="disclose">Vi får en lille provision, hvis du køber via vores links. Det ændrer ikke prisen for dig, og det påvirker ikke, hvilken butik vi viser som billigst.</p></div>
 <aside class="panel"><h3 style="margin-bottom:6px">Alt garnet i én pakke</h3><p class="muted small" style="margin:0 0 14px">{e(o['shop_name'])} sælger garnet til {e(o['name'])} som samlet pakke i din størrelse{(' ('+e(o['sizes'])+')') if o.get('sizes') else ''}. Opskriften henter du gratis.</p>
 <div style="font-family:var(--serif);font-size:30px;font-weight:600;margin-bottom:12px">{kr(o['price'])} kr.</div>
@@ -246,6 +264,11 @@ for o in pakker:
 json.dump(OPS, open(f"{ROOT}/data/opskrifter.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 
 for c in C.CATEGORIES: write("/"+c["path"]+"/", cat_page(c))
+for t in C.TYPES:
+    write(f"/opskrifter/{t['slug']}/", cat_page(dict(t, path=f"opskrifter/{t['slug']}", preset=dict(type=t["type"]), sections=t.get("sections",[]))))
+for n in C.NEEDLES:
+    slug = "pind-" + n["n"].replace(".", "-")
+    write(f"/opskrifter/{slug}/", cat_page(dict(n, path=f"opskrifter/{slug}", preset=dict(needle=n["n"]), sections=n.get("sections",[]))))
 write("/gratis/", cat_page(C.GRATIS, "gratis"))
 write("/garn/drops/", cat_page(C.DROPS, "drops"))
 for g in C.GUIDES: write(f"/guides/{g['slug']}/", guide_page(g))
@@ -253,6 +276,7 @@ write("/guides/", guides_index())
 write("/om/", om_page())
 
 urls = ["/", "/opskrifter/", "/gratis/", "/garn/", "/garn/drops/", "/guides/", "/om/"] + [f"/{c['path']}/" for c in C.CATEGORIES] + \
+       [f"/opskrifter/{t['slug']}/" for t in C.TYPES] + [f"/opskrifter/pind-{n['n'].replace('.','-')}/" for n in C.NEEDLES] + \
        [f"/guides/{g['slug']}/" for g in C.GUIDES] + [o["page"] for o in pakker] + \
        [f"/garn/{s}/" for s, g in PRIS.items() if g.get("shops") and os.path.exists(f"{ROOT}/garn/{s}")]
 open(f"{ROOT}/sitemap.xml", "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"<url><loc>{BASE}{u}</loc></url>\n" for u in urls) + "</urlset>\n")

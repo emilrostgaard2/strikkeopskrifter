@@ -7,11 +7,11 @@
 <meta property="og:image" content="https://strikkeopskrifter.dk/assets/img/hero.jpg">
 <meta name="description" content="Over 1.000 strikkeopskrifter til dame, børn, baby og herre – gratis og betalte. Se hvor meget garn du skal bruge til din størrelse, og sammenlign garnprisen hos danske butikker.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400;9..144,600;9..144,700,100&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400;9..144,600;9..144,700,100&family=Instrument+Sans:wght@400;500;600&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/style.css">
 <style>
-  .hero{padding:56px 0 48px;display:grid;grid-template-columns:6fr 5fr;gap:56px;align-items:center}
+  .hero{padding:48px 0 40px;display:grid;grid-template-columns:7fr 5fr;gap:48px;align-items:center}
   .hero p.lead{font-size:19px;max-width:48ch;margin:18px 0 28px;color:var(--ink-2)}
   .search{display:flex;background:var(--paper);border-radius:999px;overflow:hidden;max-width:540px;box-shadow:var(--shadow);border:1.5px solid var(--line)}
   .search input{flex:1;border:0;padding:16px 22px;font:inherit;font-size:16.5px;outline:0;background:transparent}
@@ -19,7 +19,7 @@
   .quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
   .quick a{font-size:13.5px;padding:7px 14px;border-radius:999px;text-decoration:none;color:var(--ink);background:var(--oat-2);font-weight:500;transition:background .15s}
   .quick a:hover{background:var(--ink);color:#fff}
-  .hero-art{aspect-ratio:4/5;background:var(--oat-2) center/cover url(assets/img/hero.jpg);border-radius:28px;max-height:620px;justify-self:end;width:100%;max-width:470px;box-shadow:0 30px 60px -30px rgba(43,37,33,.45);position:relative}
+  .hero-art{aspect-ratio:4/5;background:var(--oat-2) center/cover url(assets/img/hero.jpg);border-radius:28px;max-height:520px;justify-self:end;width:100%;max-width:400px;box-shadow:0 30px 60px -30px rgba(43,37,33,.45);position:relative}
   .hero-art::after{content:"";position:absolute;inset:auto -14px -14px auto;width:120px;height:120px;border-radius:50%;background:var(--denim) var(--knit);z-index:-1;opacity:.9}
   .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
   .steps div{padding:28px 28px 26px;background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow)}
@@ -35,6 +35,7 @@
   @media(max-width:860px){.hero,.steps,.news{grid-template-columns:1fr}.hero-art{display:none}.hero{padding:32px 0 24px}}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvad er strikkeopskrifter.dk?", "acceptedAnswer": {"@type": "Answer", "text": "En samling af danske og nordiske strikkeopskrifter, hvor hver opskrift viser garnforbrug pr. størrelse og dagens garnpris hos danske butikker. Målet er, at du kan vælge opskrift, regne garnet ud og købe det billigst – på ét sted."}}, {"@type": "Question", "name": "Koster det noget at bruge siden?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. Vi får en lille provision fra butikken, hvis du køber garn via vores links. Det ændrer ikke din pris, og det påvirker ikke, hvilken butik vi viser som billigst."}}, {"@type": "Question", "name": "Hvor kommer priserne fra?", "acceptedAnswer": {"@type": "Answer", "text": "Fra butikkernes egne produktfeeds, som vi henter hver nat. Ser du en pris, der ikke passer, så skriv til os – så retter vi det."}}, {"@type": "Question", "name": "Er opskrifterne jeres egne?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. Opskrifterne tilhører designerne og butikkerne, og vi linker til dem. Vores eget bidrag er garndata, beregneren, prissammenligningen og guides."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "strikkeopskrifter.dk", "url": "https://strikkeopskrifter.dk/", "potentialAction": {"@type": "SearchAction", "target": "https://strikkeopskrifter.dk/opskrifter/?q={search_term_string}", "query-input": "required name=search_term_string"}}</script>
 </head>
 <body>
 <header class="site"><div class="wrap nav"><a class="logo" href="/">strikke<span>opskrifter</span>.dk</a>
@@ -43,20 +44,18 @@
 <main class="wrap">
   <section class="hero">
     <div>
+      <span class="eyebrow">Danmarks samling af strikkeopskrifter</span>
       <h1>Find opskriften.<br>Regn garnet ud.<br>Køb det billigst.</h1>
-      <p class="lead">Vi samler danske strikkeopskrifter, fortæller dig præcis hvor mange nøgler du skal bruge til din størrelse – og hvor garnet er billigst lige nu.</p>
-      <form class="search" action="opskrifter/" method="get" role="search">
-        <input type="search" name="q" placeholder="Søg opskrift, designer eller garn …" aria-label="Søg">
-        <button type="submit">Søg</button>
-      </form>
-      <div class="quick">
-        <a href="opskrifter/?kategori=sweater">Sweatre</a>
-        <a href="opskrifter/?kategori=cardigan">Cardigans</a>
-        <a href="opskrifter/?kategori=hue">Huer</a>
-        <a href="opskrifter/?niveau=begynder">Begynder</a>
-        <a href="opskrifter/?pris=gratis">Gratis opskrifter</a>
-        <a href="garn/?tilbud=1">Garn på tilbud</a>
+      <p class="lead">Over 1.100 strikkeopskrifter til dame, børn, baby og herre – gratis og betalte. Vi fortæller dig, hvilket garn du skal bruge, hvor mange nøgler, og hvor det er billigst i dag.</p>
+      <div class="tiles" style="grid-template-columns:repeat(3,1fr);margin-top:6px">
+        <a class="tile" href="opskrifter/dame/"><span class="ic">🧶</span><div><b>Til damer</b><span>sweatre, cardigans, sjaler</span></div></a>
+        <a class="tile" href="opskrifter/boern/"><span class="ic">🧒</span><div><b>Til børn</b><span>2–14 år</span></div></a>
+        <a class="tile" href="opskrifter/baby/"><span class="ic">🍼</span><div><b>Til baby</b><span>0–2 år, præmatur</span></div></a>
+        <a class="tile" href="opskrifter/herre/"><span class="ic">🧔</span><div><b>Til herrer</b><span>S–3XL</span></div></a>
+        <a class="tile" href="opskrifter/begynder/"><span class="ic">🌱</span><div><b>Begyndere</b><span>nemme opskrifter</span></div></a>
+        <a class="tile" href="gratis/"><span class="ic">🎁</span><div><b>Gratis</b><span>900+ opskrifter</span></div></a>
       </div>
+      <div class="trust"><span>1.100+ opskrifter</span><span>Priser fra 3 butikker, opdateret i nat</span><span>Ingen annoncer</span></div>
     </div>
     <div class="hero-art" role="img" aria-label="Kvinde strikker en blå sweater i en lænestol med garn og opskrift ved siden af"></div>
   </section>
@@ -68,9 +67,23 @@
   </section>
 
   <section class="sec">
+    <div class="sec-head"><div><span class="eyebrow">Hvad vil du strikke?</span><h2>Opskrifter efter type</h2></div><a href="opskrifter/">Alle opskrifter →</a></div>
+    <div class="tiles">
+      <a class="tile" href="opskrifter/sweater/"><span class="ic">🧥</span><div><b>Sweatre & bluser</b><span>raglan, bærestykke, oversize</span></div></a>
+      <a class="tile" href="opskrifter/cardigan/"><span class="ic">🧷</span><div><b>Cardigans</b><span>med og uden knapper</span></div></a>
+      <a class="tile" href="opskrifter/hue/"><span class="ic">🎩</span><div><b>Huer</b><span>ét nøgle, én aften</span></div></a>
+      <a class="tile" href="opskrifter/sjal/"><span class="ic">🧣</span><div><b>Sjaler & tørklæder</b><span>hulmønster, halsrør</span></div></a>
+      <a class="tile" href="opskrifter/sokker/"><span class="ic">🧦</span><div><b>Sokker</b><span>strømpegarn der holder</span></div></a>
+      <a class="tile" href="opskrifter/vest/"><span class="ic">👕</span><div><b>Veste & slipovers</b><span>hurtige projekter</span></div></a>
+      <a class="tile" href="garn/drops/"><span class="ic">💧</span><div><b>DROPS-opskrifter</b><span>900+ gratis</span></div></a>
+      <a class="tile" href="opskrifter/pind-4/"><span class="ic">🥢</span><div><b>Efter pindestørrelse</b><span>pind 3 · 4 · 5 · 7 · 8</span></div></a>
+    </div>
+  </section>
+
+  <section class="sec">
     <div class="sec-head"><h2>Populære opskrifter lige nu</h2><a href="opskrifter/">Se alle opskrifter →</a></div>
     <div class="grid">
-      <a class="card" href="opskrifter/rikke-cozy-sweater/"><div class="img"></div><b>Rikke Cozy Sweater</b><span>Rikke Jönsson · let øvet</span><em class="price">Garn fra 200 kr.</em></a>
+      <a class="card" href="opskrifter/?kategori=vest" data-opskrift="3"><div class="img"></div><b></b><span></span><em class="price"></em></a>
       <a class="card" href="opskrifter/?kategori=sweater" data-opskrift="0"><div class="img"></div><b></b><span></span><em class="price"></em></a>
       <a class="card" href="opskrifter/?kategori=cardigan" data-opskrift="1"><div class="img"></div><b></b><span></span><em class="price"></em></a>
       <a class="card" href="opskrifter/?kategori=hue" data-opskrift="2"><div class="img"></div><b></b><span></span><em class="price"></em></a>
