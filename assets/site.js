@@ -110,7 +110,7 @@
     if(sort.value==='navn') list.sort((a,b)=>a.name.localeCompare(b.name,'da'));
     count.textContent=`${list.length} opskrifter`;
     grid.innerHTML=(t||cat.value||des.value?'':fixed.join(''))+list.slice(0,200).map(o=>`
-      <a class="card" href="${o.url}" rel="sponsored nofollow" target="_blank">
+      <a class="card" href="${o.page||o.url}" ${o.page?'':'rel="sponsored nofollow" target="_blank"'}>
         <div class="img" role="img" aria-label="${o.name}" style="background:center/cover url('${o.image}')"></div>
         <b>${o.name}</b><span>${o.designer}${o.sizes?' · '+o.sizes:''}${o.kind==='pakke'?' · gratis opskrift':''}</span>
         <em class="price">${o.kind==='pakke'?'Garnpakke '+kr(o.price)+' kr.':'Opskrift '+kr(o.price)+' kr.'}</em>
@@ -131,7 +131,7 @@
   fetch(ROOT+'data/opskrifter.json').then(r=>r.json()).then(d=>{
     const pick=['sweater','cardigan','hue'].map(t=>d.find(o=>o.type===t&&o.image&&o.kind==='pakke'));
     cards.forEach((c,i)=>{ const o=pick[i]; if(!o) return;
-      c.href=o.url; c.rel='sponsored nofollow'; c.target='_blank';
+      c.href=o.page||o.url; if(!o.page){ c.rel='sponsored nofollow'; c.target='_blank'; }
       c.querySelector('.img').style.background=`center/cover url('${o.image}')`;
       c.querySelector('b').textContent=o.name; c.querySelector('span').textContent=`${o.designer} · gratis opskrift`;
       c.querySelector('.price').textContent=`Garnpakke ${o.price.toLocaleString('da-DK')} kr.`; });
