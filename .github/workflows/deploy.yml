@@ -8,11 +8,15 @@ on:
 concurrency:
   group: deploy
   cancel-in-progress: false
+permissions:
+  contents: write
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -23,8 +27,17 @@ jobs:
           FEED_BROENGARN: ${{ secrets.FEED_BROENGARN }}
           FEED_KREATIVGARN: ${{ secrets.FEED_KREATIVGARN }}
         run: |
+          pip install -q pillow
           python3 _build/feeds.py
+          python3 _build/drops.py --max 150 || echo "drops.py fejlede – fortsætter"
+          python3 _build/images.py --max 400 || echo "images.py fejlede – fortsætter"
           python3 _build/pages.py
+
+      - name: Gem cache (drops-details, prishistorik, billeder) tilbage i repoet
+        run: |
+          git config user.name "strikkebot" && git config user.email "bot@strikkeopskrifter.dk"
+          git add data/drops-details.json data/prishistorik.json assets/img/cache 2>/dev/null || true
+          git diff --cached --quiet || (git commit -m "data: natlig opdatering" && git push)
 
       - name: Upload med lftp (parallelt)
         env:
