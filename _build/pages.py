@@ -27,6 +27,7 @@ TARGET_LABEL = {"dame":"damer","herre":"herrer","børn":"børn","baby":"baby"}
 
 HEAD = '''<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400;9..144,600;9..144,700,100&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/style.css">'''
 def nav(current=""):
     def a(href, label, key): return f'<li><a href="{href}"{" aria-current=page" if key==current else ""}>{label}</a></li>'
@@ -122,8 +123,8 @@ def drops_page(o, related):
     product_ld = {"@context":"https://schema.org","@type":"Product","name":f"{o['name']} – garnpakke","image":o["image"],"description":o.get("desc",""),
                   "brand":{"@type":"Brand","name":"DROPS Design"},"offers":{"@type":"Offer","priceCurrency":"DKK","price":o["price"],"availability":"https://schema.org/InStock" if o.get("stock")=="in_stock" else "https://schema.org/BackOrder","seller":{"@type":"Organization","name":o["shop_name"]}}}
     body = f'''{crumbs}
-<style>.hero{{display:grid;grid-template-columns:5fr 6fr;gap:48px;padding:24px 0 40px;align-items:start}}.swatch{{aspect-ratio:4/5;background:var(--stone-2) center/cover;border:1px solid var(--line)}}
-.byline{{color:var(--ink-2);margin:10px 0 18px}}.lead{{font-size:17px;max-width:56ch;margin:0 0 24px}}.cta-row{{display:flex;gap:12px;flex-wrap:wrap}}.two{{display:grid;grid-template-columns:7fr 4fr;gap:40px;margin-bottom:48px}}@media(max-width:860px){{.hero,.two{{grid-template-columns:1fr}}}}</style>
+<style>.hero{{display:grid;grid-template-columns:5fr 6fr;gap:48px;padding:24px 0 40px;align-items:start}}.swatch{{aspect-ratio:4/5;background:var(--oat-2) center/cover;border-radius:var(--r);box-shadow:var(--shadow)}}
+.byline{{color:var(--ink-2);margin:10px 0 18px}}.lead{{font-size:17px;max-width:56ch;margin:0 0 24px}}.cta-row{{display:flex;gap:12px;flex-wrap:wrap}}.two{{display:grid;grid-template-columns:7fr 4fr;gap:40px;margin-bottom:48px;align-items:start}}@media(max-width:860px){{.hero,.two{{grid-template-columns:1fr}}}}</style>
 <section class="hero"><div class="swatch" role="img" aria-label="{e(o['name'])}" style="background-image:url('{e(o['image'])}')"></div>
 <div><h1>{e(o['name'])}</h1><p class="byline">Design af DROPS Design · Gratis opskrift · Til {tgt}{(' · Str. '+e(o['sizes'])) if o.get('sizes') else ''} · Niveau: {e(o.get('level','let øvet'))}</p>
 <p class="lead">{e(o.get('desc',''))}</p>

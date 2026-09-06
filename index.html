@@ -8,27 +8,31 @@
 <meta name="description" content="Over 1.000 strikkeopskrifter til dame, børn, baby og herre – gratis og betalte. Se hvor meget garn du skal bruge til din størrelse, og sammenlign garnprisen hos danske butikker.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400;9..144,600;9..144,700,100&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css">
 <style>
-  .hero{padding:64px 0 56px;display:grid;grid-template-columns:6fr 5fr;gap:48px;align-items:center}
-  .hero p.lead{font-size:19px;max-width:48ch;margin:16px 0 28px;color:var(--ink-2)}
-  .search{display:flex;border:1px solid var(--ink);background:#fff;border-radius:4px;overflow:hidden;max-width:520px}
-  .search input{flex:1;border:0;padding:16px 18px;font:inherit;font-size:17px;outline:0}
-  .search button{border:0;background:var(--ink);color:#fff;padding:0 22px;font-weight:600}
-  .quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-  .quick a{font-size:14px;padding:6px 12px;border:1px solid var(--line);border-radius:20px;text-decoration:none;color:var(--ink-2);background:var(--paper)}
-  .hero-art{aspect-ratio:4/5;background:var(--stone-2) center/cover url(assets/img/hero.jpg);border:1px solid var(--line);max-height:640px;justify-self:end;width:100%;max-width:480px}
-  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);background:var(--paper)}
-  .steps div{padding:28px 32px}
-  .steps div+div{border-left:1px solid var(--line)}
-  .steps b{display:block;font-family:var(--serif);font-size:44px;font-weight:600;color:var(--wine);line-height:1;margin-bottom:10px}
+  .hero{padding:56px 0 48px;display:grid;grid-template-columns:6fr 5fr;gap:56px;align-items:center}
+  .hero p.lead{font-size:19px;max-width:48ch;margin:18px 0 28px;color:var(--ink-2)}
+  .search{display:flex;background:var(--paper);border-radius:999px;overflow:hidden;max-width:540px;box-shadow:var(--shadow);border:1.5px solid var(--line)}
+  .search input{flex:1;border:0;padding:16px 22px;font:inherit;font-size:16.5px;outline:0;background:transparent}
+  .search button{border:0;background:var(--denim);color:#fff;padding:0 26px;font-weight:600;border-radius:999px;margin:4px}
+  .quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+  .quick a{font-size:13.5px;padding:7px 14px;border-radius:999px;text-decoration:none;color:var(--ink);background:var(--oat-2);font-weight:500;transition:background .15s}
+  .quick a:hover{background:var(--ink);color:#fff}
+  .hero-art{aspect-ratio:4/5;background:var(--oat-2) center/cover url(assets/img/hero.jpg);border-radius:28px;max-height:620px;justify-self:end;width:100%;max-width:470px;box-shadow:0 30px 60px -30px rgba(43,37,33,.45);position:relative}
+  .hero-art::after{content:"";position:absolute;inset:auto -14px -14px auto;width:120px;height:120px;border-radius:50%;background:var(--denim) var(--knit);z-index:-1;opacity:.9}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .steps div{padding:28px 28px 26px;background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow)}
+  .steps b{display:block;font-family:var(--serif);font-size:40px;font-weight:600;color:var(--denim);line-height:1;margin-bottom:12px}
   .steps h3{font-family:var(--sans);font-size:17px;margin-bottom:6px}
   .steps p{margin:0;font-size:15px;color:var(--ink-2)}
-  .band{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:48px 0;margin-top:64px}
+  .band{background:var(--denim);color:#fff;padding:52px 0;margin-top:72px;background-image:var(--knit)}
+  .band h2{color:#fff}.band .muted{color:#D7E0EE}
   .news{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
   .news form{display:flex;gap:8px}
-  .news input{font:inherit;padding:12px 14px;border:1px solid var(--line);border-radius:3px;min-width:260px}
-  @media(max-width:860px){.hero,.steps,.news{grid-template-columns:1fr}.steps div+div{border-left:0;border-top:1px solid var(--line)}.hero-art{display:none}}
+  .news input{font:inherit;padding:13px 16px;border:0;border-radius:999px;min-width:260px}
+  .news .btn-primary{background:var(--ink)}
+  @media(max-width:860px){.hero,.steps,.news{grid-template-columns:1fr}.hero-art{display:none}.hero{padding:32px 0 24px}}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvad er strikkeopskrifter.dk?", "acceptedAnswer": {"@type": "Answer", "text": "En samling af danske og nordiske strikkeopskrifter, hvor hver opskrift viser garnforbrug pr. størrelse og dagens garnpris hos danske butikker. Målet er, at du kan vælge opskrift, regne garnet ud og købe det billigst – på ét sted."}}, {"@type": "Question", "name": "Koster det noget at bruge siden?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. Vi får en lille provision fra butikken, hvis du køber garn via vores links. Det ændrer ikke din pris, og det påvirker ikke, hvilken butik vi viser som billigst."}}, {"@type": "Question", "name": "Hvor kommer priserne fra?", "acceptedAnswer": {"@type": "Answer", "text": "Fra butikkernes egne produktfeeds, som vi henter hver nat. Ser du en pris, der ikke passer, så skriv til os – så retter vi det."}}, {"@type": "Question", "name": "Er opskrifterne jeres egne?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. Opskrifterne tilhører designerne og butikkerne, og vi linker til dem. Vores eget bidrag er garndata, beregneren, prissammenligningen og guides."}}]}</script>
 </head>

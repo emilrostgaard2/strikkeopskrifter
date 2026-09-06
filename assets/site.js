@@ -97,7 +97,7 @@
   const kr=n=>n.toLocaleString('da-DK');
   const $=id=>document.getElementById(id);
   const q=$('f-q'), cat=$('f-kat'), tgt=$('f-target'), des=$('f-des'), free=$('f-free'), sort=$('f-sort'), count=$('f-count');
-  const P={type:grid.dataset.type||'', target:grid.dataset.target||'', designer:grid.dataset.designer||'', free:grid.dataset.free||'', level:grid.dataset.level||''};
+  const P={type:grid.dataset.type||'', target:grid.dataset.target||'', designer:grid.dataset.designer||'', free:grid.dataset.free||'', level:grid.dataset.level||'', q:(grid.dataset.q||'').toLowerCase()};
   const params=new URLSearchParams(location.search);
   if(q&&params.get('q')) q.value=params.get('q'); if(cat&&params.get('kategori')) cat.value=params.get('kategori'); if(des&&params.get('des')) des.value=params.get('des'); if(tgt&&params.get('til')) tgt.value=params.get('til');
   let ALL=[];
@@ -109,6 +109,7 @@
     if(P.designer) list=list.filter(o=>o.designer===P.designer);
     if(P.free) list=list.filter(o=>o.free);
     if(P.level) list=list.filter(o=>o.level===P.level);
+    if(P.q) list=list.filter(o=>(o.desc||'').toLowerCase().includes(P.q));
     const t=(q&&q.value||'').toLowerCase().trim();
     if(t) list=list.filter(o=>(o.name+' '+o.designer+' '+(o.desc||'')).toLowerCase().includes(t));
     if(cat&&cat.value) list=list.filter(o=>o.type===cat.value);
@@ -119,7 +120,7 @@
     if(sort&&sort.value==='navn') list.sort((a,b)=>a.name.localeCompare(b.name,'da'));
     if(count) count.textContent=`${list.length} opskrifter`;
     const filtered=t||(cat&&cat.value)||(tgt&&tgt.value)||(des&&des.value)||(free&&free.value);
-    grid.innerHTML=(filtered?'':fixed.join(''))+list.slice(0,240).map(o=>`
+    grid.innerHTML=(filtered?'':fixed.join(''))+list.slice(0,P.q?8:240).map(o=>`
       <a class="card" href="${o.page||o.url}" ${o.page?'':'rel="sponsored nofollow" target="_blank"'}>
         <div class="img" role="img" aria-label="${o.name}" style="background:center/cover url('${o.image}')"></div>
         <b>${o.name}</b><span>${o.designer}${o.sizes?' · '+o.sizes:''}${o.free?' · gratis opskrift':''}</span>

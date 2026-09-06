@@ -25,6 +25,14 @@ def clean(s):
     s = s.replace("Â", "").replace("â€“", "–").replace("â€™", "'")
     return re.sub(r"\s{2,}", " ", s).strip()
 
+def cut(text, n):
+    """Klip ved sætningsgrænse i stedet for midt i et ord."""
+    text = (text or "").strip()
+    if len(text) <= n: return text
+    head = text[:n]
+    i = max(head.rfind(". "), head.rfind("! "), head.rfind("? "))
+    return (head[:i+1] if i > n*0.5 else head.rsplit(" ",1)[0] + " …").strip()
+
 def num(s):
     try: return round(float((s or "").replace(",", ".")), 2)
     except: return None
@@ -129,7 +137,7 @@ for shop in CFG["shops"]:
                            "target": guess_target(name+" "+it.get("kategorinavn","")+" "+it.get("beskrivelse","")[:300]), "level": guess_level(it.get("beskrivelse","")), "free": True,
                            "sizes": (m.group(3) or "").strip() if m else "", "price": num(it.get("nypris")),
                            "stock": stock(it.get("lagerantal")), "image": it.get("billedurl"),
-                           "url": it.get("vareurl"), "desc": it.get("beskrivelse")[:220]})
+                           "url": it.get("vareurl"), "desc": cut(it.get("beskrivelse"), 700)})
             continue
         # Løsopskrifter (fx PetiteKnit hos Broen Garn)
         if "strikkeopskrift" in it.get("kategorinavn","").lower() and not is_garn(it):
