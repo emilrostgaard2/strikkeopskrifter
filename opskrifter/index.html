@@ -24,27 +24,21 @@
   <p class="muted" style="max-width:60ch">Alle opskrifter har garnforbrug pr. størrelse og prissammenligning. Filtrér, eller søg på designer, opskrift eller garn.</p>
 
   <div class="filters" role="group" aria-label="Filtrér">
-    <input type="search" placeholder="Søg …" aria-label="Søg">
-    <select aria-label="Kategori"><option>Alle kategorier</option><option>Sweater</option><option>Cardigan</option><option>Vest</option><option>Hue</option><option>Sjal</option><option>Sokker</option><option>Børn</option></select>
-    <select aria-label="Niveau"><option>Alle niveauer</option><option>Begynder</option><option>Let øvet</option><option>Øvet</option></select>
-    <select aria-label="Pris"><option>Betalt og gratis</option><option>Kun gratis</option></select>
-    <select aria-label="Sortering"><option>Mest populære</option><option>Nyeste</option><option>Billigste garn</option></select>
+    <input type="search" id="f-q" placeholder="Søg opskrift, designer …" aria-label="Søg">
+    <select id="f-kat" aria-label="Kategori"><option value="">Alle kategorier</option><option value="sweater">Sweatre & bluser</option><option value="cardigan">Cardigans</option><option value="vest">Veste</option><option value="hue">Huer</option><option value="sjal">Sjaler & tørklæder</option><option value="sokker">Sokker</option><option value="vanter">Vanter</option><option value="baby">Baby</option><option value="børn">Børn</option><option value="kjole">Kjoler</option><option value="hjem">Hjem</option></select>
+    <select id="f-des" aria-label="Designer"><option value="">Alle designere</option></select>
+    <select id="f-sort" aria-label="Sortering"><option value="">Nyeste</option><option value="pris">Billigste garn</option><option value="navn">A–Å</option></select>
+    <span id="f-count" class="muted small" style="align-self:center"></span>
   </div>
 
-  <div class="grid">
+  <div class="grid" id="opskrift-grid">
     <a class="card" href="rikke-cozy-sweater/"><div class="img"></div><b>Rikke Cozy Sweater</b><span>Rikke Jönsson · let øvet · XS–6XL</span><em class="price">Garn fra 200 kr.</em></a>
-    <a class="card" href="#"><div class="img"></div><b>Opskrift</b><span>Designer · niveau · størrelser</span><em class="price">Garn fra — kr.</em></a>
-    <a class="card" href="#"><div class="img"></div><b>Opskrift</b><span>Designer · niveau · størrelser</span><em class="price">Garn fra — kr.</em></a>
-    <a class="card" href="#"><div class="img"></div><b>Opskrift</b><span>Designer · niveau · størrelser</span><em class="price">Garn fra — kr.</em></a>
-    <a class="card" href="#"><div class="img"></div><b>Opskrift</b><span>Designer · niveau · størrelser</span><em class="price">Garn fra — kr.</em></a>
-    <a class="card" href="#"><div class="img"></div><b>Opskrift</b><span>Designer · niveau · størrelser</span><em class="price">Garn fra — kr.</em></a>
-    <a class="card" href="#"><div class="img"></div><b>Opskrift</b><span>Designer · niveau · størrelser</span><em class="price">Garn fra — kr.</em></a>
-    <a class="card" href="#"><div class="img"></div><b>Opskrift</b><span>Designer · niveau · størrelser</span><em class="price">Garn fra — kr.</em></a>
   </div>
 </main>
 <footer class="site"><div class="wrap">
   <div>strikkeopskrifter.dk · Find opskriften, regn garnet ud, og køb det hvor det er billigst.</div>
   <div><a href="../om/">Om siden</a> · <a href="../om/#provision">Sådan tjener vi penge</a> · <a href="../om/#kontakt">Kontakt</a></div>
 </div></footer>
+<script src="../assets/site.js"></script>
 </body>
 </html>

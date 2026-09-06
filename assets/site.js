@@ -89,3 +89,51 @@
     }
   }).catch(()=>{});
 })();
+
+// ---- Opskriftsoversigt fra data/opskrifter.json ----
+(function(){
+  const grid=document.getElementById('opskrift-grid'); if(!grid) return;
+  const s=document.querySelector('script[src*="assets/site.js"]'); const ROOT=s.getAttribute('src').replace('assets/site.js','');
+  const kr=n=>n.toLocaleString('da-DK');
+  const q=document.getElementById('f-q'), cat=document.getElementById('f-kat'), des=document.getElementById('f-des'), sort=document.getElementById('f-sort'), count=document.getElementById('f-count');
+  const params=new URLSearchParams(location.search);
+  if(params.get('q')) q.value=params.get('q'); if(params.get('kategori')) cat.value=params.get('kategori');
+  let ALL=[];
+  const fixed=[...grid.querySelectorAll('.card')].map(c=>c.outerHTML); // egne opskriftssider (håndskrevne) står altid først
+  function render(){
+    let list=ALL.filter(o=>o.image);
+    const t=(q.value||'').toLowerCase().trim();
+    if(t) list=list.filter(o=>(o.name+' '+o.designer+' '+(o.desc||'')).toLowerCase().includes(t));
+    if(cat.value) list=list.filter(o=>o.type===cat.value);
+    if(des.value) list=list.filter(o=>o.designer===des.value);
+    if(sort.value==='pris') list.sort((a,b)=>(a.price||9e9)-(b.price||9e9));
+    if(sort.value==='navn') list.sort((a,b)=>a.name.localeCompare(b.name,'da'));
+    count.textContent=`${list.length} opskrifter`;
+    grid.innerHTML=(t||cat.value||des.value?'':fixed.join(''))+list.slice(0,200).map(o=>`
+      <a class="card" href="${o.url}" rel="sponsored nofollow" target="_blank">
+        <div class="img" role="img" aria-label="${o.name}" style="background:center/cover url('${o.image}')"></div>
+        <b>${o.name}</b><span>${o.designer}${o.sizes?' · '+o.sizes:''}${o.kind==='pakke'?' · gratis opskrift':''}</span>
+        <em class="price">${o.kind==='pakke'?'Garnpakke '+kr(o.price)+' kr.':'Opskrift '+kr(o.price)+' kr.'}</em>
+      </a>`).join('');
+  }
+  fetch(ROOT+'data/opskrifter.json').then(r=>r.json()).then(d=>{
+    ALL=d;
+    [...new Set(d.map(o=>o.designer).filter(Boolean))].sort().forEach(x=>des.insertAdjacentHTML('beforeend',`<option value="${x}">${x}</option>`));
+    render();
+  });
+  [q,cat,des,sort].forEach(el=>el.addEventListener('input',render));
+})();
+
+// ---- Forside: fyld opskrift-kort med rigtige opskrifter ----
+(function(){
+  const cards=[...document.querySelectorAll('[data-opskrift]')]; if(!cards.length) return;
+  const s=document.querySelector('script[src*="assets/site.js"]'); const ROOT=s.getAttribute('src').replace('assets/site.js','');
+  fetch(ROOT+'data/opskrifter.json').then(r=>r.json()).then(d=>{
+    const pick=['sweater','cardigan','hue'].map(t=>d.find(o=>o.type===t&&o.image&&o.kind==='pakke'));
+    cards.forEach((c,i)=>{ const o=pick[i]; if(!o) return;
+      c.href=o.url; c.rel='sponsored nofollow'; c.target='_blank';
+      c.querySelector('.img').style.background=`center/cover url('${o.image}')`;
+      c.querySelector('b').textContent=o.name; c.querySelector('span').textContent=`${o.designer} · gratis opskrift`;
+      c.querySelector('.price').textContent=`Garnpakke ${o.price.toLocaleString('da-DK')} kr.`; });
+  });
+})();

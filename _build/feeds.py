@@ -86,6 +86,15 @@ def is_garn(item):
 priser   = {g["slug"]: {"name": g["name"], "brand": g["brand"], "grams": g["grams"], "meters": g["meters"],
                          "gauge": g["gauge"], "needle": g["needle"], "fiber": g["fiber"], "shops": {}} for g in GARN}
 pakker   = []
+opskrifter = []
+TYPES = [("sweater",r"sweater|trøje|bluse|genser|pullover|tee\b|top\b"),("cardigan",r"cardigan|jakke|bolero"),("vest",r"vest|slipover"),
+         ("hue",r"hue|pandebånd|balaclava"),("sjal",r"sjal|tørklæde|halsrør|poncho"),("sokker",r"strømpe|sok"),("vanter",r"vante|luffe|handske"),
+         ("baby",r"baby|dåb|body|dragt"),("børn",r"junior|børn|barn"),("kjole",r"kjole|nederdel"),("hjem",r"pude|tæppe|plaid|dukke")]
+def guess_type(text):
+    t=text.lower()
+    for k,rx in TYPES:
+        if re.search(rx,t): return k
+    return "andet"
 status   = {"generated": datetime.now(timezone.utc).isoformat(timespec="minutes"), "shops": {}}
 unmatched = defaultdict(lambda: defaultdict(int))
 
@@ -101,10 +110,19 @@ for shop in CFG["shops"]:
         # Drops-garnpakker (Rito): opskrift + garn i én pakke
         if "drops" in it.get("brand", "").lower() and "strikkeopskrift" in it.get("kategorinavn", "").lower():
             m = re.match(r"(.+?) by DROPS Design\s*-\s*(.+?)\s+Strikkeopskrift\s*(?:str\.?\s*(.+))?$", name, re.I)
-            pakker.append({"shop": shop["key"], "name": m.group(1) if m else name, "type": m.group(2) if m else "",
+            pakker.append({"shop": shop["key"], "shop_name": shop["name"], "kind": "pakke", "designer": "DROPS Design",
+                           "name": m.group(1) if m else name, "type": guess_type(m.group(2) if m else name), "type_label": m.group(2) if m else "",
                            "sizes": (m.group(3) or "").strip() if m else "", "price": num(it.get("nypris")),
                            "stock": stock(it.get("lagerantal")), "image": it.get("billedurl"),
                            "url": it.get("vareurl"), "desc": it.get("beskrivelse")[:220]})
+            continue
+        # Løsopskrifter (fx PetiteKnit hos Broen Garn)
+        if "strikkeopskrift" in it.get("kategorinavn","").lower() and not is_garn(it):
+            opskrifter.append({"shop": shop["key"], "shop_name": shop["name"], "kind": "opskrift",
+                               "name": re.sub(r"\s*-\s*(dansk|engelsk|english)\s*$","",name,flags=re.I),
+                               "designer": it.get("brand") or "", "type": guess_type(name),
+                               "price": num(it.get("nypris")), "stock": stock(it.get("lagerantal")),
+                               "image": it.get("billedurl"), "url": it.get("vareurl")})
             continue
         if not is_garn(it): continue
         n += 1
@@ -144,5 +162,7 @@ status["unmatched_top"] = {k: dict(sorted(v.items(), key=lambda x: -x[1])[:25]) 
 os.makedirs(f"{ROOT}/data", exist_ok=True)
 json.dump(priser, open(f"{ROOT}/data/priser.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 json.dump(pakker, open(f"{ROOT}/data/drops-pakker.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+alle = [o for o in opskrifter + pakker if o.get("stock") != "out_of_stock"]
+json.dump(alle, open(f"{ROOT}/data/opskrifter.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 json.dump(status, open(f"{ROOT}/data/feed-status.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-print(f"\nSkrev {sum(1 for g in priser.values() if g['shops'])} garner med priser, {len(pakker)} Drops-pakker.")
+print(f"\nSkrev {sum(1 for g in priser.values() if g['shops'])} garner med priser, {len(pakker)} Drops-pakker, {len(opskrifter)} løsopskrifter.")
