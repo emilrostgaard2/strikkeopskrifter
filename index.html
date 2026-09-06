@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strikkeopskrifter – find opskriften og det billigste garn | strikkeopskrifter.dk</title>
+<meta name="description" content="Danske strikkeopskrifter samlet ét sted. Vælg din størrelse, se hvor meget garn du skal bruge, og sammenlign prisen hos danske garnbutikker.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400;9..144,600;9..144,700,100&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  .hero{padding:64px 0 56px;display:grid;grid-template-columns:6fr 5fr;gap:48px;align-items:center}
+  .hero p.lead{font-size:19px;max-width:48ch;margin:16px 0 28px;color:var(--ink-2)}
+  .search{display:flex;border:1px solid var(--ink);background:#fff;border-radius:4px;overflow:hidden;max-width:520px}
+  .search input{flex:1;border:0;padding:16px 18px;font:inherit;font-size:17px;outline:0}
+  .search button{border:0;background:var(--ink);color:#fff;padding:0 22px;font-weight:600}
+  .quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .quick a{font-size:14px;padding:6px 12px;border:1px solid var(--line);border-radius:20px;text-decoration:none;color:var(--ink-2);background:var(--paper)}
+  .hero-art{aspect-ratio:1;background:var(--stone-2);border:1px solid var(--line)}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);background:var(--paper)}
+  .steps div{padding:28px 32px}
+  .steps div+div{border-left:1px solid var(--line)}
+  .steps b{display:block;font-family:var(--serif);font-size:44px;font-weight:600;color:var(--wine);line-height:1;margin-bottom:10px}
+  .steps h3{font-family:var(--sans);font-size:17px;margin-bottom:6px}
+  .steps p{margin:0;font-size:15px;color:var(--ink-2)}
+  .band{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:48px 0;margin-top:64px}
+  .news{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
+  .news form{display:flex;gap:8px}
+  .news input{font:inherit;padding:12px 14px;border:1px solid var(--line);border-radius:3px;min-width:260px}
+  @media(max-width:860px){.hero,.steps,.news{grid-template-columns:1fr}.steps div+div{border-left:0;border-top:1px solid var(--line)}.hero-art{display:none}}
+</style>
+</head>
+<body>
+<header class="site"><div class="wrap nav">
+  <a class="logo" href="">strikke<span>opskrifter</span>.dk</a>
+  <ul>
+    <li><a href="opskrifter/" >Opskrifter</a></li>
+    <li><a href="garn/" >Garn</a></li>
+    <li><a href="designere/">Designere</a></li>
+    <li><a href="guides/">Guides</a></li>
+  </ul>
+</div></header>
+
+<main class="wrap">
+  <section class="hero">
+    <div>
+      <h1>Find opskriften.<br>Regn garnet ud.<br>Køb det billigst.</h1>
+      <p class="lead">Vi samler danske strikkeopskrifter, fortæller dig præcis hvor mange nøgler du skal bruge til din størrelse – og hvor garnet er billigst lige nu.</p>
+      <form class="search" action="opskrifter/" method="get" role="search">
+        <input type="search" name="q" placeholder="Søg opskrift, designer eller garn …" aria-label="Søg">
+        <button type="submit">Søg</button>
+      </form>
+      <div class="quick">
+        <a href="opskrifter/?kategori=sweater">Sweatre</a>
+        <a href="opskrifter/?kategori=cardigan">Cardigans</a>
+        <a href="opskrifter/?kategori=hue">Huer</a>
+        <a href="opskrifter/?niveau=begynder">Begynder</a>
+        <a href="opskrifter/?pris=gratis">Gratis opskrifter</a>
+        <a href="garn/?tilbud=1">Garn på tilbud</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true"></div>
+  </section>
+
+  <section class="steps" aria-label="Sådan virker det">
+    <div><b>1</b><h3>Vælg opskrift og størrelse</h3><p>Vi har materialelisten klar: garn, gram pr. størrelse, pinde og strikkefasthed.</p></div>
+    <div><b>2</b><h3>Se garnet – og alternativerne</h3><p>Originalgarnet, plus 2–3 alternativer i samme strikkefasthed, ofte til halv pris.</p></div>
+    <div><b>3</b><h3>Køb hvor det er billigst</h3><p>Vi sammenligner danske butikker og sender dig direkte i kurven med det rigtige antal nøgler.</p></div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head"><h2>Populære opskrifter lige nu</h2><a href="opskrifter/">Se alle opskrifter →</a></div>
+    <div class="grid">
+      <a class="card" href="opskrifter/rikke-cozy-sweater/"><div class="img"></div><b>Rikke Cozy Sweater</b><span>Rikke Jönsson · let øvet</span><em class="price">Garn fra 200 kr.</em></a>
+      <a class="card" href="#"><div class="img"></div><b>Opskrift 2</b><span>Designer · niveau</span><em class="price">Garn fra — kr.</em></a>
+      <a class="card" href="#"><div class="img"></div><b>Opskrift 3</b><span>Designer · niveau</span><em class="price">Garn fra — kr.</em></a>
+      <a class="card" href="#"><div class="img"></div><b>Opskrift 4</b><span>Designer · niveau</span><em class="price">Garn fra — kr.</em></a>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head"><h2>Garn på tilbud i dag</h2><a href="garn/?tilbud=1">Se alle tilbud →</a></div>
+    <div class="grid">
+      <a class="card" href="garn/drops-baby-merino/"><div class="img wide"></div><b>Drops Baby Merino</b><span>100 % merino · 175 m/50 g</span><em class="price">fra 19,95 kr. <span class="tag save">−40 %</span></em></a>
+      <a class="card" href="#"><div class="img wide"></div><b>Garn 2</b><span>fiber · løbelængde</span><em class="price">fra — kr.</em></a>
+      <a class="card" href="#"><div class="img wide"></div><b>Garn 3</b><span>fiber · løbelængde</span><em class="price">fra — kr.</em></a>
+      <a class="card" href="#"><div class="img wide"></div><b>Garn 4</b><span>fiber · løbelængde</span><em class="price">fra — kr.</em></a>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head"><h2>Guides</h2><a href="guides/">Alle guides →</a></div>
+    <div class="grid grid-3">
+      <a class="card" href="#"><div class="img wide"></div><b>Sådan vælger du et alternativt garn</b><span>Strikkefasthed, løbelængde og fiber – det du skal tjekke</span></a>
+      <a class="card" href="#"><div class="img wide"></div><b>Alternativer til Önling No 1</b><span>5 garner i samme fasthed, fra 20 kr. pr. nøgle</span></a>
+      <a class="card" href="#"><div class="img wide"></div><b>Hvor mange nøgler skal jeg bruge?</b><span>Beregn selv ud fra meter, ikke gram</span></a>
+    </div>
+  </section>
+</main>
+
+<section class="band">
+  <div class="wrap news">
+    <div><h2>Få besked når garnet falder i pris</h2><p class="muted" style="margin:6px 0 0">Ét mail om ugen med tilbud på de garner, du følger. Ingen spam.</p></div>
+    <form><input type="email" placeholder="din@mail.dk" aria-label="E-mail"><button class="btn btn-primary" type="submit">Tilmeld</button></form>
+  </div>
+</section>
+
+<footer class="site"><div class="wrap">
+  <div>strikkeopskrifter.dk · Find opskriften, regn garnet ud, og køb det hvor det er billigst.</div>
+  <div><a href="om/">Om siden</a> · <a href="om/#provision">Sådan tjener vi penge</a> · <a href="om/#kontakt">Kontakt</a></div>
+</div></footer>
+</body>
+</html>
