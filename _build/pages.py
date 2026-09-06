@@ -224,11 +224,14 @@ def guide_page(g):
     faq_html, faq_ld = faq_block(g["faq"])
     crumbs, crumb_ld = breadcrumbs([("Forside","/"),("Guides","/guides/"),(g["h1"],None)])
     art_ld = {"@context":"https://schema.org","@type":"Article","headline":g["title"],"description":g["meta"],"author":{"@type":"Person","name":C.OWNER},"publisher":{"@type":"Organization","name":"strikkeopskrifter.dk"},"url":BASE+path}
-    body = f'''{crumbs}<article class="prose" style="max-width:68ch"><h1 style="margin:12px 0 8px">{e(g['h1'])}</h1><p class="muted small">Af {e(C.OWNER)} · strikkeopskrifter.dk</p>{body_html}</article>{faq_html}'''
-    return shell(g["title"], g["meta"], path, body, [crumb_ld, art_ld, faq_ld], "guides")
+    img = f"/assets/img/guides/{g['slug']}.jpg" if os.path.exists(f"{ROOT}/assets/img/guides/{g['slug']}.jpg") else None
+    hero = f'<div style="aspect-ratio:16/8;background:var(--oat-2) center/cover url({img});border-radius:20px;box-shadow:var(--shadow);margin:20px 0 28px" role="img" aria-label="{e(g["h1"])}"></div>' if img else ""
+    body = f'''{crumbs}<article class="prose" style="max-width:76ch"><span class="eyebrow" style="margin-top:14px">Guide</span><h1 style="margin:0 0 8px">{e(g['h1'])}</h1><p class="muted small">Af {e(C.OWNER)} · strikkeopskrifter.dk</p>{hero}{body_html}</article>{faq_html}'''
+    art_ld["image"] = BASE + img if img else None
+    return shell(g["title"], g["meta"], path, body, [crumb_ld, art_ld, faq_ld], "guides", BASE + img if img else None)
 
 def guides_index():
-    cards = "".join(f'<a class="card" href="/guides/{g["slug"]}/"><div class="img wide" style="background:var(--stone-2)"></div><b>{e(g["h1"])}</b><span>{e(g["meta"][:90])}…</span></a>' for g in C.GUIDES)
+    cards = "".join(f'<a class="card" href="/guides/{g["slug"]}/"><div class="img wide" style="background-image:url(/assets/img/guides/{g["slug"]}.jpg)"></div><b>{e(g["h1"])}</b><span>{e(g["meta"][:90])}…</span></a>' for g in C.GUIDES)
     crumbs, crumb_ld = breadcrumbs([("Forside","/"),("Guides",None)])
     body = f'{crumbs}<h1 style="margin:12px 0 8px">Guides til garn og strik</h1><p class="muted" style="max-width:60ch">Korte, praktiske guides om det, folk oftest spørger om: garnvalg, mængder og omregning.</p><div class="grid grid-3" style="margin-top:24px">{cards}</div>'
     return shell("Guides: garnvalg, garnforbrug og alternativer", "Praktiske guides om at vælge garn, regne garnforbrug ud og erstatte garnet i en strikkeopskrift.", "/guides/", body, [crumb_ld], "guides")

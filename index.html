@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="/assets/style.css">
 <style>
   .hero{padding:48px 0 40px;display:grid;grid-template-columns:7fr 5fr;gap:48px;align-items:center}
+  .hero h1{font-size:clamp(30px,3.6vw,44px)}
   .hero p.lead{font-size:19px;max-width:48ch;margin:18px 0 28px;color:var(--ink-2)}
   .search{display:flex;background:var(--paper);border-radius:999px;overflow:hidden;max-width:540px;box-shadow:var(--shadow);border:1.5px solid var(--line)}
   .search input{flex:1;border:0;padding:16px 22px;font:inherit;font-size:16.5px;outline:0;background:transparent}
@@ -50,8 +51,8 @@
 <main class="wrap">
   <section class="hero">
     <div>
-      <span class="eyebrow">Danmarks samling af strikkeopskrifter</span>
-      <h1>Find opskriften.<br>Regn garnet ud.<br>Køb det billigst.</h1>
+      <span class="eyebrow">Find opskriften. Regn garnet ud. Køb det billigst.</span>
+      <h1>Strikkeopskrifter til dame, børn, baby og herre – med garnet regnet ud</h1>
       <p class="lead">Over 1.100 strikkeopskrifter til dame, børn, baby og herre – gratis og betalte. Vi fortæller dig, hvilket garn du skal bruge, hvor mange nøgler, og hvor det er billigst i dag.</p>
       <div class="kat-grid">
         <a class="kat" href="opskrifter/dame/"><img src="assets/img/kat/dame.jpg" alt="Kvinde i strikket cardigan" loading="lazy" width="600" height="480"><b>Til damer</b><span>sweatre, cardigans, sjaler</span></a>
@@ -74,15 +75,15 @@
 
   <section class="sec">
     <div class="sec-head"><div><span class="eyebrow">Hvad vil du strikke?</span><h2>Opskrifter efter type</h2></div><a href="opskrifter/">Alle opskrifter →</a></div>
-    <div class="tiles">
-      <a class="tile" href="opskrifter/sweater/"><span class="ic">🧥</span><div><b>Sweatre & bluser</b><span>raglan, bærestykke, oversize</span></div></a>
-      <a class="tile" href="opskrifter/cardigan/"><span class="ic">🧷</span><div><b>Cardigans</b><span>med og uden knapper</span></div></a>
-      <a class="tile" href="opskrifter/hue/"><span class="ic">🎩</span><div><b>Huer</b><span>ét nøgle, én aften</span></div></a>
-      <a class="tile" href="opskrifter/sjal/"><span class="ic">🧣</span><div><b>Sjaler & tørklæder</b><span>hulmønster, halsrør</span></div></a>
-      <a class="tile" href="opskrifter/sokker/"><span class="ic">🧦</span><div><b>Sokker</b><span>strømpegarn der holder</span></div></a>
-      <a class="tile" href="opskrifter/vest/"><span class="ic">👕</span><div><b>Veste & slipovers</b><span>hurtige projekter</span></div></a>
-      <a class="tile" href="garn/drops/"><span class="ic">💧</span><div><b>DROPS-opskrifter</b><span>900+ gratis</span></div></a>
-      <a class="tile" href="opskrifter/pind-4/"><span class="ic">🥢</span><div><b>Efter pindestørrelse</b><span>pind 3 · 4 · 5 · 7 · 8</span></div></a>
+    <div class="kat-grid" style="grid-template-columns:repeat(4,1fr)">
+      <a class="kat" href="opskrifter/sweater/"><img src="assets/img/typer/sweater.jpg" alt="Strikket sweater med rundt bærestykke" loading="lazy" width="520" height="440"><b>Sweatre & bluser</b><span>raglan, bærestykke, oversize</span></a>
+      <a class="kat" href="opskrifter/cardigan/"><img src="assets/img/typer/cardigan.jpg" alt="Strikket cardigan med snoninger og knapper" loading="lazy" width="520" height="440"><b>Cardigans</b><span>med og uden knapper</span></a>
+      <a class="kat" href="opskrifter/hue/"><img src="assets/img/typer/hue.jpg" alt="Strikket hue og garnnøgle" loading="lazy" width="520" height="440"><b>Huer</b><span>ét nøgle, én aften</span></a>
+      <a class="kat" href="opskrifter/sjal/"><img src="assets/img/typer/sjal.jpg" alt="Rødt strikket sjal i hulmønster" loading="lazy" width="520" height="440"><b>Sjaler & tørklæder</b><span>hulmønster, halsrør</span></a>
+      <a class="kat" href="opskrifter/sokker/"><img src="assets/img/typer/sokker.jpg" alt="Stribede strikkede sokker" loading="lazy" width="520" height="440"><b>Sokker</b><span>strømpegarn der holder</span></a>
+      <a class="kat" href="opskrifter/vest/"><img src="assets/img/typer/vest.jpg" alt="Blå strikket vest med V-hals" loading="lazy" width="520" height="440"><b>Veste & slipovers</b><span>hurtige projekter</span></a>
+      <a class="kat" href="garn/drops/"><img src="assets/img/typer/drops.jpg" alt="DROPS strikkeopskrifter" loading="lazy" width="520" height="440"><b>DROPS-opskrifter</b><span>900+ gratis</span></a>
+      <a class="kat" href="opskrifter/pind-4/"><img src="assets/img/typer/pinde.jpg" alt="Strikkepinde i forskellige størrelser" loading="lazy" width="520" height="440"><b>Efter pindestørrelse</b><span>pind 3 · 4 · 5 · 7 · 8</span></a>
     </div>
   </section>
 
@@ -109,9 +110,9 @@
   <section class="sec">
     <div class="sec-head"><h2>Guides</h2><a href="guides/">Alle guides →</a></div>
     <div class="grid grid-3">
-      <a class="card" href="#"><div class="img wide"></div><b>Sådan vælger du et alternativt garn</b><span>Strikkefasthed, løbelængde og fiber – det du skal tjekke</span></a>
-      <a class="card" href="#"><div class="img wide"></div><b>Alternativer til Önling No 1</b><span>5 garner i samme fasthed, fra 20 kr. pr. nøgle</span></a>
-      <a class="card" href="#"><div class="img wide"></div><b>Hvor mange nøgler skal jeg bruge?</b><span>Beregn selv ud fra meter, ikke gram</span></a>
+      <a class="card" href="guides/vaelg-alternativt-garn/"><div class="img wide" style="background-image:url(assets/img/guides/vaelg-alternativt-garn.jpg)"></div><b>Sådan vælger du et alternativt garn</b><span>Strikkefasthed, løbelængde og fiber – det du skal tjekke</span></a>
+      <a class="card" href="guides/alternativer-onling-no-1/"><div class="img wide" style="background-image:url(assets/img/guides/alternativer-onling-no-1.jpg)"></div><b>Alternativer til Önling No 1</b><span>Garner i samme fasthed, fra 20 kr. pr. nøgle</span></a>
+      <a class="card" href="guides/hvor-mange-noegler/"><div class="img wide" style="background-image:url(assets/img/guides/hvor-mange-noegler.jpg)"></div><b>Hvor mange nøgler skal jeg bruge?</b><span>Beregn selv ud fra meter, ikke gram</span></a>
     </div>
   </section>
 
