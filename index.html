@@ -33,6 +33,12 @@
   .news input{font:inherit;padding:13px 16px;border:0;border-radius:999px;min-width:260px}
   .news .btn-primary{background:var(--ink)}
   @media(max-width:860px){.hero,.steps,.news{grid-template-columns:1fr}.hero-art{display:none}.hero{padding:32px 0 24px}}
+  .kat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
+  .kat{text-decoration:none;color:var(--ink);display:block}
+  .kat img{width:100%;height:auto;aspect-ratio:5/4;object-fit:cover;border-radius:var(--r);box-shadow:var(--shadow);transition:transform .2s;display:block}
+  .kat:hover img{transform:translateY(-3px)}
+  .kat b{display:block;font-weight:600;margin-top:9px;line-height:1.2}.kat span{font-size:12.5px;color:var(--ink-2)}
+  @media(max-width:860px){.kat-grid{grid-template-columns:repeat(2,1fr)}}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvad er strikkeopskrifter.dk?", "acceptedAnswer": {"@type": "Answer", "text": "En samling af danske og nordiske strikkeopskrifter, hvor hver opskrift viser garnforbrug pr. størrelse og dagens garnpris hos danske butikker. Målet er, at du kan vælge opskrift, regne garnet ud og købe det billigst – på ét sted."}}, {"@type": "Question", "name": "Koster det noget at bruge siden?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. Vi får en lille provision fra butikken, hvis du køber garn via vores links. Det ændrer ikke din pris, og det påvirker ikke, hvilken butik vi viser som billigst."}}, {"@type": "Question", "name": "Hvor kommer priserne fra?", "acceptedAnswer": {"@type": "Answer", "text": "Fra butikkernes egne produktfeeds, som vi henter hver nat. Ser du en pris, der ikke passer, så skriv til os – så retter vi det."}}, {"@type": "Question", "name": "Er opskrifterne jeres egne?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. Opskrifterne tilhører designerne og butikkerne, og vi linker til dem. Vores eget bidrag er garndata, beregneren, prissammenligningen og guides."}}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "strikkeopskrifter.dk", "url": "https://strikkeopskrifter.dk/", "potentialAction": {"@type": "SearchAction", "target": "https://strikkeopskrifter.dk/opskrifter/?q={search_term_string}", "query-input": "required name=search_term_string"}}</script>
@@ -47,13 +53,13 @@
       <span class="eyebrow">Danmarks samling af strikkeopskrifter</span>
       <h1>Find opskriften.<br>Regn garnet ud.<br>Køb det billigst.</h1>
       <p class="lead">Over 1.100 strikkeopskrifter til dame, børn, baby og herre – gratis og betalte. Vi fortæller dig, hvilket garn du skal bruge, hvor mange nøgler, og hvor det er billigst i dag.</p>
-      <div class="tiles" style="grid-template-columns:repeat(3,1fr);margin-top:6px">
-        <a class="tile" href="opskrifter/dame/"><span class="ic">🧶</span><div><b>Til damer</b><span>sweatre, cardigans, sjaler</span></div></a>
-        <a class="tile" href="opskrifter/boern/"><span class="ic">🧒</span><div><b>Til børn</b><span>2–14 år</span></div></a>
-        <a class="tile" href="opskrifter/baby/"><span class="ic">🍼</span><div><b>Til baby</b><span>0–2 år, præmatur</span></div></a>
-        <a class="tile" href="opskrifter/herre/"><span class="ic">🧔</span><div><b>Til herrer</b><span>S–3XL</span></div></a>
-        <a class="tile" href="opskrifter/begynder/"><span class="ic">🌱</span><div><b>Begyndere</b><span>nemme opskrifter</span></div></a>
-        <a class="tile" href="gratis/"><span class="ic">🎁</span><div><b>Gratis</b><span>900+ opskrifter</span></div></a>
+      <div class="kat-grid">
+        <a class="kat" href="opskrifter/dame/"><img src="assets/img/kat/dame.jpg" alt="Kvinde i strikket cardigan" loading="lazy" width="600" height="480"><b>Til damer</b><span>sweatre, cardigans, sjaler</span></a>
+        <a class="kat" href="opskrifter/boern/"><img src="assets/img/kat/boern.jpg" alt="Barn i strikket sweater" loading="lazy" width="600" height="480"><b>Til børn</b><span>2–14 år</span></a>
+        <a class="kat" href="opskrifter/baby/"><img src="assets/img/kat/baby.jpg" alt="Baby i strikket hue og tæppe" loading="lazy" width="600" height="480"><b>Til baby</b><span>0–2 år, præmatur</span></a>
+        <a class="kat" href="opskrifter/herre/"><img src="assets/img/kat/herre.jpg" alt="Mand i strikket sweater" loading="lazy" width="600" height="480"><b>Til herrer</b><span>S–3XL</span></a>
+        <a class="kat" href="opskrifter/begynder/"><img src="assets/img/kat/begynder.jpg" alt="Kvinde der strikker sit første projekt" loading="lazy" width="600" height="480"><b>Begyndere</b><span>nemme opskrifter</span></a>
+        <a class="kat" href="gratis/"><img src="assets/img/kat/gratis.jpg" alt="Gratis strikkeopskrifter" loading="lazy" width="600" height="480"><b>Gratis</b><span>900+ opskrifter</span></a>
       </div>
       <div class="trust"><span>1.100+ opskrifter</span><span>Priser fra 3 butikker, opdateret i nat</span><span>Ingen annoncer</span></div>
     </div>
