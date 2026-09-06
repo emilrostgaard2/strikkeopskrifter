@@ -1,9 +1,17 @@
 {
- "generated": "2026-09-06T15:15+00:00",
+ "generated": "2026-09-06T15:40+00:00",
  "shops": {
   "rito": {
    "garn_items": 11958,
    "matched": 1098
+  },
+  "kreamok": {
+   "garn_items": 800,
+   "matched": 358
+  },
+  "hobbygarn": {
+   "garn_items": 1907,
+   "matched": 1020
   },
   "broengarn": {
    "garn_items": 299,
@@ -11,6 +19,10 @@
   },
   "kreativgarn": {
    "garn_items": 60,
+   "matched": 0
+  },
+  "garnspecialisten": {
+   "garn_items": 384,
    "matched": 0
   }
  },
@@ -41,6 +53,60 @@
    "Du Store Alpakka Sterk Garn": 61,
    "Viking Garn Sportsragg": 60,
    "Scheepjes Scrumptious Garn": 60
+  },
+  "kreamok": {
+   "Lang Yarns Merino": 31,
+   "Lang Yarns Vaya -": 5,
+   "Angel by Permin - Ibiza Blue -": 1,
+   "Angel by Permin - Coral -": 1,
+   "Angel by Permin - Lavender -": 1,
+   "Angel by Permin - Navy -": 1,
+   "Angel by Permin - Støvet rosa -": 1,
+   "Angel by Permin - Mørk camel -": 1,
+   "Angel by Permin - Mørk chokolade -": 1,
+   "Angel by Permin - Salvie -": 1,
+   "Angel by Permin - Mauve -": 1,
+   "Angel by Permin - Army -": 1,
+   "Angel by Permin - Olive/brun -": 1,
+   "Angel by Permin - Beige -": 1,
+   "Angel by Permin - Råhvid -": 1,
+   "Agnes by Permin - Beige -": 1,
+   "Agnes by Permin - Brun -": 1,
+   "Agnes by Permin - Stengrå -": 1,
+   "Agnes by Permin - Sort -": 1,
+   "Agnes by Permin - Guava -": 1,
+   "Agnes by Permin - Mosgrøn -": 1,
+   "Agnes by Permin - Støvet lilla -": 1,
+   "Agnes by Permin - Royal Blue -": 1,
+   "Berta by Permin - Babyblå -": 1,
+   "Berta by Permin - Deligree -": 1
+  },
+  "hobbygarn": {
+   "Hjertegarn Extrafine Merino": 73,
+   "Viking Garn Sportsragg": 60,
+   "Hjertegarn Merino Cotton": 46,
+   "Hjertegarn Lana Cotton": 44,
+   "Istex Léttlopi": 44,
+   "Hjertegarn Silk Kid Mohair": 40,
+   "Hjertegarn Lima": 39,
+   "Hjertegarn Natur Uld": 39,
+   "Viking Garn Bjørk": 39,
+   "Drops Fiesta": 37,
+   "Viking Garn Bambino": 35,
+   "Viking Garn Alpaca Bris": 33,
+   "Viking Garn Bamboo": 32,
+   "Drops Nord": 30,
+   "Hjertegarn Alpaca": 29,
+   "Rico Design Ricorumi Nilli Nilli": 28,
+   "Hjertegarn Ragg": 27,
+   "Lana Grossa Cool Wool": 27,
+   "Viking Garn - Viking Wool": 25,
+   "Leonora By Permin": 21,
+   "Drops Loves You": 17,
+   "Viking Garn Nordlys": 17,
+   "Iris By Permin": 16,
+   "Katalog": 16,
+   "Viking Garn Linus": 15
   },
   "broengarn": {
    "Gilliatt - Amarante -": 1,
@@ -95,6 +161,33 @@
    "Hedgehog sock - Pinky Swear": 1,
    "Hedgehog skinny singles - Pinky Swear": 1,
    "Hedgehog skinny singles - Brigid": 1
+  },
+  "garnspecialisten": {
+   "SMILLA": 15,
+   "November": 6,
+   "#StopGarnspild Garnpakke - nøgler (750 g": 6,
+   "SIBERIAN Blå,": 6,
+   "GIAMAICA Sølvgrå,": 6,
+   "Gabi Koksgrå,": 5,
+   "JANE -": 5,
+   "GIAMAICA Blå,": 4,
+   "Gabi Lilla,": 3,
+   "PACIFICO Lys beige,": 3,
+   "VENERE": 3,
+   "GIAMAICA Torden,": 3,
+   "SEAHORSE - Rabarber": 3,
+   "GABI Kvædegul,": 3,
+   "LYON Koral,": 3,
+   "MARCONA Oliven,": 3,
+   "CARIOCA - Råhvid": 3,
+   "GABI Fersken,": 3,
+   "CAIFAST Chokolade,": 3,
+   "LYON Lava,": 3,
+   "LYON Sennep,": 2,
+   "#StopGarnspild Garnpakke -": 2,
+   "Bahamas Merinogarn - Råhvid": 2,
+   "Oktober": 2,
+   "#StopGarnspild Effektgarnpakke (3 kg con": 2
   }
  }
 }

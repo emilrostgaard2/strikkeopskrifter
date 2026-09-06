@@ -56,13 +56,25 @@ def with_target(vareurl, new_target):
     return u._replace(query=urllib.parse.urlencode(q, doseq=True)).geturl()
 
 COLOR_RE = re.compile(r"(?:unicolor|mix|uni|colour|color)?\s*(\d{2,4})\s+([A-Za-zÆØÅæøåéü'/ -]+?)\s*$", re.I)
+def parse_color_field(c):
+    """'01 Hvid Unicolour' / 'Off White - 01' / 'Poivre' → (nr, navn)"""
+    c = (c or "").strip()
+    if not c: return "", ""
+    m = re.match(r"^(\d{1,4})\s+(.+?)(?:\s+(?:unicolou?r|mix|uni))?$", c, re.I)
+    if m: return m.group(1), m.group(2).strip()
+    m = re.match(r"^(.+?)\s*[-–]\s*(\d{1,4})$", c)
+    if m: return m.group(2), m.group(1).strip()
+    return "", c
+
 def split_color(name, feed_color=None):
-    """'Drops Baby Merino Garn Unicolor 01 Hvid' → ('01','Hvid'). Fallback: feed-felt."""
+    """Finder farvenummer + navn. Feed-felt 'color' vinder, ellers produktnavnet."""
+    nr, col = parse_color_field(feed_color)
+    if nr: return nr, col
     m = COLOR_RE.search(name)
     if m: return m.group(1), m.group(2).strip()
-    m = re.search(r"-\s*([^-]+?)\s*-\s*(\d{1,4})\s*$", name)          # 'Ulysse - Poivre - 01'
+    m = re.search(r"-\s*([^-]+?)\s*-\s*(\d{1,4})\s*$", name)          # 'Ulysse - Poivre - 01' / 'Drops Air - Off White - 01'
     if m: return m.group(2), m.group(1).strip()
-    return "", (feed_color or "").strip()
+    return "", col
 
 def cart_url(shop, product_id, vareurl, qty=1):
     p = shop.get("platform")
@@ -90,7 +102,7 @@ def load_feed(shop):
 
 def is_garn(item):
     k = (item.get("kategorinavn") + " " + item.get("produktnavn")).lower()
-    if any(w in k for w in ("opskrift", "bog", "pinde", "hæklenål", "tilbehør", "broderi", "pensel")): return False
+    if any(w in k for w in ("opskrift", "bog", "pinde", "hæklenål", "tilbehør", "broderi", "pensel", "knap", "garnkit", "maskemark")): return False
     return "garn" in k
 
 # ---------- kørsel ----------
@@ -98,6 +110,7 @@ priser   = {g["slug"]: {"name": g["name"], "brand": g["brand"], "grams": g["gram
                          "gauge": g["gauge"], "needle": g["needle"], "fiber": g["fiber"], "shops": {}} for g in GARN}
 pakker   = []
 opskrifter = []
+seen_pakke = set()
 TYPES = [("sweater",r"sweater|trøje|bluse|genser|pullover|tee\b|top\b"),("cardigan",r"cardigan|jakke|bolero"),("vest",r"vest|slipover"),
          ("hue",r"hue|pandebånd|balaclava"),("sjal",r"sjal|tørklæde|halsrør|poncho"),("sokker",r"strømpe|sok"),("vanter",r"vante|luffe|handske"),
          ("baby",r"baby|dåb|body|dragt"),("børn",r"junior|børn|barn"),("kjole",r"kjole|nederdel"),("hjem",r"pude|tæppe|plaid|dukke")]
@@ -130,7 +143,10 @@ for shop in CFG["shops"]:
     for it in items:
         name = it.get("produktnavn", "")
         # Drops-garnpakker (Rito): opskrift + garn i én pakke
-        if "drops" in it.get("brand", "").lower() and "strikkeopskrift" in it.get("kategorinavn", "").lower():
+        if ("drops" in it.get("brand", "").lower() and "strikkeopskrift" in it.get("kategorinavn", "").lower()) or \
+           (it.get("kategorinavn","").lower().startswith("drops") and "opskrift" in it.get("kategorinavn","").lower()):
+            if it.get("produktid") in seen_pakke: continue
+            seen_pakke.add(it.get("produktid"))
             m = re.match(r"(.+?) by DROPS Design\s*-\s*(.+?)\s+Strikkeopskrift\s*(?:str\.?\s*(.+))?$", name, re.I)
             pakker.append({"shop": shop["key"], "shop_name": shop["name"], "kind": "pakke", "designer": "DROPS Design",
                            "name": m.group(1) if m else name, "type": guess_type(m.group(2) if m else name), "type_label": m.group(2) if m else "",
@@ -164,7 +180,7 @@ for shop in CFG["shops"]:
             "free_shipping_from": shop.get("free_shipping_from"), "delivery": it.get("leveringstid"),
             "price": None, "old_price": None, "url": it.get("vareurl"), "image": it.get("billedurl"), "variants": []})
         entry["variants"].append({"nr": nr, "color": color, "price": price, "old_price": old if old and old > price else None,
-                                  "stock": stock(it.get("lagerantal")), "ean": it.get("ean") or None,
+                                  "stock": stock(it.get("lagerantal")), "ean": re.sub(r"\D","",it.get("ean") or "") or None,
                                   "url": it.get("vareurl"), "cart": cart_url(shop, it.get("produktid", ""), it.get("vareurl")),
                                   "image": it.get("billedurl")})
     status["shops"][shop["key"]] = {"garn_items": n, "matched": matched}

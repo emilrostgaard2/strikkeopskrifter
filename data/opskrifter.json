@@ -2445,6 +2445,21 @@
   "url": "https://www.partner-ads.com/dk/klikbanner.php?bannerid=117235&partnerid=29233&htmlurl=https://broengarn.dk/products/coming-soon-sweater-engelsk?variant=61995911512394"
  },
  {
+  "shop": "garnspecialisten",
+  "shop_name": "Garnspecialisten",
+  "kind": "opskrift",
+  "name": "Bomberjakke - Strikkeopskrift",
+  "designer": "Opskrift",
+  "type": "cardigan",
+  "target": "dame",
+  "level": "let øvet",
+  "free": false,
+  "price": 50.0,
+  "stock": "in_stock",
+  "image": "https://h707788.shop03.dogado.net/media/91/fc/3a/1748505721/Bomberjakke til hende.jpg?ts=1778692631",
+  "url": "https://www.partner-ads.com/dk/klikbanner.php?bannerid=117623&partnerid=29233&htmlurl=https://garnspecialisten.dk/bomberjakke-strikkeopskrift"
+ },
+ {
   "shop": "rito",
   "shop_name": "Rito.dk",
   "kind": "pakke",
@@ -20523,5 +20538,25 @@
   "desc": "Dancing Bunny Socks 2 by DROPS Design er et sæt fine sokker til børn, som strikkes med Drops Karisma. Sokkerne strikkes oppefra og ned i glatstrik med flerfarvet mønster med hare, blomst og hjerte. Dancing Bunny Socks 2 by DROPS Design kan strikkes i st",
   "slug": "dancing-bunny-socks-2",
   "page": "/opskrifter/drops/dancing-bunny-socks-2/"
+ },
+ {
+  "shop": "hobbygarn",
+  "shop_name": "Hobbygarn",
+  "kind": "pakke",
+  "designer": "DROPS Design",
+  "name": "Cosy Rosy",
+  "type": "andet",
+  "type_label": "",
+  "target": "dame",
+  "level": "let øvet",
+  "free": true,
+  "sizes": "",
+  "price": 300.0,
+  "stock": "in_stock",
+  "image": "https://hobbygarn.dk/cache/1/8/5/0/3/7/8/fit-800x800x100.webp",
+  "url": "https://www.partner-ads.com/dk/klikbanner.php?bannerid=56355&partnerid=29233&htmlurl=https://hobbygarn.dk/cosy-rosy",
+  "desc": "",
+  "slug": "cosy-rosy",
+  "page": "/opskrifter/drops/cosy-rosy/"
  }
 ]
