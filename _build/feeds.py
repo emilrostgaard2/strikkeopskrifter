@@ -67,10 +67,13 @@ def cart_url(shop, product_id, vareurl, qty=1):
 # ---------- indlæsning ----------
 def load_feed(shop):
     url = shop.get("url") or os.environ.get(f"FEED_{shop['key'].upper()}", "")
+    path = f"{ROOT}/{shop.get('file','')}"
     if url:
         raw = urllib.request.urlopen(url, timeout=120).read()
+    elif shop.get("file") and os.path.exists(path):
+        raw = open(path, "rb").read()
     else:
-        raw = open(f"{ROOT}/{shop['file']}", "rb").read()
+        raise FileNotFoundError(f"intet feed: sæt secret FEED_{shop['key'].upper()} eller læg {shop.get('file')}")
     text = raw.decode("iso-8859-1")
     text = re.sub(r'encoding="[^"]+"', 'encoding="utf-8"', text, count=1)
     root = ET.fromstring(text.encode("utf-8"))
@@ -158,6 +161,10 @@ for slug, g in priser.items():
     g["shops"] = dict(sorted(g["shops"].items(), key=lambda kv: kv[1]["price"] or 1e9))
     g["from_price"] = min((s["price"] for s in g["shops"].values() if s["price"]), default=None)
 
+loaded = [k for k, v in status["shops"].items() if "error" not in v]
+if not loaded:
+    print("\nIngen feeds kunne læses – beholder eksisterende data/*.json og fortsætter deploy.")
+    sys.exit(0)
 status["unmatched_top"] = {k: dict(sorted(v.items(), key=lambda x: -x[1])[:25]) for k, v in unmatched.items()}
 os.makedirs(f"{ROOT}/data", exist_ok=True)
 json.dump(priser, open(f"{ROOT}/data/priser.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
