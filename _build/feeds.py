@@ -1,0 +1,148 @@
+#!/usr/bin/env python3
+"""
+Læser Partner-ads produktfeeds, normaliserer dem, matcher garn mod data/garn.json
+og skriver:
+  data/priser.json        – pris pr. garnkvalitet pr. butik, med alle farvevarianter
+  data/drops-pakker.json  – Drops-garnpakker (opskrift + garn) fra Rito
+  data/feed-status.json   – hvornår, hvor mange, hvad matchede ikke
+
+Kør:  python3 _build/feeds.py            (bruger feeds/*.xml eller henter fra url/env)
+"""
+import json, os, re, sys, html, urllib.request, urllib.parse, xml.etree.ElementTree as ET
+from datetime import datetime, timezone
+from collections import defaultdict
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CFG  = json.load(open(f"{ROOT}/_build/feeds.json", encoding="utf-8"))
+GARN = json.load(open(f"{ROOT}/data/garn.json", encoding="utf-8"))["garn"]
+for g in GARN: g["_re"] = re.compile(g["match"], re.I)
+
+# ---------- hjælpere ----------
+def clean(s):
+    """Feeds er iso-8859-1 med indlejret UTF-8-rod (Â). Ryd op."""
+    if not s: return ""
+    s = html.unescape(s).replace("\r", " ").replace("\n", " ")
+    s = s.replace("Â", "").replace("â€“", "–").replace("â€™", "'")
+    return re.sub(r"\s{2,}", " ", s).strip()
+
+def num(s):
+    try: return round(float((s or "").replace(",", ".")), 2)
+    except: return None
+
+def stock(s):
+    s = (s or "").lower().replace("_", " ").strip()
+    if s.startswith("in") or s in ("på lager", "ja", "true", "1"): return "in_stock"
+    if "backorder" in s or "restordre" in s: return "backorder"
+    return "out_of_stock"
+
+def target_url(vareurl):
+    """Partner-ads-link → den URL kunden lander på (htmlurl=)."""
+    q = urllib.parse.urlparse(vareurl).query
+    return urllib.parse.parse_qs(q).get("htmlurl", [""])[0]
+
+def with_target(vareurl, new_target):
+    """Byt htmlurl= i et Partner-ads-link, behold tracking."""
+    u = urllib.parse.urlparse(vareurl)
+    q = urllib.parse.parse_qs(u.query)
+    q["htmlurl"] = [new_target]
+    return u._replace(query=urllib.parse.urlencode(q, doseq=True)).geturl()
+
+COLOR_RE = re.compile(r"(?:unicolor|mix|uni|colour|color)?\s*(\d{2,4})\s+([A-Za-zÆØÅæøåéü'/ -]+?)\s*$", re.I)
+def split_color(name, feed_color=None):
+    """'Drops Baby Merino Garn Unicolor 01 Hvid' → ('01','Hvid'). Fallback: feed-felt."""
+    m = COLOR_RE.search(name)
+    if m: return m.group(1), m.group(2).strip()
+    m = re.search(r"-\s*([^-]+?)\s*-\s*(\d{1,4})\s*$", name)          # 'Ulysse - Poivre - 01'
+    if m: return m.group(2), m.group(1).strip()
+    return "", (feed_color or "").strip()
+
+def cart_url(shop, product_id, vareurl, qty=1):
+    p = shop.get("platform")
+    if p == "shopify" and product_id.isdigit() and len(product_id) >= 12:
+        return with_target(vareurl, f"{shop['cart_base']}/cart/{product_id}:{qty}")
+    if p == "woocommerce" and product_id.isdigit():
+        return with_target(vareurl, f"{shop['cart_base']}?add-to-cart={product_id}&quantity={qty}")
+    return None
+
+# ---------- indlæsning ----------
+def load_feed(shop):
+    url = shop.get("url") or os.environ.get(f"FEED_{shop['key'].upper()}", "")
+    if url:
+        raw = urllib.request.urlopen(url, timeout=120).read()
+    else:
+        raw = open(f"{ROOT}/{shop['file']}", "rb").read()
+    text = raw.decode("iso-8859-1")
+    text = re.sub(r'encoding="[^"]+"', 'encoding="utf-8"', text, count=1)
+    root = ET.fromstring(text.encode("utf-8"))
+    for p in root.iter("produkt"):
+        yield {c.tag: clean(c.text) for c in p}
+
+def is_garn(item):
+    k = (item.get("kategorinavn") + " " + item.get("produktnavn")).lower()
+    if any(w in k for w in ("opskrift", "bog", "pinde", "hæklenål", "tilbehør", "broderi", "pensel")): return False
+    return "garn" in k
+
+# ---------- kørsel ----------
+priser   = {g["slug"]: {"name": g["name"], "brand": g["brand"], "grams": g["grams"], "meters": g["meters"],
+                         "gauge": g["gauge"], "needle": g["needle"], "fiber": g["fiber"], "shops": {}} for g in GARN}
+pakker   = []
+status   = {"generated": datetime.now(timezone.utc).isoformat(timespec="minutes"), "shops": {}}
+unmatched = defaultdict(lambda: defaultdict(int))
+
+for shop in CFG["shops"]:
+    n = matched = 0
+    try:
+        items = list(load_feed(shop))
+    except Exception as e:
+        status["shops"][shop["key"]] = {"error": str(e)}; print("FEJL", shop["key"], e); continue
+
+    for it in items:
+        name = it.get("produktnavn", "")
+        # Drops-garnpakker (Rito): opskrift + garn i én pakke
+        if "drops" in it.get("brand", "").lower() and "strikkeopskrift" in it.get("kategorinavn", "").lower():
+            m = re.match(r"(.+?) by DROPS Design\s*-\s*(.+?)\s+Strikkeopskrift\s*(?:str\.?\s*(.+))?$", name, re.I)
+            pakker.append({"shop": shop["key"], "name": m.group(1) if m else name, "type": m.group(2) if m else "",
+                           "sizes": (m.group(3) or "").strip() if m else "", "price": num(it.get("nypris")),
+                           "stock": stock(it.get("lagerantal")), "image": it.get("billedurl"),
+                           "url": it.get("vareurl"), "desc": it.get("beskrivelse")[:220]})
+            continue
+        if not is_garn(it): continue
+        n += 1
+        g = next((g for g in GARN if g["_re"].search(name)), None)
+        if not g:
+            key = re.sub(r"\s+\d.*$", "", name)[:40]
+            unmatched[shop["key"]][key] += 1
+            continue
+        matched += 1
+        nr, color = split_color(name, it.get("color"))
+        price = num(it.get("nypris")); old = num(it.get("glpris"))
+        if price is None or price > g["grams"] * 4:   # frasortér pakker/kg-priser (fx 229,50 for 10 nøgler)
+            continue
+        entry = priser[g["slug"]]["shops"].setdefault(shop["key"], {
+            "shop": shop["name"], "platform": shop.get("platform"), "shipping": num(it.get("fragtomk")),
+            "free_shipping_from": shop.get("free_shipping_from"), "delivery": it.get("leveringstid"),
+            "price": None, "old_price": None, "url": it.get("vareurl"), "image": it.get("billedurl"), "variants": []})
+        entry["variants"].append({"nr": nr, "color": color, "price": price, "old_price": old if old and old > price else None,
+                                  "stock": stock(it.get("lagerantal")), "ean": it.get("ean") or None,
+                                  "url": it.get("vareurl"), "cart": cart_url(shop, it.get("produktid", ""), it.get("vareurl")),
+                                  "image": it.get("billedurl")})
+    status["shops"][shop["key"]] = {"garn_items": n, "matched": matched}
+    print(f"{shop['name']:<16} garn: {n:>6}  matchede: {matched:>5}")
+
+# pris pr. butik = laveste pris blandt varianter på lager; sortér butikker billigst først
+for slug, g in priser.items():
+    for k, s in g["shops"].items():
+        instock = [v for v in s["variants"] if v["stock"] == "in_stock"] or s["variants"]
+        s["price"] = min(v["price"] for v in instock) if instock else None
+        s["old_price"] = max((v["old_price"] or 0) for v in instock) or None
+        s["colors_in_stock"] = sum(1 for v in s["variants"] if v["stock"] == "in_stock")
+        s["variants"].sort(key=lambda v: (v["nr"] or "zzz", v["color"]))
+    g["shops"] = dict(sorted(g["shops"].items(), key=lambda kv: kv[1]["price"] or 1e9))
+    g["from_price"] = min((s["price"] for s in g["shops"].values() if s["price"]), default=None)
+
+status["unmatched_top"] = {k: dict(sorted(v.items(), key=lambda x: -x[1])[:25]) for k, v in unmatched.items()}
+os.makedirs(f"{ROOT}/data", exist_ok=True)
+json.dump(priser, open(f"{ROOT}/data/priser.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+json.dump(pakker, open(f"{ROOT}/data/drops-pakker.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+json.dump(status, open(f"{ROOT}/data/feed-status.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+print(f"\nSkrev {sum(1 for g in priser.values() if g['shops'])} garner med priser, {len(pakker)} Drops-pakker.")

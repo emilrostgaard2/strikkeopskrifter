@@ -1,0 +1,8 @@
+{
+  "_doc": "Én entry pr. butik. url = Partner-ads/Adtraction feed-URL (eller sæt env FEED_<KEY>). file = lokal fil i feeds/ til test. platform styrer kurv-links: shopify | woocommerce | prestashop | shopware | other. cart_base: Shopify = domæne, Woo = URL til kurvsiden.",
+  "shops": [
+    {"key":"rito","name":"Rito.dk","url":"","file":"feeds/rito.xml","platform":"prestashop","free_shipping_from":799},
+    {"key":"broengarn","name":"Broen Garn","url":"","file":"feeds/broengarn.xml","platform":"shopify","cart_base":"https://broengarn.dk","free_shipping_from":499},
+    {"key":"kreativgarn","name":"Kreativgarn.dk","url":"","file":"feeds/kreativgarn.xml","platform":"woocommerce","cart_base":"https://kreativgarn.dk/indkoebskurv2/","free_shipping_from":399}
+  ]
+}

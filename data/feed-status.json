@@ -1,0 +1,100 @@
+{
+ "generated": "2026-09-06T08:28+00:00",
+ "shops": {
+  "rito": {
+   "garn_items": 11958,
+   "matched": 515
+  },
+  "broengarn": {
+   "garn_items": 299,
+   "matched": 38
+  },
+  "kreativgarn": {
+   "garn_items": 60,
+   "matched": 0
+  }
+ },
+ "unmatched_top": {
+  "rito": {
+   "Lana Grossa Meilenweit": 261,
+   "Scheepjes Catona Garn": 230,
+   "Scheepjes Catona Garn Unicolor": 113,
+   "Infinity Hearts Rose": 109,
+   "Scheepjes Cahlista Yarn Unicolor": 99,
+   "Lana Grossa Cool Wool Garn": 94,
+   "Scheepjes Colour Crafter Garn Unicolor": 92,
+   "Kremke Soul Wool The Merry Merino": 89,
+   "Scheepjes Maxi Sweet Treat Garn Unicolor": 87,
+   "Scheepjes Softfun Garn Unicolor": 85,
+   "DMC Petra nr.": 83,
+   "Symfonie Yarns By KnitPro Viva Garn": 83,
+   "Lang Yarns Merino": 79,
+   "BC Garn Babyalpaca": 73,
+   "Scheepjes Maxi Sugar Rush Garn Unicolor": 72,
+   "Scheepjes Organicon Garn": 70,
+   "Scheepjes Metropolis Garn": 69,
+   "Lammy Rio Garn Unicolor": 69,
+   "Drops Magic Garn Uni": 69,
+   "Lana Grossa Cool Wool Big Garn": 63,
+   "Lana Grossa Silkhair Garn": 63,
+   "Lammy Cotton": 62,
+   "Du Store Alpakka Sterk Garn": 61,
+   "Viking Garn Sportsragg": 60,
+   "Scheepjes Scrumptious Garn": 60
+  },
+  "broengarn": {
+   "Gilliatt - Amarante -": 1,
+   "Gilliatt - Aubépine -": 1,
+   "Gilliatt - Biche -": 1,
+   "Gilliatt - Bouleau -": 1,
+   "Gilliatt - Darjeeling -": 1,
+   "Gilliatt - Delphinium -": 1,
+   "Gilliatt - Ebène -": 1,
+   "Gilliatt - Érable -": 1,
+   "Gilliatt - Eucalyptus -": 1,
+   "Gilliatt - Goéland -": 1,
+   "Gilliatt - Poivre -": 1,
+   "Gilliatt - Poivre Blanc -": 1,
+   "Gilliatt - Poivre et Sel -": 1,
+   "Albertine - Galet -": 1,
+   "Albertine - Bois Flotté -": 1,
+   "Albertine - Orgeat -": 1,
+   "Albertine - Crépuscule -": 1,
+   "Albertine - Belle étoile -": 1,
+   "Albertine - Créme -": 1,
+   "Albertine - Or rose -": 1,
+   "Albertine - Armoise -": 1,
+   "Albertine - Mésange -": 1,
+   "Albertine - Chocolat chaud -": 1,
+   "Bérénice - Orgeat -": 1,
+   "Bérénice - Goéland -": 1
+  },
+  "kreativgarn": {
+   "Scotland": 6,
+   "Schoppel Edition": 1,
+   "Mondial Soave": 1,
+   "Mondial Angora": 1,
+   "Semilla Melange GOTS - antrazit (04)": 1,
+   "Julie - jute": 1,
+   "Gründl Hot Sock Silk - strømpegarn": 1,
+   "Zauberball Crazy": 1,
+   "Lazy Lion Sock yarn": 1,
+   "Elise - Vinrød (32)": 1,
+   "Mondial - Super Tweed": 1,
+   "Proper Sock - Natural Woman": 1,
+   "Brushed Armonia - sart lilla (3903)": 1,
+   "Brushed Armonia - pudder (1208)": 1,
+   "Noro Kompeito": 1,
+   "ANYDAY Cotton": 1,
+   "Armonia Handdyed - grøn (86)": 1,
+   "Hedgehog sock - Damsel": 1,
+   "Hedgehog sock - Method": 1,
+   "Hedgehog sock - Nomad": 1,
+   "Hedgehog sock - Plume": 1,
+   "Hedgehog sock - Brigid": 1,
+   "Hedgehog sock - Pinky Swear": 1,
+   "Hedgehog skinny singles - Pinky Swear": 1,
+   "Hedgehog skinny singles - Brigid": 1
+  }
+ }
+}

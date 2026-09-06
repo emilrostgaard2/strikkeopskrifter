@@ -1,0 +1,18 @@
+{
+  "_doc": "Master-tabel over garnkvaliteter. match = regex mod produktnavn (case-insensitive). Feed-linjer der matcher, lægges under denne slug.",
+  "garn": [
+    {"slug":"drops-baby-merino","brand":"Drops","name":"Drops Baby Merino","fiber":"100 % merino, superwash","grams":50,"meters":175,"gauge":24,"needle":"3","match":"drops\\s+baby\\s*merino"},
+    {"slug":"drops-merino-extra-fine","brand":"Drops","name":"Drops Merino Extra Fine","fiber":"100 % merino, superwash","grams":50,"meters":105,"gauge":21,"needle":"4","match":"drops\\s+merino\\s+extra\\s+fine"},
+    {"slug":"drops-alpaca","brand":"Drops","name":"Drops Alpaca","fiber":"100 % alpaka","grams":50,"meters":167,"gauge":23,"needle":"3–4","match":"drops\\s+alpaca(?!\\s+(silk|bouclé|boucle))"},
+    {"slug":"drops-kid-silk","brand":"Drops","name":"Drops Kid-Silk","fiber":"75 % mohair, 25 % silke","grams":25,"meters":200,"gauge":18,"needle":"3–4 (dobbelt)","match":"drops\\s+kid[\\s-]*silk"},
+    {"slug":"drops-air","brand":"Drops","name":"Drops Air","fiber":"65 % alpaka, 28 % polyamid, 7 % uld","grams":50,"meters":125,"gauge":17,"needle":"5","match":"drops\\s+air\\b"},
+    {"slug":"drops-snow","brand":"Drops","name":"Drops Snow (Eskimo)","fiber":"100 % uld","grams":50,"meters":50,"gauge":11,"needle":"8","match":"drops\\s+(snow|eskimo)\\b"},
+    {"slug":"drops-alaska","brand":"Drops","name":"Drops Alaska","fiber":"100 % uld","grams":50,"meters":70,"gauge":15,"needle":"6","match":"drops\\s+alaska\\b"},
+    {"slug":"drops-nepal","brand":"Drops","name":"Drops Nepal","fiber":"65 % uld, 35 % alpaka","grams":50,"meters":75,"gauge":17,"needle":"5","match":"drops\\s+nepal\\b"},
+    {"slug":"drops-brushed-alpaca-silk","brand":"Drops","name":"Drops Brushed Alpaca Silk","fiber":"77 % alpaka, 23 % silke","grams":25,"meters":140,"gauge":18,"needle":"4–5","match":"drops\\s+brushed\\s+alpaca\\s+silk"},
+    {"slug":"onling-no-1","brand":"Önling","name":"Önling No 1","fiber":"75 % merino, 25 % angora","grams":50,"meters":180,"gauge":21,"needle":"3–4","match":"(ö|oe|o)nling\\s+no\\.?\\s*1\\b"},
+    {"slug":"sandnes-sunday","brand":"Sandnes","name":"Sandnes Sunday","fiber":"100 % merino","grams":50,"meters":235,"gauge":27,"needle":"2.5–3","match":"sandnes\\s+sunday"},
+    {"slug":"knitting-for-olive-merino","brand":"Knitting for Olive","name":"Knitting for Olive Merino","fiber":"100 % merino","grams":50,"meters":250,"gauge":28,"needle":"2.5–3","match":"knitting\\s+for\\s+olive\\s+merino\\b(?!\\s+heavy)"},
+    {"slug":"de-rerum-natura-ulysse","brand":"De Rerum Natura","name":"De Rerum Natura Ulysse","fiber":"100 % merino","grams":50,"meters":185,"gauge":22,"needle":"3.5–4","match":"^ulysse\\b|de\\s+rerum\\s+natura\\s+ulysse"}
+  ]
+}
