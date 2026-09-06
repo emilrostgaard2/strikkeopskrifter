@@ -22,7 +22,9 @@ jobs:
           FEED_RITO: ${{ secrets.FEED_RITO }}
           FEED_BROENGARN: ${{ secrets.FEED_BROENGARN }}
           FEED_KREATIVGARN: ${{ secrets.FEED_KREATIVGARN }}
-        run: python3 _build/feeds.py
+        run: |
+          python3 _build/feeds.py
+          python3 _build/pages.py
 
       - name: Upload med lftp
         env:
