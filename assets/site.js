@@ -20,7 +20,7 @@
       const v = s.variants.find(v=>v.stock==='in_stock' && v.cart) || s.variants.find(v=>v.cart);
       const note = [s.free_shipping_from ? `Fri fragt over ${s.free_shipping_from} kr.` : (s.shipping ? `Fragt ${kr(s.shipping)} kr.` : ''),
                     s.colors_in_stock ? `${s.colors_in_stock} farver på lager` : ''].filter(Boolean).join(' · ');
-      return { s:s.shop, n:note, p:s.price, url:s.url, cart: v ? v.cart : null };
+      return { s:s.shop, n:note, p:s.price, url:s.url, cart: v ? v.cart : null, logo:s.logo||'' };
     });
   }
 
@@ -35,6 +35,7 @@
     const list=shopsFor(y).map(s=>({...s,total:Math.round(s.p*balls)})).sort((a,b)=>a.total-b.total);
     document.getElementById('shops').innerHTML = list.length ? list.map((s,i)=>`
       <div class="shop ${i===0?'best':''}">
+        ${s.logo?`<img class="logo" src="${s.logo}" alt="" width="40" height="40">`:`<span class="logo logo-txt">${s.s[0]}</span>`}
         <div class="name">${s.s}<small>${s.n} · ${kr(s.p)} kr. pr. nøgle</small></div>
         <div class="price">${dk(s.total)} kr.<small>${balls} × ${kr(s.p)}</small></div>
         <a class="go" href="${s.cart ? withQty(s.cart, balls) : s.url}" rel="sponsored nofollow" target="_blank">${s.cart?'Læg i kurven':'Gå til '+s.s}</a>
@@ -76,7 +77,7 @@
       box.innerHTML=Object.values(g.shops).filter(x=>x.price).map((x,i)=>{
         const v=x.variants.find(v=>v.stock==='in_stock'&&v.cart)||x.variants.find(v=>v.cart);
         const note=[x.free_shipping_from?`Fri fragt over ${x.free_shipping_from} kr.`:'', x.colors_in_stock?`${x.colors_in_stock} farver på lager`:''].filter(Boolean).join(' · ');
-        return `<div class="shop ${i===0?'best':''}"><div class="name">${x.shop}<small>${note}</small></div>
+        return `<div class="shop ${i===0?'best':''}">${x.logo?`<img class="logo" src="${x.logo}" alt="" width="40" height="40">`:`<span class="logo logo-txt">${x.shop[0]}</span>`}<div class="name">${x.shop}<small>${note}</small></div>
           <div class="price">${kr(x.price)} kr.${x.old_price?`<small><s>${kr(x.old_price)} kr.</s></small>`:''}</div>
           <a class="go" href="${v?v.cart:x.url}" rel="sponsored nofollow" target="_blank">${v?'Læg i kurven':'Gå til butik'}</a></div>`;
       }).join('') || '<p class="muted small">Ingen priser endnu.</p>';

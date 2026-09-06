@@ -68,14 +68,19 @@ def find_yarns(text):
         out.append((name, next((s for s, g in GARN.items() if g["_re"].search(name)), None)))
     return out
 
-def shop_rows(slug):
+def shop_rows(slug, qty=1):
     g = PRIS.get(slug); rows = []
     if not g: return ""
     for i, s in enumerate(v for v in g["shops"].values() if v["price"]):
         note = " · ".join(x for x in [f"Fri fragt over {s['free_shipping_from']} kr." if s.get("free_shipping_from") else "", f"{s.get('colors_in_stock',0)} farver på lager"] if x)
         v = next((v for v in s["variants"] if v["stock"]=="in_stock" and v.get("cart")), None)
-        rows.append(f'''<div class="shop {'best' if i==0 else ''}"><div class="name">{e(s['shop'])}<small>{e(note)}</small></div>
-<div class="price">{kr(s['price'])} kr.<small>pr. nøgle</small></div><a class="go" href="{e(v['cart'] if v else s['url'])}" rel="sponsored nofollow" target="_blank">{'Læg i kurven' if v else 'Gå til butik'}</a></div>''')
+        if v and qty > 1:
+            v = dict(v)
+            v["cart"] = re.sub(r"(%3A|:)1(?=(&|$))", lambda m: m.group(1) + str(qty), v["cart"])
+            v["cart"] = re.sub(r"quantity(%3D|=)1(?=(%26|&|$))", lambda m: "quantity" + m.group(1) + str(qty), v["cart"])
+        logo = f'<img class="logo" src="{e(s["logo"])}" alt="" width="40" height="40">' if s.get("logo") else '<span class="logo logo-txt">' + e(s["shop"][:1]) + '</span>'
+        rows.append(f'''<div class="shop {'best' if i==0 else ''}">{logo}<div class="name">{e(s['shop'])}<small>{e(note)}</small></div>
+<div class="price">{kr(s['price'])} kr.<small>pr. nøgle</small></div><a class="go" href="{e(v['cart'] if v else s['url'])}" rel="sponsored nofollow" target="_blank">{f'Læg {qty} i kurven' if v and qty>1 else ('Læg i kurven' if v else 'Gå til butik')}</a></div>''')
     return "".join(rows)
 
 TYPE_SENT = {
@@ -93,6 +98,32 @@ TYPE_SENT = {
  "andet":"",
 }
 
+def needles(text):
+    found = sorted({m.group(1).replace(",", ".") for m in re.finditer(r"(?:rund)?pind(?:e)?\s*(?:nr\.?\s*)?(\d+(?:[.,]\d)?)\s*(?:mm)?", text, re.I)}, key=float)
+    return found
+
+def materials_panel(o, yarns):
+    """Estimerer nøgler ud fra garnpakkens pris / Ritos pris pr. nøgle (mindste størrelse)."""
+    rows = []
+    for name, slug in yarns:
+        g = GARN.get(slug); p = PRIS.get(slug)
+        if not (g and p and p.get("shops")): 
+            rows.append(f"<tr><th>{e(name)}</th><td>mængde pr. størrelse står i opskriften</td></tr>"); continue
+        ref = p["shops"].get("rito") or next(iter(p["shops"].values()))
+        balls = max(1, round(o["price"] / ref["price"])) if ref.get("price") and len(yarns) == 1 else None
+        cheapest = next((v for v in p["shops"].values() if v["price"]), None)
+        if balls:
+            rows.append(f"<tr><th>{e(name)}</th><td>ca. <b>{balls} nøgler</b> à {g['grams']} g til mindste størrelse ({balls*g['grams']} g / {balls*g['meters']} m)"
+                        f"<br><span class='small muted'>{balls} × {kr(cheapest['price'])} kr. = <b>{kr(balls*cheapest['price'])} kr.</b> hos {e(cheapest['shop'])} (billigst)</span></td></tr>")
+        else:
+            rows.append(f"<tr><th>{e(name)}</th><td>fra {kr(cheapest['price'])} kr. pr. nøgle hos {e(cheapest['shop'])} – mængde pr. størrelse står i opskriften</td></tr>")
+    n = needles(o.get("desc",""))
+    rows.append(f"<tr><th>Pinde</th><td>{'Rundpind ' + ' og '.join(x+' mm' for x in n) if n else 'Se opskriften'}</td></tr>")
+    rows.append(f"<tr><th>Størrelser</th><td>{e(o.get('sizes') or 'Se opskriften')}</td></tr>")
+    rows.append("<tr><th>Opskrift</th><td>Gratis PDF fra DROPS Design (dansk)</td></tr>")
+    note = "<p class='small muted' style='margin:10px 0 0'>Nøgleantallet er beregnet ud fra garnpakkens pris og gælder mindste størrelse – større størrelser bruger mere. Den præcise mængde pr. størrelse står i opskriften.</p>" if len(yarns)==1 else ""
+    return f"<section class='panel' style='margin-bottom:22px'><h3 style='margin-bottom:10px'>Det skal du bruge</h3><table>{''.join(rows)}</table>{note}</section>"
+
 def drops_page(o, related):
     yarns = find_yarns(o.get("desc",""))
     tl = TYPE_LABEL.get(o["type"], "andet").lower()
@@ -105,7 +136,11 @@ def drops_page(o, related):
         g = GARN.get(slug); p = PRIS.get(slug)
         spec = f"{g['fiber']} · {g['grams']} g / {g['meters']} m · {g['gauge']} m på 10 cm · pind {g['needle']}" if g else ""
         link = f'<a href="/garn/{slug}/">{e(name)}</a>' if slug and p and p.get("shops") else e(name)
-        rows = shop_rows(slug) if slug else ""
+        qty = 1
+        if g and p and p.get("shops") and len(yarns) == 1:
+            ref = p["shops"].get("rito") or next(iter(p["shops"].values()))
+            if ref.get("price"): qty = max(1, round(o["price"] / ref["price"]))
+        rows = shop_rows(slug, qty) if slug else ""
         yarn_html += f'''<section class="panel" style="margin-bottom:20px"><h3 style="margin-bottom:4px">{link}</h3><p class="muted small" style="margin:0 0 12px">{e(spec)}</p>
 {rows if rows else '<p class="muted small">Vi har ikke priser på dette garn endnu – brug garnpakken, eller se <a href="/guides/vaelg-alternativt-garn/">alternativer i samme strikkefasthed</a>.</p>'}</section>'''
     if not yarns:
@@ -130,7 +165,7 @@ def drops_page(o, related):
 <p class="lead">{e(o.get('desc',''))}</p>
 <div class="cta-row"><a class="btn btn-primary" href="#garn">Se garn og pris</a><a class="btn btn-ghost" href="{e(o['url'])}" rel="sponsored nofollow" target="_blank">Hent opskriften gratis</a></div>
 <p class="small muted" style="margin-top:12px">Opskriften er gratis hos DROPS. Garnet køber du hvor det er billigst – eller som samlet pakke.</p></div></section>
-<section id="garn" class="two"><div><h2 style="margin-bottom:8px">Garnet til {e(o['name'])}</h2><p class="muted" style="margin:0 0 18px;max-width:60ch">{e(TYPE_SENT.get(o['type'],''))} Priserne herunder hentes hver nat fra butikkernes egne feeds.</p>{yarn_html}
+<section id="garn" class="two"><div><h2 style="margin-bottom:8px">Garnet til {e(o['name'])}</h2><p class="muted" style="margin:0 0 18px;max-width:60ch">{e(TYPE_SENT.get(o['type'],''))} Priserne herunder hentes hver nat fra butikkernes egne feeds.</p>{materials_panel(o, yarns)}{yarn_html}
 <p class="disclose">Vi får en lille provision, hvis du køber via vores links. Det ændrer ikke prisen for dig, og det påvirker ikke, hvilken butik vi viser som billigst.</p></div>
 <aside class="panel"><h3 style="margin-bottom:6px">Alt garnet i én pakke</h3><p class="muted small" style="margin:0 0 14px">{e(o['shop_name'])} sælger garnet til {e(o['name'])} som samlet pakke i din størrelse{(' ('+e(o['sizes'])+')') if o.get('sizes') else ''}. Opskriften henter du gratis.</p>
 <div style="font-family:var(--serif);font-size:30px;font-weight:600;margin-bottom:12px">{kr(o['price'])} kr.</div>

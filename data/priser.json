@@ -10,6 +10,7 @@
   "shops": {
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -673,6 +674,7 @@
    },
    "hobbygarn": {
     "shop": "Hobbygarn",
+    "logo": "/assets/img/shops/hobbygarn.png",
     "platform": "other",
     "shipping": 39.0,
     "free_shipping_from": 499,
@@ -1336,6 +1338,7 @@
    },
    "kreamok": {
     "shop": "Kreamok",
+    "logo": "/assets/img/shops/kreamok.png",
     "platform": "shopify",
     "shipping": 39.0,
     "free_shipping_from": 600,
@@ -1780,6 +1783,7 @@
   "shops": {
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -2311,6 +2315,7 @@
    },
    "hobbygarn": {
     "shop": "Hobbygarn",
+    "logo": "/assets/img/shops/hobbygarn.png",
     "platform": "other",
     "shipping": 39.0,
     "free_shipping_from": 499,
@@ -2853,6 +2858,7 @@
    },
    "kreamok": {
     "shop": "Kreamok",
+    "logo": "/assets/img/shops/kreamok.png",
     "platform": "shopify",
     "shipping": 39.0,
     "free_shipping_from": 600,
@@ -3187,6 +3193,7 @@
   "shops": {
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -3883,6 +3890,7 @@
    },
    "hobbygarn": {
     "shop": "Hobbygarn",
+    "logo": "/assets/img/shops/hobbygarn.png",
     "platform": "other",
     "shipping": 39.0,
     "free_shipping_from": 499,
@@ -4601,6 +4609,7 @@
    },
    "kreamok": {
     "shop": "Kreamok",
+    "logo": "/assets/img/shops/kreamok.png",
     "platform": "shopify",
     "shipping": 39.0,
     "free_shipping_from": 600,
@@ -4869,6 +4878,7 @@
   "shops": {
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -5664,6 +5674,7 @@
    },
    "kreamok": {
     "shop": "Kreamok",
+    "logo": "/assets/img/shops/kreamok.png",
     "platform": "shopify",
     "shipping": 39.0,
     "free_shipping_from": 600,
@@ -6152,6 +6163,7 @@
   "shops": {
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -6815,6 +6827,7 @@
    },
    "hobbygarn": {
     "shop": "Hobbygarn",
+    "logo": "/assets/img/shops/hobbygarn.png",
     "platform": "other",
     "shipping": 39.0,
     "free_shipping_from": 499,
@@ -7489,6 +7502,7 @@
    },
    "kreamok": {
     "shop": "Kreamok",
+    "logo": "/assets/img/shops/kreamok.png",
     "platform": "shopify",
     "shipping": 39.0,
     "free_shipping_from": 600,
@@ -7911,6 +7925,7 @@
   "shops": {
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -8882,6 +8897,7 @@
    },
    "hobbygarn": {
     "shop": "Hobbygarn",
+    "logo": "/assets/img/shops/hobbygarn.png",
     "platform": "other",
     "shipping": 39.0,
     "free_shipping_from": 499,
@@ -9810,6 +9826,7 @@
   "shops": {
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -10297,6 +10314,7 @@
    },
    "hobbygarn": {
     "shop": "Hobbygarn",
+    "logo": "/assets/img/shops/hobbygarn.png",
     "platform": "other",
     "shipping": 39.0,
     "free_shipping_from": 499,
@@ -10785,6 +10803,7 @@
   "shops": {
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -11283,6 +11302,7 @@
    },
    "hobbygarn": {
     "shop": "Hobbygarn",
+    "logo": "/assets/img/shops/hobbygarn.png",
     "platform": "other",
     "shipping": 39.0,
     "free_shipping_from": 499,
@@ -11804,6 +11824,7 @@
   "shops": {
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -12291,6 +12312,7 @@
    },
    "hobbygarn": {
     "shop": "Hobbygarn",
+    "logo": "/assets/img/shops/hobbygarn.png",
     "platform": "other",
     "shipping": 39.0,
     "free_shipping_from": 499,
@@ -12767,6 +12789,7 @@
    },
    "kreamok": {
     "shop": "Kreamok",
+    "logo": "/assets/img/shops/kreamok.png",
     "platform": "shopify",
     "shipping": 39.0,
     "free_shipping_from": 600,
@@ -13178,6 +13201,7 @@
   "shops": {
    "broengarn": {
     "shop": "Broen Garn",
+    "logo": "",
     "platform": "shopify",
     "shipping": 29.0,
     "free_shipping_from": 499,
@@ -13622,6 +13646,7 @@
   "shops": {
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -14208,6 +14233,7 @@
    },
    "hobbygarn": {
     "shop": "Hobbygarn",
+    "logo": "/assets/img/shops/hobbygarn.png",
     "platform": "other",
     "shipping": 39.0,
     "free_shipping_from": 499,
@@ -14816,6 +14842,7 @@
    },
    "kreamok": {
     "shop": "Kreamok",
+    "logo": "/assets/img/shops/kreamok.png",
     "platform": "shopify",
     "shipping": 39.0,
     "free_shipping_from": 600,
@@ -15062,6 +15089,7 @@
   "shops": {
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -15780,6 +15808,7 @@
    },
    "hobbygarn": {
     "shop": "Hobbygarn",
+    "logo": "/assets/img/shops/hobbygarn.png",
     "platform": "other",
     "shipping": 39.0,
     "free_shipping_from": 499,
@@ -16455,6 +16484,7 @@
   "shops": {
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -17107,6 +17137,7 @@
    },
    "hobbygarn": {
     "shop": "Hobbygarn",
+    "logo": "/assets/img/shops/hobbygarn.png",
     "platform": "other",
     "shipping": 39.0,
     "free_shipping_from": 499,
@@ -17771,6 +17802,7 @@
   "shops": {
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -18104,6 +18136,7 @@
    },
    "hobbygarn": {
     "shop": "Hobbygarn",
+    "logo": "/assets/img/shops/hobbygarn.png",
     "platform": "other",
     "shipping": 39.0,
     "free_shipping_from": 499,
@@ -18504,6 +18537,7 @@
   "shops": {
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -18892,6 +18926,7 @@
    },
    "hobbygarn": {
     "shop": "Hobbygarn",
+    "logo": "/assets/img/shops/hobbygarn.png",
     "platform": "other",
     "shipping": 39.0,
     "free_shipping_from": 499,
@@ -19280,6 +19315,7 @@
    },
    "kreamok": {
     "shop": "Kreamok",
+    "logo": "/assets/img/shops/kreamok.png",
     "platform": "shopify",
     "shipping": 39.0,
     "free_shipping_from": 600,
@@ -19559,6 +19595,7 @@
   "shops": {
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -20002,6 +20039,7 @@
    },
    "hobbygarn": {
     "shop": "Hobbygarn",
+    "logo": "/assets/img/shops/hobbygarn.png",
     "platform": "other",
     "shipping": 39.0,
     "free_shipping_from": 499,
@@ -20456,6 +20494,7 @@
    },
    "kreamok": {
     "shop": "Kreamok",
+    "logo": "/assets/img/shops/kreamok.png",
     "platform": "shopify",
     "shipping": 39.0,
     "free_shipping_from": 600,
@@ -20493,6 +20532,7 @@
   "shops": {
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -20793,6 +20833,7 @@
    },
    "kreamok": {
     "shop": "Kreamok",
+    "logo": "/assets/img/shops/kreamok.png",
     "platform": "shopify",
     "shipping": 39.0,
     "free_shipping_from": 600,
@@ -20818,6 +20859,7 @@
    },
    "hobbygarn": {
     "shop": "Hobbygarn",
+    "logo": "/assets/img/shops/hobbygarn.png",
     "platform": "other",
     "shipping": 39.0,
     "free_shipping_from": 499,
@@ -21163,6 +21205,7 @@
   "shops": {
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -21551,6 +21594,7 @@
    },
    "hobbygarn": {
     "shop": "Hobbygarn",
+    "logo": "/assets/img/shops/hobbygarn.png",
     "platform": "other",
     "shipping": 39.0,
     "free_shipping_from": 499,
@@ -21950,6 +21994,7 @@
    },
    "kreamok": {
     "shop": "Kreamok",
+    "logo": "/assets/img/shops/kreamok.png",
     "platform": "shopify",
     "shipping": 39.0,
     "free_shipping_from": 600,
@@ -22229,6 +22274,7 @@
   "shops": {
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -22760,6 +22806,7 @@
    },
    "hobbygarn": {
     "shop": "Hobbygarn",
+    "logo": "/assets/img/shops/hobbygarn.png",
     "platform": "other",
     "shipping": 39.0,
     "free_shipping_from": 499,
@@ -23302,6 +23349,7 @@
    },
    "kreamok": {
     "shop": "Kreamok",
+    "logo": "/assets/img/shops/kreamok.png",
     "platform": "shopify",
     "shipping": 39.0,
     "free_shipping_from": 600,
@@ -23845,6 +23893,7 @@
   "shops": {
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -24079,6 +24128,7 @@
    },
    "hobbygarn": {
     "shop": "Hobbygarn",
+    "logo": "/assets/img/shops/hobbygarn.png",
     "platform": "other",
     "shipping": 39.0,
     "free_shipping_from": 499,
@@ -24325,6 +24375,7 @@
   "shops": {
    "hobbygarn": {
     "shop": "Hobbygarn",
+    "logo": "/assets/img/shops/hobbygarn.png",
     "platform": "other",
     "shipping": 39.0,
     "free_shipping_from": 499,
@@ -24757,6 +24808,7 @@
    },
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -25178,6 +25230,7 @@
    },
    "kreamok": {
     "shop": "Kreamok",
+    "logo": "/assets/img/shops/kreamok.png",
     "platform": "shopify",
     "shipping": 39.0,
     "free_shipping_from": 600,
@@ -25523,6 +25576,7 @@
   "shops": {
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -25812,6 +25866,7 @@
    },
    "hobbygarn": {
     "shop": "Hobbygarn",
+    "logo": "/assets/img/shops/hobbygarn.png",
     "platform": "other",
     "shipping": 39.0,
     "free_shipping_from": 499,
@@ -26146,6 +26201,7 @@
   "shops": {
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -26259,6 +26315,7 @@
    },
    "hobbygarn": {
     "shop": "Hobbygarn",
+    "logo": "/assets/img/shops/hobbygarn.png",
     "platform": "other",
     "shipping": 39.0,
     "free_shipping_from": 499,
@@ -26384,6 +26441,7 @@
   "shops": {
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -26838,6 +26896,7 @@
    },
    "hobbygarn": {
     "shop": "Hobbygarn",
+    "logo": "/assets/img/shops/hobbygarn.png",
     "platform": "other",
     "shipping": 39.0,
     "free_shipping_from": 499,
@@ -27315,6 +27374,7 @@
   "shops": {
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -27439,6 +27499,7 @@
    },
    "kreamok": {
     "shop": "Kreamok",
+    "logo": "/assets/img/shops/kreamok.png",
     "platform": "shopify",
     "shipping": 39.0,
     "free_shipping_from": 600,
@@ -27531,6 +27592,7 @@
   "shops": {
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -27743,6 +27805,7 @@
    },
    "hobbygarn": {
     "shop": "Hobbygarn",
+    "logo": "/assets/img/shops/hobbygarn.png",
     "platform": "other",
     "shipping": 39.0,
     "free_shipping_from": 499,
@@ -27911,6 +27974,7 @@
    },
    "kreamok": {
     "shop": "Kreamok",
+    "logo": "/assets/img/shops/kreamok.png",
     "platform": "shopify",
     "shipping": 39.0,
     "free_shipping_from": 600,
@@ -28058,6 +28122,7 @@
   "shops": {
    "rito": {
     "shop": "Rito.dk",
+    "logo": "/assets/img/shops/rito.png",
     "platform": "prestashop",
     "shipping": 45.0,
     "free_shipping_from": 799,
@@ -28468,6 +28533,7 @@
    },
    "hobbygarn": {
     "shop": "Hobbygarn",
+    "logo": "/assets/img/shops/hobbygarn.png",
     "platform": "other",
     "shipping": 39.0,
     "free_shipping_from": 499,

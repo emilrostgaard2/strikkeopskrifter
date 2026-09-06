@@ -176,7 +176,7 @@ for shop in CFG["shops"]:
         if price is None or price > g["grams"] * 4:   # frasortér pakker/kg-priser (fx 229,50 for 10 nøgler)
             continue
         entry = priser[g["slug"]]["shops"].setdefault(shop["key"], {
-            "shop": shop["name"], "platform": shop.get("platform"), "shipping": num(it.get("fragtomk")),
+            "shop": shop["name"], "logo": shop.get("logo",""), "platform": shop.get("platform"), "shipping": num(it.get("fragtomk")),
             "free_shipping_from": shop.get("free_shipping_from"), "delivery": it.get("leveringstid"),
             "price": None, "old_price": None, "url": it.get("vareurl"), "image": it.get("billedurl"), "variants": []})
         entry["variants"].append({"nr": nr, "color": color, "price": price, "old_price": old if old and old > price else None,
