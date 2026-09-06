@@ -1,0 +1,56 @@
+name: Upload til Simply
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Upload med lftp
+        env:
+          SERVER: ${{ secrets.FTP_SERVER }}
+          BRUGER: ${{ secrets.FTP_USERNAME }}
+          KODE: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y lftp
+          lftp -c "
+            set ftp:ssl-allow true;
+            set ssl:verify-certificate no;
+            set ftp:passive-mode true;
+            set net:max-retries 6;
+            set net:timeout 120;
+            set net:reconnect-interval-base 20;
+            set net:reconnect-interval-multiplier 1.5;
+            set mirror:parallel-directories false;
+            set mirror:parallel-transfer-count 1;
+            open -u '$BRUGER','$KODE' '$SERVER';
+            mirror --reverse --only-newer --continue --verbose=1 \
+              --exclude-glob .git/ \
+              --exclude-glob .github/ \
+              --exclude-glob _build/ \
+              --exclude-glob '*.md' \
+              ./ public_html/;
+          "
+
+      - name: Fjern Simplys standardfiler
+        if: success()
+        env:
+          SERVER: ${{ secrets.FTP_SERVER }}
+          BRUGER: ${{ secrets.FTP_USERNAME }}
+          KODE: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          lftp -c "
+            set ftp:ssl-allow true;
+            set ssl:verify-certificate no;
+            set ftp:passive-mode true;
+            set cmd:fail-exit false;
+            open -u '$BRUGER','$KODE' '$SERVER';
+            glob -a rm -f public_html/index.php;
+            glob -a rm -f public_html/readme.html;
+          " || echo "Ingen standardfiler at fjerne — det er fint."
