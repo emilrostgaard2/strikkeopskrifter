@@ -2,8 +2,10 @@
 <html lang="da">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Strikkeopskrifter – find opskriften og det billigste garn | strikkeopskrifter.dk</title>
-<meta name="description" content="Danske strikkeopskrifter samlet ét sted. Vælg din størrelse, se hvor meget garn du skal bruge, og sammenlign prisen hos danske garnbutikker.">
+<title>Strikkeopskrifter – gratis og betalte opskrifter med garnpris | strikkeopskrifter.dk</title>
+<link rel="canonical" href="https://strikkeopskrifter.dk/">
+<meta property="og:image" content="https://strikkeopskrifter.dk/assets/img/hero.jpg">
+<meta name="description" content="Over 1.000 strikkeopskrifter til dame, børn, baby og herre – gratis og betalte. Se hvor meget garn du skal bruge til din størrelse, og sammenlign garnprisen hos danske butikker.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400;9..144,600;9..144,700,100&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
@@ -15,7 +17,7 @@
   .search button{border:0;background:var(--ink);color:#fff;padding:0 22px;font-weight:600}
   .quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
   .quick a{font-size:14px;padding:6px 12px;border:1px solid var(--line);border-radius:20px;text-decoration:none;color:var(--ink-2);background:var(--paper)}
-  .hero-art{aspect-ratio:1;background:var(--stone-2);border:1px solid var(--line)}
+  .hero-art{aspect-ratio:4/5;background:var(--stone-2) center/cover url(assets/img/hero.jpg);border:1px solid var(--line);max-height:640px;justify-self:end;width:100%;max-width:480px}
   .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);background:var(--paper)}
   .steps div{padding:28px 32px}
   .steps div+div{border-left:1px solid var(--line)}
@@ -28,17 +30,11 @@
   .news input{font:inherit;padding:12px 14px;border:1px solid var(--line);border-radius:3px;min-width:260px}
   @media(max-width:860px){.hero,.steps,.news{grid-template-columns:1fr}.steps div+div{border-left:0;border-top:1px solid var(--line)}.hero-art{display:none}}
 </style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvad er strikkeopskrifter.dk?", "acceptedAnswer": {"@type": "Answer", "text": "En samling af danske og nordiske strikkeopskrifter, hvor hver opskrift viser garnforbrug pr. størrelse og dagens garnpris hos danske butikker. Målet er, at du kan vælge opskrift, regne garnet ud og købe det billigst – på ét sted."}}, {"@type": "Question", "name": "Koster det noget at bruge siden?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. Vi får en lille provision fra butikken, hvis du køber garn via vores links. Det ændrer ikke din pris, og det påvirker ikke, hvilken butik vi viser som billigst."}}, {"@type": "Question", "name": "Hvor kommer priserne fra?", "acceptedAnswer": {"@type": "Answer", "text": "Fra butikkernes egne produktfeeds, som vi henter hver nat. Ser du en pris, der ikke passer, så skriv til os – så retter vi det."}}, {"@type": "Question", "name": "Er opskrifterne jeres egne?", "acceptedAnswer": {"@type": "Answer", "text": "Nej. Opskrifterne tilhører designerne og butikkerne, og vi linker til dem. Vores eget bidrag er garndata, beregneren, prissammenligningen og guides."}}]}</script>
 </head>
 <body>
-<header class="site"><div class="wrap nav">
-  <a class="logo" href="">strikke<span>opskrifter</span>.dk</a>
-  <ul>
-    <li><a href="opskrifter/" >Opskrifter</a></li>
-    <li><a href="garn/" >Garn</a></li>
-    <li><a href="designere/">Designere</a></li>
-    <li><a href="guides/">Guides</a></li>
-  </ul>
-</div></header>
+<header class="site"><div class="wrap nav"><a class="logo" href="/">strikke<span>opskrifter</span>.dk</a>
+<ul><li><a href="/opskrifter/">Opskrifter</a></li><li><a href="/gratis/">Gratis</a></li><li><a href="/garn/">Garn</a></li><li><a href="/garn/drops/">DROPS</a></li><li><a href="/guides/">Guides</a></li></ul></div></header>
 
 <main class="wrap">
   <section class="hero">
@@ -58,7 +54,7 @@
         <a href="garn/?tilbud=1">Garn på tilbud</a>
       </div>
     </div>
-    <div class="hero-art" aria-hidden="true"></div>
+    <div class="hero-art" role="img" aria-label="Kvinde strikker en blå sweater i en lænestol med garn og opskrift ved siden af"></div>
   </section>
 
   <section class="steps" aria-label="Sådan virker det">
@@ -95,6 +91,14 @@
       <a class="card" href="#"><div class="img wide"></div><b>Hvor mange nøgler skal jeg bruge?</b><span>Beregn selv ud fra meter, ikke gram</span></a>
     </div>
   </section>
+
+  <section class="sec prose">
+    <h2>Strikkeopskrifter med garnet regnet ud</h2>
+    <p>De fleste sider med strikkeopskrifter stopper, hvor det bliver besværligt: du har fundet en sweater, du vil strikke, og nu skal du selv finde ud af, hvilket garn den kræver, hvor mange nøgler du skal bruge i din størrelse, og hvad det koster – i fem forskellige butikker. Det er dét stykke arbejde, strikkeopskrifter.dk gør for dig.</p>
+    <p>Vi samler danske og nordiske strikkeopskrifter – over 900 gratis fra DROPS Design og et voksende udvalg fra danske designere som PetiteKnit, Rikke Jönsson og Önling. For hver opskrift viser vi garnet, den er strikket i, alternativer i samme strikkefasthed, og dagens pris pr. nøgle hos de danske garnbutikker, vi sammenligner. Priserne hentes automatisk hver nat, så de er sjældent mere end et døgn gamle.</p>
+    <p>Find opskrifter <a href="opskrifter/dame/">til damer</a>, <a href="opskrifter/boern/">til børn</a>, <a href="opskrifter/baby/">til baby</a> eller <a href="opskrifter/herre/">til herrer</a> – eller start med <a href="opskrifter/begynder/">de nemme opskrifter til begyndere</a>, hvis du er ny i strik. Alle <a href="gratis/">gratis strikkeopskrifter</a> er samlet på én side, og <a href="garn/drops/">DROPS' opskrifter</a> har deres egen, fordi de er så mange.</p>
+  </section>
+<section class="sec faq"><h2>Ofte stillede spørgsmål</h2><details><summary>Hvad er strikkeopskrifter.dk?</summary><p>En samling af danske og nordiske strikkeopskrifter, hvor hver opskrift viser garnforbrug pr. størrelse og dagens garnpris hos danske butikker. Målet er, at du kan vælge opskrift, regne garnet ud og købe det billigst – på ét sted.</p></details><details><summary>Koster det noget at bruge siden?</summary><p>Nej. Vi får en lille provision fra butikken, hvis du køber garn via vores links. Det ændrer ikke din pris, og det påvirker ikke, hvilken butik vi viser som billigst.</p></details><details><summary>Hvor kommer priserne fra?</summary><p>Fra butikkernes egne produktfeeds, som vi henter hver nat. Ser du en pris, der ikke passer, så skriv til os – så retter vi det.</p></details><details><summary>Er opskrifterne jeres egne?</summary><p>Nej. Opskrifterne tilhører designerne og butikkerne, og vi linker til dem. Vores eget bidrag er garndata, beregneren, prissammenligningen og guides.</p></details></section>
 </main>
 
 <section class="band">
@@ -104,10 +108,8 @@
   </div>
 </section>
 
-<footer class="site"><div class="wrap">
-  <div>strikkeopskrifter.dk · Find opskriften, regn garnet ud, og køb det hvor det er billigst.</div>
-  <div><a href="om/">Om siden</a> · <a href="om/#provision">Sådan tjener vi penge</a> · <a href="om/#kontakt">Kontakt</a></div>
-</div></footer>
+<footer class="site"><div class="wrap"><div>strikkeopskrifter.dk · Find opskriften, regn garnet ud, og køb det hvor det er billigst.<br><span style="opacity:.7">Opskrifter: <a href="/opskrifter/dame/">Damer</a> · <a href="/opskrifter/boern/">Børn</a> · <a href="/opskrifter/baby/">Baby</a> · <a href="/opskrifter/herre/">Herrer</a> · <a href="/opskrifter/begynder/">Begyndere</a> · <a href="/gratis/">Gratis</a> · <a href="/garn/drops/">DROPS</a></span></div>
+<div><a href="/om/">Om siden</a> · <a href="/om/#provision">Sådan tjener vi penge</a> · <a href="/om/#kontakt">Kontakt</a></div></div></footer>
 <script src="assets/site.js"></script>
 </body>
 </html>

@@ -93,6 +93,17 @@ opskrifter = []
 TYPES = [("sweater",r"sweater|trøje|bluse|genser|pullover|tee\b|top\b"),("cardigan",r"cardigan|jakke|bolero"),("vest",r"vest|slipover"),
          ("hue",r"hue|pandebånd|balaclava"),("sjal",r"sjal|tørklæde|halsrør|poncho"),("sokker",r"strømpe|sok"),("vanter",r"vante|luffe|handske"),
          ("baby",r"baby|dåb|body|dragt"),("børn",r"junior|børn|barn"),("kjole",r"kjole|nederdel"),("hjem",r"pude|tæppe|plaid|dukke")]
+def guess_target(text):
+    t=text.lower()
+    if re.search(r"\bbaby\b|0-3 mdr|1-3 mdr|præmatur|dåb", t): return "baby"
+    if re.search(r"børn|barn\b|junior|\b(2|4|6|8|10|12|14) år", t): return "børn"
+    if re.search(r"\bherre|\bmand\b|\bmænd|\bmen'?s\b|\bhr\b", t): return "herre"
+    return "dame"
+def guess_level(text):
+    t=text.lower()
+    if re.search(r"\bnem\b|nemt|enkel|begynder|let at strikke|simpel", t): return "begynder"
+    if re.search(r"fair isle|flerfarvet|snoning|hulmønster|lace|vendepinde|kortrækker|intarsia", t): return "øvet"
+    return "let øvet"
 def guess_type(text):
     t=text.lower()
     for k,rx in TYPES:
@@ -115,6 +126,7 @@ for shop in CFG["shops"]:
             m = re.match(r"(.+?) by DROPS Design\s*-\s*(.+?)\s+Strikkeopskrift\s*(?:str\.?\s*(.+))?$", name, re.I)
             pakker.append({"shop": shop["key"], "shop_name": shop["name"], "kind": "pakke", "designer": "DROPS Design",
                            "name": m.group(1) if m else name, "type": guess_type(m.group(2) if m else name), "type_label": m.group(2) if m else "",
+                           "target": guess_target(name+" "+it.get("kategorinavn","")+" "+it.get("beskrivelse","")[:300]), "level": guess_level(it.get("beskrivelse","")), "free": True,
                            "sizes": (m.group(3) or "").strip() if m else "", "price": num(it.get("nypris")),
                            "stock": stock(it.get("lagerantal")), "image": it.get("billedurl"),
                            "url": it.get("vareurl"), "desc": it.get("beskrivelse")[:220]})
@@ -123,7 +135,7 @@ for shop in CFG["shops"]:
         if "strikkeopskrift" in it.get("kategorinavn","").lower() and not is_garn(it):
             opskrifter.append({"shop": shop["key"], "shop_name": shop["name"], "kind": "opskrift",
                                "name": re.sub(r"\s*-\s*(dansk|engelsk|english)\s*$","",name,flags=re.I),
-                               "designer": it.get("brand") or "", "type": guess_type(name),
+                               "designer": it.get("brand") or "", "type": guess_type(name), "target": guess_target(name+" "+it.get("beskrivelse","")), "level": guess_level(it.get("beskrivelse","")), "free": False,
                                "price": num(it.get("nypris")), "stock": stock(it.get("lagerantal")),
                                "image": it.get("billedurl"), "url": it.get("vareurl")})
             continue

@@ -2,43 +2,39 @@
 <html lang="da">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Alle strikkeopskrifter – sweatre, cardigans, huer og mere | strikkeopskrifter.dk</title>
-<meta name="description" content="Gennemse danske strikkeopskrifter efter kategori, designer, sværhedsgrad og garn. Se garnforbrug og pris før du køber.">
+<title>Strikkeopskrifter – over 1.000 opskrifter med garnforbrug og garnpris | strikkeopskrifter.dk</title>
+<link rel="canonical" href="https://strikkeopskrifter.dk/opskrifter/">
+<meta name="description" content="Alle strikkeopskrifter samlet: sweatre, cardigans, veste, huer, sjaler og sokker til dame, børn, baby og herre. Filtrér på kategori, designer og gratis – og se garnpris før du køber.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,400;9..144,600;9..144,700,100&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvordan finder jeg en bestemt opskrift?", "acceptedAnswer": {"@type": "Answer", "text": "Skriv navnet, designeren eller garnet i søgefeltet – fx 'Butterfly Heart', 'PetiteKnit' eller 'Belle'. Listen filtreres, mens du skriver."}}, {"@type": "Question", "name": "Hvorfor står der 'garnpakke' på nogle opskrifter?", "acceptedAnswer": {"@type": "Answer", "text": "Det er gratis opskrifter, hvor en butik sælger alt garnet som samlet pakke i din størrelse. Prisen er for garnet – opskriften henter du gratis."}}, {"@type": "Question", "name": "Hvad betyder niveau?", "acceptedAnswer": {"@type": "Answer", "text": "Begynder: kun ret, vrang og simple ud-/indtagninger. Let øvet: raglan, rib, enkle mønstre. Øvet: snoninger, hulmønster, fair isle, vendepinde."}}, {"@type": "Question", "name": "Kan jeg gemme opskrifter?", "acceptedAnswer": {"@type": "Answer", "text": "Ikke endnu – funktionen er på vej. Indtil da: bogmærk siden, eller tilmeld dig nyhedsbrevet og få besked, når garnet til dine opskrifter falder i pris."}}]}</script>
 </head>
 <body>
-<header class="site"><div class="wrap nav">
-  <a class="logo" href="../">strikke<span>opskrifter</span>.dk</a>
-  <ul>
-    <li><a href="../opskrifter/" aria-current=page>Opskrifter</a></li>
-    <li><a href="../garn/" >Garn</a></li>
-    <li><a href="../designere/">Designere</a></li>
-    <li><a href="../guides/">Guides</a></li>
-  </ul>
-</div></header>
+<header class="site"><div class="wrap nav"><a class="logo" href="/">strikke<span>opskrifter</span>.dk</a>
+<ul><li><a href="/opskrifter/" aria-current="page">Opskrifter</a></li><li><a href="/gratis/">Gratis</a></li><li><a href="/garn/">Garn</a></li><li><a href="/garn/drops/">DROPS</a></li><li><a href="/guides/">Guides</a></li></ul></div></header>
 <main class="wrap">
   <div class="crumbs"><a href="../">Forside</a> / Opskrifter</div>
   <h1 style="margin-top:12px">Strikkeopskrifter</h1>
-  <p class="muted" style="max-width:60ch">Alle opskrifter har garnforbrug pr. størrelse og prissammenligning. Filtrér, eller søg på designer, opskrift eller garn.</p>
+  <div class="prose intro"><p>Her er alle opskrifter på siden – over 1.000 strikkeopskrifter til damer, herrer, børn og baby, fra gratis DROPS-modeller til betalte opskrifter fra danske designere. Brug filtrene til at finde typen (sweater, cardigan, hue, sjal, sokker …), hvem den er til, og om den skal være gratis. Sortér efter billigste garn, hvis budgettet bestemmer.</p>
+  <p>Hver opskrift har sin egen side hos os med garnet, den er strikket i, dagens pris hos danske butikker og – for de opskrifter, vi har tastet materialelisten ind for – en beregner, der viser antal nøgler til din størrelse. Leder du efter noget bestemt, så prøv <a href="dame/">damer</a>, <a href="boern/">børn</a>, <a href="baby/">baby</a>, <a href="herre/">herrer</a> eller <a href="begynder/">begyndere</a>.</p></div>
 
   <div class="filters" role="group" aria-label="Filtrér">
-    <input type="search" id="f-q" placeholder="Søg opskrift, designer …" aria-label="Søg">
-    <select id="f-kat" aria-label="Kategori"><option value="">Alle kategorier</option><option value="sweater">Sweatre & bluser</option><option value="cardigan">Cardigans</option><option value="vest">Veste</option><option value="hue">Huer</option><option value="sjal">Sjaler & tørklæder</option><option value="sokker">Sokker</option><option value="vanter">Vanter</option><option value="baby">Baby</option><option value="børn">Børn</option><option value="kjole">Kjoler</option><option value="hjem">Hjem</option></select>
+    <input type="search" id="f-q" placeholder="Søg opskrift, garn …" aria-label="Søg">
+    <select id="f-kat" aria-label="Kategori"><option value="">Alle kategorier</option><option value="sweater">Sweatre & bluser</option><option value="cardigan">Cardigans</option><option value="vest">Veste</option><option value="hue">Huer</option><option value="sjal">Sjaler & tørklæder</option><option value="sokker">Sokker</option><option value="vanter">Vanter</option><option value="kjole">Kjoler</option><option value="hjem">Hjem</option></select>
+    <select id="f-target" aria-label="Til"><option value="">Alle</option><option value="dame">Damer</option><option value="herre">Herrer</option><option value="børn">Børn</option><option value="baby">Baby</option></select>
     <select id="f-des" aria-label="Designer"><option value="">Alle designere</option></select>
+    <select id="f-free" aria-label="Pris"><option value="">Betalt og gratis</option><option value="1">Kun gratis</option></select>
     <select id="f-sort" aria-label="Sortering"><option value="">Nyeste</option><option value="pris">Billigste garn</option><option value="navn">A–Å</option></select>
     <span id="f-count" class="muted small" style="align-self:center"></span>
   </div>
-
   <div class="grid" id="opskrift-grid">
     <a class="card" href="rikke-cozy-sweater/"><div class="img"></div><b>Rikke Cozy Sweater</b><span>Rikke Jönsson · let øvet · XS–6XL</span><em class="price">Garn fra 200 kr.</em></a>
   </div>
+<section class="sec faq"><h2>Ofte stillede spørgsmål</h2><details><summary>Hvordan finder jeg en bestemt opskrift?</summary><p>Skriv navnet, designeren eller garnet i søgefeltet – fx &#x27;Butterfly Heart&#x27;, &#x27;PetiteKnit&#x27; eller &#x27;Belle&#x27;. Listen filtreres, mens du skriver.</p></details><details><summary>Hvorfor står der &#x27;garnpakke&#x27; på nogle opskrifter?</summary><p>Det er gratis opskrifter, hvor en butik sælger alt garnet som samlet pakke i din størrelse. Prisen er for garnet – opskriften henter du gratis.</p></details><details><summary>Hvad betyder niveau?</summary><p>Begynder: kun ret, vrang og simple ud-/indtagninger. Let øvet: raglan, rib, enkle mønstre. Øvet: snoninger, hulmønster, fair isle, vendepinde.</p></details><details><summary>Kan jeg gemme opskrifter?</summary><p>Ikke endnu – funktionen er på vej. Indtil da: bogmærk siden, eller tilmeld dig nyhedsbrevet og få besked, når garnet til dine opskrifter falder i pris.</p></details></section>
 </main>
-<footer class="site"><div class="wrap">
-  <div>strikkeopskrifter.dk · Find opskriften, regn garnet ud, og køb det hvor det er billigst.</div>
-  <div><a href="../om/">Om siden</a> · <a href="../om/#provision">Sådan tjener vi penge</a> · <a href="../om/#kontakt">Kontakt</a></div>
-</div></footer>
-<script src="../assets/site.js"></script>
+<footer class="site"><div class="wrap"><div>strikkeopskrifter.dk · Find opskriften, regn garnet ud, og køb det hvor det er billigst.<br><span style="opacity:.7">Opskrifter: <a href="/opskrifter/dame/">Damer</a> · <a href="/opskrifter/boern/">Børn</a> · <a href="/opskrifter/baby/">Baby</a> · <a href="/opskrifter/herre/">Herrer</a> · <a href="/opskrifter/begynder/">Begyndere</a> · <a href="/gratis/">Gratis</a> · <a href="/garn/drops/">DROPS</a></span></div>
+<div><a href="/om/">Om siden</a> · <a href="/om/#provision">Sådan tjener vi penge</a> · <a href="/om/#kontakt">Kontakt</a></div></div></footer>
+<script src="/assets/site.js"></script>
 </body>
 </html>

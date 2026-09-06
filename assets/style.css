@@ -102,3 +102,15 @@ th{font-weight:500;color:var(--ink-2);width:42%}
   .yarn{padding:18px 20px}.compare,.calc-head{padding-left:20px;padding-right:20px}
   .nav ul{display:none}
 }
+
+/* Tekst & FAQ */
+.prose p{max-width:66ch;margin:0 0 14px;font-size:16.5px}
+.prose h2{margin:32px 0 10px;font-size:24px}
+.intro p:first-child{font-size:18px}
+.faq details{border-top:1px solid var(--line);padding:14px 0}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq summary::after{content:"+";color:var(--wine);font-family:var(--serif);font-size:22px;line-height:1}
+.faq details[open] summary::after{content:"–"}
+.faq p{margin:10px 0 0;max-width:66ch;color:var(--ink-2)}
+.faq h2{margin-bottom:8px}

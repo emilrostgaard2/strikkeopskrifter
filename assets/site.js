@@ -3,7 +3,7 @@
 // Hvis data/priser.json findes, erstattes shops med dagens priser fra feeds (kørt af _build/feeds.py).
 (function(){
   const O = window.OPSKRIFT; if(!O) return;
-  const ROOT = document.querySelector('script[src*="assets/site.js"]').getAttribute('src').replace('assets/site.js','');
+  const _src=document.querySelector('script[src*="assets/site.js"]').getAttribute('src'); const ROOT=_src.startsWith('/')?'/':_src.replace('assets/site.js','');
   let size = O.defaultSize ?? 2, yarn = Object.keys(O.yarns)[0], priser = null;
   const dk = n => n.toLocaleString('da-DK');
   const kr = n => n.toFixed(2).replace('.',',');
@@ -52,7 +52,7 @@
 // ---- Hydrering fra data/priser.json (garn-kort, garnsider) ----
 (function(){
   const s = document.querySelector('script[src*="assets/site.js"]'); if(!s) return;
-  const ROOT = s.getAttribute('src').replace('assets/site.js','');
+  const ROOT = s.getAttribute('src').startsWith('/')?'/':s.getAttribute('src').replace('assets/site.js','');
   const kr = n => n.toFixed(2).replace('.',',');
   fetch(ROOT+'data/priser.json').then(r=>r.ok?r.json():null).then(P=>{
     if(!P) return;
@@ -90,44 +90,54 @@
   }).catch(()=>{});
 })();
 
-// ---- Opskriftsoversigt fra data/opskrifter.json ----
+// ---- Opskriftsoversigt fra data/opskrifter.json (med presets via data-* på #opskrift-grid) ----
 (function(){
   const grid=document.getElementById('opskrift-grid'); if(!grid) return;
-  const s=document.querySelector('script[src*="assets/site.js"]'); const ROOT=s.getAttribute('src').replace('assets/site.js','');
+  const s=document.querySelector('script[src*="assets/site.js"]'); const ROOT=s.getAttribute('src').startsWith('/')?'/':s.getAttribute('src').replace('assets/site.js','');
   const kr=n=>n.toLocaleString('da-DK');
-  const q=document.getElementById('f-q'), cat=document.getElementById('f-kat'), des=document.getElementById('f-des'), sort=document.getElementById('f-sort'), count=document.getElementById('f-count');
+  const $=id=>document.getElementById(id);
+  const q=$('f-q'), cat=$('f-kat'), tgt=$('f-target'), des=$('f-des'), free=$('f-free'), sort=$('f-sort'), count=$('f-count');
+  const P={type:grid.dataset.type||'', target:grid.dataset.target||'', designer:grid.dataset.designer||'', free:grid.dataset.free||'', level:grid.dataset.level||''};
   const params=new URLSearchParams(location.search);
-  if(params.get('q')) q.value=params.get('q'); if(params.get('kategori')) cat.value=params.get('kategori');
+  if(q&&params.get('q')) q.value=params.get('q'); if(cat&&params.get('kategori')) cat.value=params.get('kategori'); if(des&&params.get('des')) des.value=params.get('des'); if(tgt&&params.get('til')) tgt.value=params.get('til');
   let ALL=[];
-  const fixed=[...grid.querySelectorAll('.card')].map(c=>c.outerHTML); // egne opskriftssider (håndskrevne) står altid først
+  const fixed=[...grid.querySelectorAll('.card')].map(c=>c.outerHTML);
   function render(){
     let list=ALL.filter(o=>o.image);
-    const t=(q.value||'').toLowerCase().trim();
+    if(P.type) list=list.filter(o=>o.type===P.type);
+    if(P.target) list=list.filter(o=>o.target===P.target);
+    if(P.designer) list=list.filter(o=>o.designer===P.designer);
+    if(P.free) list=list.filter(o=>o.free);
+    if(P.level) list=list.filter(o=>o.level===P.level);
+    const t=(q&&q.value||'').toLowerCase().trim();
     if(t) list=list.filter(o=>(o.name+' '+o.designer+' '+(o.desc||'')).toLowerCase().includes(t));
-    if(cat.value) list=list.filter(o=>o.type===cat.value);
-    if(des.value) list=list.filter(o=>o.designer===des.value);
-    if(sort.value==='pris') list.sort((a,b)=>(a.price||9e9)-(b.price||9e9));
-    if(sort.value==='navn') list.sort((a,b)=>a.name.localeCompare(b.name,'da'));
-    count.textContent=`${list.length} opskrifter`;
-    grid.innerHTML=(t||cat.value||des.value?'':fixed.join(''))+list.slice(0,200).map(o=>`
+    if(cat&&cat.value) list=list.filter(o=>o.type===cat.value);
+    if(tgt&&tgt.value) list=list.filter(o=>o.target===tgt.value);
+    if(des&&des.value) list=list.filter(o=>o.designer===des.value);
+    if(free&&free.value) list=list.filter(o=>o.free);
+    if(sort&&sort.value==='pris') list.sort((a,b)=>(a.price||9e9)-(b.price||9e9));
+    if(sort&&sort.value==='navn') list.sort((a,b)=>a.name.localeCompare(b.name,'da'));
+    if(count) count.textContent=`${list.length} opskrifter`;
+    const filtered=t||(cat&&cat.value)||(tgt&&tgt.value)||(des&&des.value)||(free&&free.value);
+    grid.innerHTML=(filtered?'':fixed.join(''))+list.slice(0,240).map(o=>`
       <a class="card" href="${o.page||o.url}" ${o.page?'':'rel="sponsored nofollow" target="_blank"'}>
         <div class="img" role="img" aria-label="${o.name}" style="background:center/cover url('${o.image}')"></div>
-        <b>${o.name}</b><span>${o.designer}${o.sizes?' · '+o.sizes:''}${o.kind==='pakke'?' · gratis opskrift':''}</span>
+        <b>${o.name}</b><span>${o.designer}${o.sizes?' · '+o.sizes:''}${o.free?' · gratis opskrift':''}</span>
         <em class="price">${o.kind==='pakke'?'Garnpakke '+kr(o.price)+' kr.':'Opskrift '+kr(o.price)+' kr.'}</em>
       </a>`).join('');
   }
   fetch(ROOT+'data/opskrifter.json').then(r=>r.json()).then(d=>{
     ALL=d;
-    [...new Set(d.map(o=>o.designer).filter(Boolean))].sort().forEach(x=>des.insertAdjacentHTML('beforeend',`<option value="${x}">${x}</option>`));
+    if(des) [...new Set(d.map(o=>o.designer).filter(Boolean))].sort().forEach(x=>des.insertAdjacentHTML('beforeend',`<option value="${x}">${x}</option>`));
     render();
   });
-  [q,cat,des,sort].forEach(el=>el.addEventListener('input',render));
+  [q,cat,tgt,des,free,sort].filter(Boolean).forEach(el=>el.addEventListener('input',render));
 })();
 
 // ---- Forside: fyld opskrift-kort med rigtige opskrifter ----
 (function(){
   const cards=[...document.querySelectorAll('[data-opskrift]')]; if(!cards.length) return;
-  const s=document.querySelector('script[src*="assets/site.js"]'); const ROOT=s.getAttribute('src').replace('assets/site.js','');
+  const s=document.querySelector('script[src*="assets/site.js"]'); const ROOT=s.getAttribute('src').startsWith('/')?'/':s.getAttribute('src').replace('assets/site.js','');
   fetch(ROOT+'data/opskrifter.json').then(r=>r.json()).then(d=>{
     const pick=['sweater','cardigan','hue'].map(t=>d.find(o=>o.type===t&&o.image&&o.kind==='pakke'));
     cards.forEach((c,i)=>{ const o=pick[i]; if(!o) return;
