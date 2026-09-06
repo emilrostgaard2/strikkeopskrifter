@@ -48,3 +48,44 @@
   render();
   fetch(ROOT+'data/priser.json').then(r=>r.ok?r.json():null).then(d=>{ if(d){ priser=d; render(); } }).catch(()=>{});
 })();
+
+// ---- Hydrering fra data/priser.json (garn-kort, garnsider) ----
+(function(){
+  const s = document.querySelector('script[src*="assets/site.js"]'); if(!s) return;
+  const ROOT = s.getAttribute('src').replace('assets/site.js','');
+  const kr = n => n.toFixed(2).replace('.',',');
+  fetch(ROOT+'data/priser.json').then(r=>r.ok?r.json():null).then(P=>{
+    if(!P) return;
+    // Kort: <a class="card" data-garn="drops-baby-merino"> – fylder .img med billede og .price med fra-pris
+    document.querySelectorAll('[data-garn]').forEach(el=>{
+      const g=P[el.dataset.garn]; if(!g) return;
+      const shop=Object.values(g.shops)[0]; if(!shop) return;
+      const img=el.querySelector('.img');
+      if(img && shop.image){ img.style.background=`center/cover url("${shop.image}")`; img.setAttribute('role','img'); img.setAttribute('aria-label',g.name); }
+      const price=el.querySelector('.price');
+      if(price && g.from_price){
+        const disc = shop.old_price ? Math.round((1-shop.price/shop.old_price)*100) : 0;
+        price.innerHTML=`fra ${kr(g.from_price)} kr.${disc>=10?` <span class="tag save">−${disc} %</span>`:''}`;
+      }
+      const n=el.querySelector('[data-shops]'); if(n) n.textContent=`${Object.keys(g.shops).length} butik${Object.keys(g.shops).length===1?'':'ker'}`;
+    });
+    // Garnside: <div id="garn-shops" data-garn="…"> – fuld butiksliste
+    const box=document.getElementById('garn-shops');
+    if(box && P[box.dataset.garn]){
+      const g=P[box.dataset.garn];
+      box.innerHTML=Object.values(g.shops).filter(x=>x.price).map((x,i)=>{
+        const v=x.variants.find(v=>v.stock==='in_stock'&&v.cart)||x.variants.find(v=>v.cart);
+        const note=[x.free_shipping_from?`Fri fragt over ${x.free_shipping_from} kr.`:'', x.colors_in_stock?`${x.colors_in_stock} farver på lager`:''].filter(Boolean).join(' · ');
+        return `<div class="shop ${i===0?'best':''}"><div class="name">${x.shop}<small>${note}</small></div>
+          <div class="price">${kr(x.price)} kr.${x.old_price?`<small><s>${kr(x.old_price)} kr.</s></small>`:''}</div>
+          <a class="go" href="${v?v.cart:x.url}" rel="sponsored nofollow" target="_blank">${v?'Læg i kurven':'Gå til butik'}</a></div>`;
+      }).join('') || '<p class="muted small">Ingen priser endnu.</p>';
+      const from=document.getElementById('garn-from'); if(from&&g.from_price) from.firstChild.textContent=`fra ${kr(g.from_price)} kr. `;
+      const hero=document.getElementById('garn-img'); const shop=Object.values(g.shops)[0];
+      if(hero&&shop&&shop.image) hero.style.background=`center/cover url("${shop.image}")`;
+      // Farvekort
+      const sw=document.getElementById('garn-colors');
+      if(sw&&shop){ sw.innerHTML=shop.variants.filter(v=>v.image).slice(0,24).map(v=>`<a href="${v.cart||v.url}" rel="sponsored nofollow" target="_blank" title="${v.nr} ${v.color}${v.stock!=='in_stock'?' (udsolgt)':''}" style="aspect-ratio:1;background:center/cover url('${v.image}');border:1px solid var(--line);display:block;${v.stock!=='in_stock'?'opacity:.35':''}"></a>`).join(''); }
+    }
+  }).catch(()=>{});
+})();
