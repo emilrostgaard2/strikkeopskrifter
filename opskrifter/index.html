@@ -13,7 +13,14 @@
 </head>
 <body>
 <header class="site"><div class="wrap nav"><a class="logo" href="/">strikke<span>opskrifter</span>.dk</a>
-<ul><li><a href="/opskrifter/" aria-current="page">Opskrifter</a></li><li><a href="/gratis/">Gratis</a></li><li><a href="/garn/">Garn</a></li><li><a href="/garn/drops/">DROPS</a></li><li><a href="/guides/">Guides</a></li></ul></div></header>
+<button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="mainnav"><span></span><span></span><span></span></button>
+<nav id="mainnav"><ul>
+<li class="has-sub"><a href="/opskrifter/" aria-current=page aria-haspopup="true">Opskrifter</a><button class="sub-toggle" aria-label="Vis undermenu">▾</button>
+<div class="sub"><div class="sub-col"><b>Til hvem</b><a href="/opskrifter/dame/">Damer</a><a href="/opskrifter/boern/">Børn</a><a href="/opskrifter/baby/">Baby</a><a href="/opskrifter/herre/">Herrer</a><a href="/opskrifter/begynder/">Begyndere</a></div>
+<div class="sub-col"><b>Type</b><a href="/opskrifter/sweater/">Sweatre & bluser</a><a href="/opskrifter/cardigan/">Cardigans</a><a href="/opskrifter/vest/">Veste</a><a href="/opskrifter/hue/">Huer</a><a href="/opskrifter/sjal/">Sjaler & tørklæder</a><a href="/opskrifter/sokker/">Sokker</a></div>
+<div class="sub-col"><b>Pind</b><a href="/opskrifter/pind-3/">Pind 3</a><a href="/opskrifter/pind-4/">Pind 4</a><a href="/opskrifter/pind-5/">Pind 5</a><a href="/opskrifter/pind-7/">Pind 7</a><a href="/opskrifter/pind-8/">Pind 8</a></div></div></li>
+<li><a href="/gratis/">Gratis</a></li><li><a href="/garn/">Garn</a></li><li><a href="/garn/drops/">DROPS</a></li><li><a href="/guides/">Guides</a></li>
+</ul></nav></div></header>
 <main class="wrap">
   <div class="crumbs"><a href="../">Forside</a> / Opskrifter</div>
   <h1 style="margin-top:12px">Strikkeopskrifter</h1>
@@ -34,8 +41,14 @@
   </div>
 <section class="sec faq"><h2>Ofte stillede spørgsmål</h2><details><summary>Hvordan finder jeg en bestemt opskrift?</summary><p>Skriv navnet, designeren eller garnet i søgefeltet – fx &#x27;Butterfly Heart&#x27;, &#x27;PetiteKnit&#x27; eller &#x27;Belle&#x27;. Listen filtreres, mens du skriver.</p></details><details><summary>Hvorfor står der &#x27;garnpakke&#x27; på nogle opskrifter?</summary><p>Det er gratis opskrifter, hvor en butik sælger alt garnet som samlet pakke i din størrelse. Prisen er for garnet – opskriften henter du gratis.</p></details><details><summary>Hvad betyder niveau?</summary><p>Begynder: kun ret, vrang og simple ud-/indtagninger. Let øvet: raglan, rib, enkle mønstre. Øvet: snoninger, hulmønster, fair isle, vendepinde.</p></details><details><summary>Kan jeg gemme opskrifter?</summary><p>Ikke endnu – funktionen er på vej. Indtil da: bogmærk siden, eller tilmeld dig nyhedsbrevet og få besked, når garnet til dine opskrifter falder i pris.</p></details></section>
 </main>
-<footer class="site"><div class="wrap"><div>strikkeopskrifter.dk · Find opskriften, regn garnet ud, og køb det hvor det er billigst.<br><span style="opacity:.7">Opskrifter: <a href="/opskrifter/dame/">Damer</a> · <a href="/opskrifter/boern/">Børn</a> · <a href="/opskrifter/baby/">Baby</a> · <a href="/opskrifter/herre/">Herrer</a> · <a href="/opskrifter/begynder/">Begyndere</a> · <a href="/gratis/">Gratis</a> · <a href="/garn/drops/">DROPS</a></span></div>
-<div><a href="/om/">Om siden</a> · <a href="/om/#provision">Sådan tjener vi penge</a> · <a href="/om/#kontakt">Kontakt</a></div></div></footer>
+<footer class="site"><div class="wrap foot-grid">
+<div class="foot-brand"><a class="logo" href="/">strikke<span>opskrifter</span>.dk</a><p>Find opskriften, regn garnet ud, og køb det hvor det er billigst. Priser hentes hver nat fra danske garnbutikker.</p>
+<form class="foot-news" action="#" onsubmit="return false"><input type="email" placeholder="din@mail.dk" aria-label="E-mail"><button class="btn btn-primary btn-sm" type="submit">Få prisfald</button></form></div>
+<div><b>Opskrifter</b><a href="/opskrifter/dame/">Til damer</a><a href="/opskrifter/boern/">Til børn</a><a href="/opskrifter/baby/">Til baby</a><a href="/opskrifter/herre/">Til herrer</a><a href="/opskrifter/begynder/">Begyndere</a><a href="/gratis/">Gratis opskrifter</a><a href="/garn/drops/">DROPS-opskrifter</a></div>
+<div><b>Typer</b><a href="/opskrifter/sweater/">Sweatre & bluser</a><a href="/opskrifter/cardigan/">Cardigans</a><a href="/opskrifter/vest/">Veste</a><a href="/opskrifter/hue/">Huer</a><a href="/opskrifter/sjal/">Sjaler</a><a href="/opskrifter/sokker/">Sokker</a></div>
+<div><b>Garn & guides</b><a href="/garn/">Sammenlign garnpriser</a><a href="/garn/drops-baby-merino/">Drops Baby Merino</a><a href="/garn/drops-air/">Drops Air</a><a href="/guides/vaelg-alternativt-garn/">Vælg alternativt garn</a><a href="/guides/hvor-mange-noegler/">Hvor mange nøgler?</a><a href="/guides/alternativer-onling-no-1/">Alternativer til Önling No 1</a></div>
+<div><b>Om</b><a href="/om/">Om siden</a><a href="/om/#provision">Sådan tjener vi penge</a><a href="/om/#kontakt">Kontakt</a><span class="small" style="opacity:.6;margin-top:8px;display:block">Pinde: <a href="/opskrifter/pind-3/">3</a> · <a href="/opskrifter/pind-4/">4</a> · <a href="/opskrifter/pind-5/">5</a> · <a href="/opskrifter/pind-7/">7</a> · <a href="/opskrifter/pind-8/">8</a></span></div>
+</div><div class="wrap foot-bottom">© strikkeopskrifter.dk · Opskrifterne tilhører designerne og butikkerne. Vi linker til dem og får provision ved køb – det ændrer ikke din pris.</div></footer>
 <script src="/assets/site.js"></script>
 </body>
 </html>

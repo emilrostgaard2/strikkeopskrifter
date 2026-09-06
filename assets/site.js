@@ -82,6 +82,17 @@
           <a class="go" href="${v?v.cart:x.url}" rel="sponsored nofollow" target="_blank">${v?'Læg i kurven':'Gå til butik'}</a></div>`;
       }).join('') || '<p class="muted small">Ingen priser endnu.</p>';
       const from=document.getElementById('garn-from'); if(from&&g.from_price) from.firstChild.textContent=`fra ${kr(g.from_price)} kr. `;
+      // Prishistorik
+      fetch(ROOT+'data/prishistorik.json').then(r=>r.ok?r.json():null).then(H=>{
+        const h=H&&H[box.dataset.garn]; const el=document.getElementById('garn-hist'); if(!h||!el) return;
+        const days={}; Object.values(h).forEach(sh=>Object.entries(sh).forEach(([d,p])=>{days[d]=Math.min(days[d]||1e9,p);}));
+        const ds=Object.keys(days).sort().slice(-30); if(ds.length<1) return;
+        const vals=ds.map(d=>days[d]); const lo=Math.min(...vals), hi=Math.max(...vals), cur=vals[vals.length-1];
+        const w=300,hh=56, pad=4; const pts=vals.map((v,i)=>`${pad+i*(w-2*pad)/Math.max(1,vals.length-1)},${hi===lo?hh/2:(hh-pad)-(v-lo)/(hi-lo)*(hh-2*pad)}`).join(' ');
+        el.innerHTML=`<b>Laveste pris de sidste ${ds.length} dag${ds.length===1?'':'e'}: ${lo.toFixed(2).replace('.',',')} kr.</b> <span class="muted small">· højeste ${hi.toFixed(2).replace('.',',')} kr. · i dag ${cur.toFixed(2).replace('.',',')} kr.</span>
+          <svg class="spark" viewBox="0 0 ${w} ${hh}" preserveAspectRatio="none" aria-hidden="true"><polyline fill="none" stroke="var(--denim)" stroke-width="2" points="${pts}"/></svg>
+          <span class="small muted">${cur<=lo?'Prisen er på det laveste niveau i perioden.':'Prisen har været lavere – sæt en prisalarm.'}</span>`;
+      }).catch(()=>{});
       const hero=document.getElementById('garn-img'); const shop=Object.values(g.shops)[0];
       if(hero&&shop&&shop.image) hero.style.background=`center/cover url("${shop.image}")`;
       // Farvekort
@@ -102,7 +113,7 @@
   const params=new URLSearchParams(location.search);
   if(q&&params.get('q')) q.value=params.get('q'); if(cat&&params.get('kategori')) cat.value=params.get('kategori'); if(des&&params.get('des')) des.value=params.get('des'); if(tgt&&params.get('til')) tgt.value=params.get('til');
   let ALL=[];
-  const fixed=[...grid.querySelectorAll('.card')].map(c=>c.outerHTML);
+  const fixed=[]; // SSR-kortene erstattes af JS-listen (samme data)
   function render(){
     let list=ALL.filter(o=>o.image);
     if(P.type) list=list.filter(o=>o.type===P.type);
@@ -149,4 +160,13 @@
       c.querySelector('b').textContent=o.name; c.querySelector('span').textContent=`${o.designer} · gratis opskrift`;
       c.querySelector('.price').textContent=`Garnpakke ${o.price.toLocaleString('da-DK')} kr.`; });
   });
+})();
+
+
+// ---- Mobilmenu ----
+(function(){
+  const b=document.querySelector('.burger'), n=document.getElementById('mainnav'); if(!b||!n) return;
+  b.addEventListener('click',()=>{const o=n.classList.toggle('open'); b.setAttribute('aria-expanded',o?'true':'false');});
+  document.querySelectorAll('.sub-toggle').forEach(t=>t.addEventListener('click',e=>{e.preventDefault(); t.closest('.has-sub').classList.toggle('open');}));
+  if(document.querySelector('.sticky-cta')) document.body.classList.add('has-sticky');
 })();

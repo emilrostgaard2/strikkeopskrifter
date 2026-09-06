@@ -12,6 +12,20 @@ PRIS = json.load(open(f"{ROOT}/data/priser.json", encoding="utf-8"))
 GARN = {g["slug"]: g for g in json.load(open(f"{ROOT}/data/garn.json", encoding="utf-8"))["garn"]}
 for g in GARN.values(): g["_re"] = re.compile(g["match"], re.I)
 BASE = "https://strikkeopskrifter.dk"
+import datetime
+try:
+    _st = json.load(open(f"{ROOT}/data/feed-status.json", encoding="utf-8")); _gen = datetime.datetime.fromisoformat(_st["generated"])
+except Exception:
+    _gen = datetime.datetime.now(datetime.timezone.utc)
+_gen_dk = _gen + datetime.timedelta(hours=2)
+UPDATED = _gen_dk.strftime("%-d. %B %Y kl. %H:%M").replace("January","januar").replace("February","februar").replace("March","marts").replace("April","april").replace("May","maj").replace("June","juni").replace("July","juli").replace("August","august").replace("September","september").replace("October","oktober").replace("November","november").replace("December","december")
+TODAY = _gen_dk.strftime("%Y-%m-%d")
+DETAILS = {}
+try: DETAILS = json.load(open(f"{ROOT}/data/drops-details.json", encoding="utf-8"))
+except Exception: pass
+HIST = {}
+try: HIST = json.load(open(f"{ROOT}/data/prishistorik.json", encoding="utf-8"))
+except Exception: pass
 
 def slugify(s):
     s = s.lower().replace("ø","o").replace("æ","ae").replace("å","aa")
@@ -19,6 +33,12 @@ def slugify(s):
     return re.sub(r"-+", "-", re.sub(r"[^a-z0-9]+", "-", s)).strip("-")
 def e(s): return html.escape(str(s or ""), quote=True)
 def kr(n): return f"{n:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+import hashlib
+def img(url):
+    """Lokal WebP hvis images.py har hentet den, ellers feed-URL."""
+    if not url: return ""
+    k = hashlib.md5(url.encode()).hexdigest()[:16]
+    return f"/assets/img/cache/{k}.webp" if os.path.exists(f"{ROOT}/assets/img/cache/{k}.webp") else url
 def jsonld(obj): return f'<script type="application/ld+json">{json.dumps(obj, ensure_ascii=False)}</script>'
 
 TYPE_LABEL = {"sweater":"Sweatre & bluser","cardigan":"Cardigans","vest":"Veste","hue":"Huer","sjal":"Sjaler & tørklæder","sokker":"Sokker",
@@ -30,12 +50,24 @@ HEAD = '''<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/style.css">'''
 def nav(current=""):
-    def a(href, label, key): return f'<li><a href="{href}"{" aria-current=page" if key==current else ""}>{label}</a></li>'
+    def a(href, label, key, extra=""): return f'<a href="{href}"{" aria-current=page" if key==current else ""}{extra}>{label}</a>'
     return f'''<header class="site"><div class="wrap nav"><a class="logo" href="/">strikke<span>opskrifter</span>.dk</a>
-<ul>{a("/opskrifter/","Opskrifter","opskrifter")}{a("/gratis/","Gratis","gratis")}{a("/garn/","Garn","garn")}{a("/garn/drops/","DROPS","drops")}{a("/guides/","Guides","guides")}</ul></div></header>'''
-FOOT = f'''<footer class="site"><div class="wrap"><div>strikkeopskrifter.dk · Find opskriften, regn garnet ud, og køb det hvor det er billigst.<br><span style="opacity:.7">Opskrifter: <a href="/opskrifter/dame/">Damer</a> · <a href="/opskrifter/boern/">Børn</a> · <a href="/opskrifter/baby/">Baby</a> · <a href="/opskrifter/herre/">Herrer</a> · <a href="/opskrifter/begynder/">Begyndere</a> · <a href="/gratis/">Gratis</a> · <a href="/garn/drops/">DROPS</a><br>Typer: <a href="/opskrifter/sweater/">Sweatre</a> · <a href="/opskrifter/cardigan/">Cardigans</a> · <a href="/opskrifter/vest/">Veste</a> · <a href="/opskrifter/hue/">Huer</a> · <a href="/opskrifter/sjal/">Sjaler</a> · <a href="/opskrifter/sokker/">Sokker</a><br>Pinde: <a href="/opskrifter/pind-3/">3</a> · <a href="/opskrifter/pind-4/">4</a> · <a href="/opskrifter/pind-5/">5</a> · <a href="/opskrifter/pind-7/">7</a> · <a href="/opskrifter/pind-8/">8</a></span></div>
-<div><a href="/om/">Om siden</a> · <a href="/om/#provision">Sådan tjener vi penge</a> · <a href="/om/#kontakt">Kontakt</a></div></div></footer>'''
-
+<button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="mainnav"><span></span><span></span><span></span></button>
+<nav id="mainnav"><ul>
+<li class="has-sub">{a("/opskrifter/","Opskrifter","opskrifter",' aria-haspopup="true"')}<button class="sub-toggle" aria-label="Vis undermenu">▾</button>
+<div class="sub"><div class="sub-col"><b>Til hvem</b><a href="/opskrifter/dame/">Damer</a><a href="/opskrifter/boern/">Børn</a><a href="/opskrifter/baby/">Baby</a><a href="/opskrifter/herre/">Herrer</a><a href="/opskrifter/begynder/">Begyndere</a></div>
+<div class="sub-col"><b>Type</b><a href="/opskrifter/sweater/">Sweatre & bluser</a><a href="/opskrifter/cardigan/">Cardigans</a><a href="/opskrifter/vest/">Veste</a><a href="/opskrifter/hue/">Huer</a><a href="/opskrifter/sjal/">Sjaler & tørklæder</a><a href="/opskrifter/sokker/">Sokker</a></div>
+<div class="sub-col"><b>Pind</b><a href="/opskrifter/pind-3/">Pind 3</a><a href="/opskrifter/pind-4/">Pind 4</a><a href="/opskrifter/pind-5/">Pind 5</a><a href="/opskrifter/pind-7/">Pind 7</a><a href="/opskrifter/pind-8/">Pind 8</a></div></div></li>
+<li>{a("/gratis/","Gratis","gratis")}</li><li>{a("/garn/","Garn","garn")}</li><li>{a("/garn/drops/","DROPS","drops")}</li><li>{a("/guides/","Guides","guides")}</li>
+</ul></nav></div></header>'''
+FOOT = '''<footer class="site"><div class="wrap foot-grid">
+<div class="foot-brand"><a class="logo" href="/">strikke<span>opskrifter</span>.dk</a><p>Find opskriften, regn garnet ud, og køb det hvor det er billigst. Priser hentes hver nat fra danske garnbutikker.</p>
+<form class="foot-news" action="#" onsubmit="return false"><input type="email" placeholder="din@mail.dk" aria-label="E-mail"><button class="btn btn-primary btn-sm" type="submit">Få prisfald</button></form></div>
+<div><b>Opskrifter</b><a href="/opskrifter/dame/">Til damer</a><a href="/opskrifter/boern/">Til børn</a><a href="/opskrifter/baby/">Til baby</a><a href="/opskrifter/herre/">Til herrer</a><a href="/opskrifter/begynder/">Begyndere</a><a href="/gratis/">Gratis opskrifter</a><a href="/garn/drops/">DROPS-opskrifter</a></div>
+<div><b>Typer</b><a href="/opskrifter/sweater/">Sweatre & bluser</a><a href="/opskrifter/cardigan/">Cardigans</a><a href="/opskrifter/vest/">Veste</a><a href="/opskrifter/hue/">Huer</a><a href="/opskrifter/sjal/">Sjaler</a><a href="/opskrifter/sokker/">Sokker</a></div>
+<div><b>Garn & guides</b><a href="/garn/">Sammenlign garnpriser</a><a href="/garn/drops-baby-merino/">Drops Baby Merino</a><a href="/garn/drops-air/">Drops Air</a><a href="/guides/vaelg-alternativt-garn/">Vælg alternativt garn</a><a href="/guides/hvor-mange-noegler/">Hvor mange nøgler?</a><a href="/guides/alternativer-onling-no-1/">Alternativer til Önling No 1</a></div>
+<div><b>Om</b><a href="/om/">Om siden</a><a href="/om/#provision">Sådan tjener vi penge</a><a href="/om/#kontakt">Kontakt</a><span class="small" style="opacity:.6;margin-top:8px;display:block">Pinde: <a href="/opskrifter/pind-3/">3</a> · <a href="/opskrifter/pind-4/">4</a> · <a href="/opskrifter/pind-5/">5</a> · <a href="/opskrifter/pind-7/">7</a> · <a href="/opskrifter/pind-8/">8</a></span></div>
+</div><div class="wrap foot-bottom">© strikkeopskrifter.dk · Opskrifterne tilhører designerne og butikkerne. Vi linker til dem og får provision ved køb – det ændrer ikke din pris.</div></footer>'''
 def breadcrumbs(items):
     html_ = " / ".join(f'<a href="{u}">{e(l)}</a>' if u else e(l) for l, u in items)
     ld = {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
@@ -50,12 +82,12 @@ def faq_block(faq, h="Ofte stillede spørgsmål"):
 
 def shell(title, meta, path, body, lds, current="", og_image=None):
     ld_html = "".join(jsonld(x) for x in lds if x)
-    og = f'<meta property="og:image" content="{e(og_image)}">' if og_image else ""
+    og = f'<meta property="og:image" content="{e(og_image)}"><link rel="preload" as="image" href="{e(img(og_image))}">' if og_image else ""
     return f'''<!DOCTYPE html>
 <html lang="da"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{e(title)} | strikkeopskrifter.dk</title><meta name="description" content="{e(meta)}">
 <link rel="canonical" href="{BASE}{path}"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(meta)}">{og}
-{HEAD}{ld_html}</head><body>{nav(current)}<main class="wrap">{body}</main>{FOOT}<script src="/assets/site.js"></script><script>if(document.querySelector('.sticky-cta'))document.body.classList.add('has-sticky');</script></body></html>'''
+{HEAD}{ld_html}</head><body>{nav(current)}<main class="wrap">{body}</main>{FOOT}<script src="/assets/site.js"></script></body></html>'''
 
 # ---------------- Drops-opskriftssider ----------------
 def find_yarns(text):
@@ -103,8 +135,23 @@ def needles(text):
     return found
 
 def materials_panel(o, yarns):
-    """Estimerer nøgler ud fra garnpakkens pris / Ritos pris pr. nøgle (mindste størrelse)."""
+    """Rigtige mængder fra DROPS når de findes, ellers estimat ud fra garnpakkens pris."""
     rows = []
+    det = DETAILS.get(o.get("page"))
+    if det and det.get("yarns"):
+        for y in det["yarns"]:
+            slug = next((s_ for s_, g in GARN.items() if g["_re"].search(y["name"])), None); g = GARN.get(slug); p = PRIS.get(slug) if slug else None
+            gr = y["grams"]; sizes = det.get("sizes") or []
+            per = " · ".join(f"{sz}: {gm} g" for sz, gm in zip(sizes, gr)) if sizes and len(sizes)==len(gr) else " – ".join(str(x) for x in gr) + " g"
+            ch = next((v for v in p["shops"].values() if v["price"]), None) if p else None
+            cost = f"<br><span class='small muted'>{-(-gr[0]//g['grams'])}–{-(-gr[-1]//g['grams'])} nøgler à {g['grams']} g · fra {kr(-(-gr[0]//g['grams'])*ch['price'])} kr. hos {e(ch['shop'])}</span>" if g and ch else ""
+            rows.append(f"<tr><th>{e(y['name'])}</th><td>{e(per)}{cost}</td></tr>")
+        n = det.get("needles") or []
+        rows.append(f"<tr><th>Pinde</th><td>{'Rundpind ' + ' og '.join(x+' mm' for x in n) if n else 'Se opskriften'}</td></tr>")
+        if det.get("gauge"): rows.append(f"<tr><th>Strikkefasthed</th><td>{e(det['gauge'])}</td></tr>")
+        rows.append(f"<tr><th>Størrelser</th><td>{e(' – '.join(det.get('sizes') or []) or o.get('sizes') or 'Se opskriften')}</td></tr>")
+        rows.append("<tr><th>Opskrift</th><td>Gratis PDF fra DROPS Design (dansk) – <a href='#beregner'>brug beregneren</a> til din størrelse</td></tr>")
+        return f"<section class='panel' style='margin-bottom:22px'><h3 style='margin-bottom:10px'>Det skal du bruge</h3><table>{''.join(rows)}</table><p class='small muted' style='margin:10px 0 0'>Mængder pr. størrelse er DROPS Designs egne angivelser.</p></section>"
     for name, slug in yarns:
         g = GARN.get(slug); p = PRIS.get(slug)
         if not (g and p and p.get("shops")): 
@@ -124,8 +171,55 @@ def materials_panel(o, yarns):
     note = "<p class='small muted' style='margin:10px 0 0'>Nøgleantallet er beregnet ud fra garnpakkens pris og gælder mindste størrelse – større størrelser bruger mere. Den præcise mængde pr. størrelse står i opskriften.</p>" if len(yarns)==1 else ""
     return f"<section class='panel' style='margin-bottom:22px'><h3 style='margin-bottom:10px'>Det skal du bruge</h3><table>{''.join(rows)}</table>{note}</section>"
 
+def alternatives_html(yarns):
+    """2 garner i samme strikkefasthed (±1 m) med priser – automatisk fra garntabellen."""
+    if not yarns or not yarns[0][1] or not GARN.get(yarns[0][1]): return ""
+    g0 = GARN[yarns[0][1]]; out = []
+    cands = [g for s_, g in GARN.items() if s_ != g0["slug"] and abs(g["gauge"] - g0["gauge"]) <= 1 and PRIS.get(s_, {}).get("from_price")]
+    cands.sort(key=lambda g: PRIS[g["slug"]]["from_price"])
+    for g in cands[:3]:
+        p = PRIS[g["slug"]]; ch = next((v for v in p["shops"].values() if v["price"]), None)
+        save = ""
+        if PRIS.get(g0["slug"], {}).get("from_price"):
+            d = PRIS[g0["slug"]]["from_price"] - p["from_price"]
+            save = f'<span class="tag save">spar {kr(d)} kr./nøgle</span>' if d >= 2 else ""
+        out.append(f'''<div class="shop"><span class="logo logo-txt">{e(g["name"][6:7] if g["name"].startswith("Drops ") else g["name"][:1])}</span><div class="name"><a href="/garn/{g["slug"]}/">{e(g["name"])}</a> {save}<small>{e(g["fiber"])} · {g["meters"]} m/{g["grams"]} g · {g["gauge"]} m på 10 cm</small></div>
+<div class="price">{kr(p["from_price"])} kr.<small>pr. nøgle hos {e(ch["shop"])}</small></div><a class="go" href="/garn/{g["slug"]}/">Se priser</a></div>''')
+    if not out: return ""
+    return f'''<section style="margin-top:26px"><h3 style="margin-bottom:4px">Alternativer i samme strikkefasthed</h3><p class="small muted" style="margin:0 0 10px">Garner med {g0["gauge"]}±1 masker på 10 cm – strik en prøve, og regn mængden om i meter. <a href="/guides/vaelg-alternativt-garn/">Sådan gør du</a>.</p>{"".join(out)}</section>'''
+
+def calc_html(o, det):
+    """Rigtig beregner (som Rikke Cozy) når DROPS-mængder pr. størrelse findes."""
+    if not det or "yarns" not in det: return "", ""
+    sizes = det.get("sizes") or []
+    n = max(len(y["grams"]) for y in det["yarns"])
+    if not sizes or len(sizes) != n: sizes = [f"Str. {i+1}" for i in range(n)]
+    yconf = {}; opts = ""
+    for i, y in enumerate(det["yarns"]):
+        slug = next((s_ for s_, g in GARN.items() if g["_re"].search(y["name"])), None)
+        g = GARN.get(slug); p = PRIS.get(slug) if slug else None
+        if not g: continue
+        key = f"y{i}"
+        grams = (y["grams"] + [y["grams"][-1]]*n)[:n]
+        yconf[key] = {"name": y["name"], "garn": slug, "perBall": g["grams"], "grams": grams, "shops": []}
+        opts += f'''<label class="yarn"><input type="radio" name="yarn" value="{key}" {'checked' if not opts else ''}><div><h3>{e(y["name"])} <span class="tag orig">Originalgarn</span></h3><p>{e(g["fiber"])} · {g["grams"]} g / {g["meters"]} m{' · <a href="/garn/'+slug+'/">se priser</a>' if p and p.get("shops") else ''}</p></div><div class="amt" data-amt="{key}"></div></label>'''
+    if not yconf: return "", ""
+    default = min(len(sizes)-1, 2)
+    buttons = "".join(f'<button aria-pressed="{"true" if i==default else "false"}" data-i="{i}">{e(sz)}</button>' for i, sz in enumerate(sizes))
+    gauge = f'<p class="small muted" style="margin:8px 0 0">Strikkefasthed: {e(det["gauge"])}</p>' if det.get("gauge") else ""
+    html_ = f'''<section class="calc" id="beregner"><div class="calc-head"><div><h2>Hvor meget garn skal du bruge?</h2><p>Vælg din størrelse. Mængderne er DROPS' egne tal pr. størrelse – vi regner nøgler og pris ud hos hver butik.</p>{gauge}</div>
+<div class="sizes" role="group" aria-label="Vælg størrelse">{buttons}</div></div>
+<div class="calc-body"><div class="yarn-opts" role="radiogroup" aria-label="Vælg garn">{opts}<div style="padding:14px 34px;font-size:13.5px;color:var(--ink-2)">Skal du bruge flere garner (fx mohair holdt sammen), vælg dem én ad gangen.</div></div>
+<div class="compare"><h3 id="cmp-title"></h3><p class="sub">Priser opdateret {UPDATED}. Fragt er ikke medregnet.</p><div id="shops"></div></div></div></section>'''
+    js = f'<script>window.OPSKRIFT={json.dumps({"sizes": sizes, "defaultSize": default, "yarns": yconf}, ensure_ascii=False)};</script>'
+    return html_, js
+
 def drops_page(o, related):
+    det = DETAILS.get(o.get("page"))
+    calc, calc_js = calc_html(o, det)
     yarns = find_yarns(o.get("desc",""))
+    if det and det.get("yarns"):
+        yarns = [(y["name"], next((s_ for s_, g in GARN.items() if g["_re"].search(y["name"])), None)) for y in det["yarns"]] or yarns
     tl = TYPE_LABEL.get(o["type"], "andet").lower()
     tgt = TARGET_LABEL.get(o.get("target","dame"), "damer")
     title = f"{o['name']} – gratis strikkeopskrift fra DROPS ({tl}, {tgt})"
@@ -170,20 +264,21 @@ def drops_page(o, related):
                 f'<a href="{e(v.get("cart") or v["url"])}" rel="sponsored nofollow" target="_blank" title="{e(v["nr"])} {e(v["color"])}{"" if v["stock"]=="in_stock" else " (udsolgt)"}" class="{"" if v["stock"]=="in_stock" else "out"}" style="background-image:url(\'{e(v["image"])}\')"></a>' for v in sw) + "</div>"
     faq_html, faq_ld = faq_block(faq, f"Spørgsmål om {o['name']}")
     crumbs, crumb_ld = breadcrumbs([("Forside","/"),("Opskrifter","/opskrifter/"),("DROPS","/garn/drops/"),(TYPE_LABEL.get(o['type'],'Andet'), f"/opskrifter/?kategori={o['type']}"),(o['name'],None)])
-    rel_html = "".join(f'''<a class="card" href="{r['page']}"><div class="img" style="background:center/cover url('{e(r['image'])}')"></div><b>{e(r['name'])}</b><span>DROPS Design · gratis · {TARGET_LABEL.get(r.get('target',''),'')}</span><em class="price">Garnpakke {kr(r['price'])} kr.</em></a>''' for r in related)
+    rel_html = "".join(f'''<a class="card" href="{r['page']}"><div class="img" style="background:center/cover url('{e(img(r['image']))}')"></div><b>{e(r['name'])}</b><span>DROPS Design · gratis · {TARGET_LABEL.get(r.get('target',''),'')}</span><em class="price">Garnpakke {kr(r['price'])} kr.</em></a>''' for r in related)
     product_ld = {"@context":"https://schema.org","@type":"Product","name":f"{o['name']} – garnpakke","image":o["image"],"description":o.get("desc",""),
                   "brand":{"@type":"Brand","name":"DROPS Design"},"offers":{"@type":"Offer","priceCurrency":"DKK","price":o["price"],"availability":"https://schema.org/InStock" if o.get("stock")=="in_stock" else "https://schema.org/BackOrder","seller":{"@type":"Organization","name":o["shop_name"]}}}
     body = f'''{crumbs}
 <style>.hero{{display:grid;grid-template-columns:5fr 6fr;gap:48px;padding:24px 0 40px;align-items:start}}.swatch{{aspect-ratio:4/5;background:var(--oat-2) center/cover;border-radius:var(--r);box-shadow:var(--shadow)}}
 .byline{{color:var(--ink-2);margin:10px 0 18px}}.lead{{font-size:17px;max-width:56ch;margin:0 0 24px}}.cta-row{{display:flex;gap:12px;flex-wrap:wrap}}.two{{display:grid;grid-template-columns:7fr 4fr;gap:40px;margin-bottom:48px;align-items:start}}@media(max-width:860px){{.hero,.two{{grid-template-columns:1fr}}}}</style>
-<section class="hero"><div class="swatch" role="img" aria-label="{e(o['name'])}" style="background-image:url('{e(o['image'])}')"></div>
+<section class="hero"><div class="swatch" role="img" aria-label="{e(o['name'])}" style="background-image:url('{e(img(o['image']))}')"></div>
 <div><span class="eyebrow">Gratis opskrift · til {tgt}</span><h1>{e(o['name'])}</h1><p class="byline">Design af DROPS Design{(' · Str. '+e(o['sizes'])) if o.get('sizes') else ''} · Niveau: {e(o.get('level','let øvet'))}</p>
 {pricebox}
 <p class="lead">{e(o.get('desc',''))}</p>
 <div class="cta-row"><a class="btn btn-primary" href="#garn">Se garn og pris</a><a class="btn btn-ghost" href="{e(o['url'])}" rel="sponsored nofollow" target="_blank">Hent opskriften gratis</a></div>
 <p class="small muted" style="margin-top:12px">Opskriften er gratis hos DROPS. Garnet køber du hvor det er billigst – eller som samlet pakke.</p></div></section>
 <div class="sticky-cta"><div><div class="small muted">Garn fra</div><div class="big">{kr(cheapest_total)} kr.</div></div><a class="btn btn-primary btn-sm" href="#garn">Se garn og pris</a></div>
-<section id="garn" class="two"><div><h2 style="margin-bottom:8px">Garnet til {e(o['name'])}</h2><p class="muted" style="margin:0 0 18px;max-width:60ch">{e(TYPE_SENT.get(o['type'],''))} Priserne herunder hentes hver nat fra butikkernes egne feeds.</p>{materials_panel(o, yarns)}{yarn_html}{colors_html}
+{calc}
+<section id="garn" class="two"><div><h2 style="margin-bottom:8px">Garnet til {e(o['name'])}</h2><p class="muted" style="margin:0 0 18px;max-width:60ch">{e(TYPE_SENT.get(o['type'],''))} Priser opdateret {UPDATED}.</p>{materials_panel(o, yarns)}{yarn_html}{colors_html}{alternatives_html(yarns)}
 <p class="disclose">Vi får en lille provision, hvis du køber via vores links. Det ændrer ikke prisen for dig, og det påvirker ikke, hvilken butik vi viser som billigst.</p></div>
 <aside class="panel"><h3 style="margin-bottom:6px">Alt garnet i én pakke</h3><p class="muted small" style="margin:0 0 14px">{e(o['shop_name'])} sælger garnet til {e(o['name'])} som samlet pakke i din størrelse{(' ('+e(o['sizes'])+')') if o.get('sizes') else ''}. Opskriften henter du gratis.</p>
 <div style="font-family:var(--serif);font-size:30px;font-weight:600;margin-bottom:12px">{kr(o['price'])} kr.</div>
@@ -191,10 +286,34 @@ def drops_page(o, related):
 <p class="small muted" style="margin:16px 0 0">Ny i strik? Læs <a href="/guides/hvor-mange-noegler/">hvor mange nøgler du skal bruge</a> og <a href="/guides/vaelg-alternativt-garn/">hvordan du vælger et andet garn</a>.</p></aside></section>
 {faq_html}
 <section class="sec"><div class="sec-head"><h2>Flere gratis DROPS-opskrifter – {e(tl)} til {e(tgt)}</h2><a href="/opskrifter/?kategori={o['type']}">Se alle →</a></div><div class="grid">{rel_html}</div></section>'''
-    return shell(title, meta, path, body, [crumb_ld, faq_ld, product_ld], "drops", o["image"])
+    return shell(title, meta, path, body + calc_js, [crumb_ld, faq_ld, product_ld], "drops", o["image"])
 
 # ---------------- kategorisider / hubs ----------------
-def grid_html(preset):
+def card(o):
+    sub = f"{e(o.get('designer',''))}{(' · '+e(o['sizes'])) if o.get('sizes') else ''}{' · gratis opskrift' if o.get('free') else ''}"
+    price = f"Garnpakke {kr(o['price'])} kr." if o.get("kind")=="pakke" else f"Opskrift {kr(o['price'])} kr."
+    return f'''<a class="card" href="{e(o.get('page') or o['url'])}"{'' if o.get('page') else ' rel="sponsored nofollow" target="_blank"'}><div class="img" role="img" aria-label="{e(o['name'])}" style="background-image:url('{e(img(o['image']))}')">{'<span class="badge">gratis</span>' if o.get('free') else ''}</div><b>{e(o['name'])}</b><span>{sub}</span><em class="price">{price}</em></a>'''
+
+def match_preset(o, preset):
+    if preset.get("type") and o.get("type") != preset["type"]: return False
+    if preset.get("target") and o.get("target") != preset["target"]: return False
+    if preset.get("designer") and o.get("designer") != preset["designer"]: return False
+    if preset.get("free") and not o.get("free"): return False
+    if preset.get("level") and o.get("level") != preset["level"]: return False
+    if preset.get("needle") and preset["needle"] not in (o.get("needles") or []): return False
+    return bool(o.get("image"))
+
+def stats_html(items, what):
+    """Genereret prisspænd + top-10 – unikt pr. side, baseret på data."""
+    prices = sorted(o["price"] for o in items if o.get("kind")=="pakke" and o.get("price"))
+    if len(prices) < 5: return ""
+    lo, hi = prices[0], prices[-1]; q1, q3 = prices[len(prices)//4], prices[3*len(prices)//4]
+    top = items[:10]
+    lis = "".join(f'<li><a href="{e(o.get("page") or o["url"])}">{e(o["name"])}</a> <span class="muted small">– {e(o.get("designer",""))}, garn {kr(o["price"])} kr.</span></li>' for o in top)
+    return f'''<section class="sec"><h2>Hvad koster garnet til {e(what)}?</h2><p>Blandt de {len(prices)} opskrifter her, hvor en butik sælger garnet som samlet pakke, koster garnet fra <b>{kr(lo)} kr.</b> til <b>{kr(hi)} kr.</b> – de fleste ligger mellem {kr(q1)} og {kr(q3)} kr. Prisen afhænger af garntykkelse, størrelse og om du køber løst eller som pakke; på hver opskriftsside kan du se, hvor garnet er billigst i dag.</p>
+<h3 style="margin:22px 0 10px">De 10 nyeste {e(what)}</h3><ol class="toplist">{lis}</ol></section>'''
+
+def grid_html(preset, items=None):
     attrs = " ".join(f'data-{k}="{e(v)}"' for k, v in preset.items())
     return f'''<div class="filters" role="group" aria-label="Filtrér">
     <input type="search" id="f-q" placeholder="Søg opskrift, garn …" aria-label="Søg">
@@ -204,7 +323,7 @@ def grid_html(preset):
     <select id="f-free" aria-label="Pris" {'hidden' if 'free' in preset else ''}><option value="">Betalt og gratis</option><option value="1">Kun gratis</option></select>
     <select id="f-sort" aria-label="Sortering"><option value="">Nyeste</option><option value="pris">Billigste garn</option><option value="navn">A–Å</option></select>
     <span id="f-count" class="muted small" style="align-self:center"></span></div>
-  <div class="grid" id="opskrift-grid" {attrs}></div>'''
+  <div class="grid" id="opskrift-grid" {attrs}>{''.join(card(o) for o in (items or [])[:24])}</div>'''
 
 def cat_page(c, current="opskrifter"):
     path = "/" + c["path"] + "/"
@@ -213,9 +332,12 @@ def cat_page(c, current="opskrifter"):
     faq_html, faq_ld = faq_block(c["faq"])
     crumbs, crumb_ld = breadcrumbs([("Forside","/"),("Opskrifter","/opskrifter/"),(c["h1"],None)] if c["path"].startswith("opskrifter") else [("Forside","/"),(c["h1"],None)])
     coll_ld = {"@context":"https://schema.org","@type":"CollectionPage","name":c["title"],"description":c["meta"],"url":BASE+path,"isPartOf":{"@type":"WebSite","name":"strikkeopskrifter.dk","url":BASE}}
-    body = f'''{crumbs}<h1 style="margin-top:12px">{e(c['h1'])}</h1><div class="prose intro">{intro}</div>
-{grid_html(c['preset'])}
-<div class="prose">{secs}</div>{faq_html}'''
+    items = [o for o in OPS if match_preset(o, c["preset"])]
+    what = c["h1"].replace("Strikkeopskrifter til ", "").replace("Nemme strikkeopskrifter til ", "opskrifter til ").replace("Strikkeopskrifter", "opskrifter").lower()
+    upd = f'<p class="small muted" style="margin:-6px 0 10px">{len(items)} opskrifter · priser opdateret {UPDATED}</p>'
+    body = f'''{crumbs}<h1 style="margin-top:12px">{e(c['h1'])}</h1><div class="prose intro">{intro}</div>{upd}
+{grid_html(c['preset'], items)}
+<div class="prose">{secs}</div>{stats_html(items, what)}{faq_html}'''
     return shell(c["title"], c["meta"], path, body, [crumb_ld, coll_ld, faq_ld], current)
 
 def guide_page(g):
@@ -260,8 +382,11 @@ for o in pakker:
     o["slug"] = s if n == 0 else f"{s}-{n+1}"; o["page"] = f"/opskrifter/drops/{o['slug']}/"
 by_key = {}
 for o in pakker: by_key.setdefault((o["type"], o.get("target")), []).append(o)
+def yarn_key(o): return tuple(sorted(n for n,_ in find_yarns(o.get("desc",""))))
 for o in pakker:
-    rel = [r for r in by_key[(o["type"], o.get("target"))] if r is not o][:4]
+    yk = yarn_key(o)
+    rel = [r for r in by_key[(o["type"], o.get("target"))] if r is not o and yk and yarn_key(r) == yk][:4]
+    rel += [r for r in by_key[(o["type"], o.get("target"))] if r is not o and r not in rel][:4-len(rel)]
     if len(rel) < 4: rel += [r for r in pakker if r["type"] == o["type"] and r not in rel and r is not o][:4-len(rel)]
     write(o["page"], drops_page(o, rel))
 json.dump(OPS, open(f"{ROOT}/data/opskrifter.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
@@ -282,6 +407,20 @@ urls = ["/", "/opskrifter/", "/gratis/", "/garn/", "/garn/drops/", "/guides/", "
        [f"/opskrifter/{t['slug']}/" for t in C.TYPES] + [f"/opskrifter/pind-{n['n'].replace('.','-')}/" for n in C.NEEDLES] + \
        [f"/guides/{g['slug']}/" for g in C.GUIDES] + [o["page"] for o in pakker] + \
        [f"/garn/{s}/" for s, g in PRIS.items() if g.get("shops") and os.path.exists(f"{ROOT}/garn/{s}")]
-open(f"{ROOT}/sitemap.xml", "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"<url><loc>{BASE}{u}</loc></url>\n" for u in urls) + "</urlset>\n")
+open(f"{ROOT}/sitemap.xml", "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"<url><loc>{BASE}{u}</loc><lastmod>{TODAY}</lastmod></url>\n" for u in urls) + "</urlset>\n")
 open(f"{ROOT}/robots.txt", "w").write(f"User-agent: *\nAllow: /\nDisallow: /data/\nSitemap: {BASE}/sitemap.xml\n")
 print(f"Skrev {len(pakker)} opskriftssider, {len(C.CATEGORIES)+2} kategorisider, {len(C.GUIDES)} guides, om-side, sitemap ({len(urls)} URL'er)")
+
+# ---------------- Fælles header/footer på de håndskrevne sider ----------------
+STATIC = {"index.html": "", "opskrifter/index.html": "opskrifter", "garn/index.html": "garn", "opskrifter/rikke-cozy-sweater/index.html": "opskrifter"}
+import glob as _glob
+for f in _glob.glob(f"{ROOT}/garn/*/index.html"):
+    if not f.endswith("/garn/drops/index.html"): STATIC[os.path.relpath(f, ROOT)] = "garn"
+for rel, cur in STATIC.items():
+    f = f"{ROOT}/{rel}"
+    if not os.path.exists(f): continue
+    t = open(f, encoding="utf-8").read()
+    t2 = re.sub(r"<header class=\"site\">.*?</header>", lambda m: nav(cur), t, flags=re.S)
+    t2 = re.sub(r"<footer class=\"site\">.*?</footer>", lambda m: FOOT, t2, flags=re.S)
+    if t2 != t: open(f, "w", encoding="utf-8").write(t2)
+print("Header/footer synkroniseret på", len(STATIC), "statiske sider")

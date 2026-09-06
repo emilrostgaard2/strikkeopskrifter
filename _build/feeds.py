@@ -211,6 +211,18 @@ if not loaded:
     sys.exit(0)
 status["unmatched_top"] = {k: dict(sorted(v.items(), key=lambda x: -x[1])[:25]) for k, v in unmatched.items()}
 os.makedirs(f"{ROOT}/data", exist_ok=True)
+# Prishistorik: én linje pr. dag pr. garn pr. butik (laveste pris) – bruges til "laveste 30 dage" og graf
+hist_path = f"{ROOT}/data/prishistorik.json"
+try: hist = json.load(open(hist_path, encoding="utf-8"))
+except Exception: hist = {}
+today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+for slug, g in priser.items():
+    for k, s in g["shops"].items():
+        if s.get("price"): hist.setdefault(slug, {}).setdefault(k, {})[today] = s["price"]
+cutoff = (datetime.now(timezone.utc).replace(hour=0) - __import__("datetime").timedelta(days=120)).strftime("%Y-%m-%d")
+for slug in hist:
+    for k in hist[slug]: hist[slug][k] = {d: v for d, v in hist[slug][k].items() if d >= cutoff}
+json.dump(hist, open(hist_path, "w", encoding="utf-8"), ensure_ascii=False)
 json.dump(priser, open(f"{ROOT}/data/priser.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 json.dump(pakker, open(f"{ROOT}/data/drops-pakker.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 alle = [o for o in opskrifter + pakker if o.get("stock") != "out_of_stock"]
