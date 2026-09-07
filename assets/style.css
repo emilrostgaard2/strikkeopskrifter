@@ -12,7 +12,7 @@
   --line:rgba(43,37,33,.10);
   --shadow:0 1px 2px rgba(43,37,33,.06),0 8px 24px -12px rgba(43,37,33,.18);
   --r:14px;
-  --serif:"Fraunces",Georgia,serif;--display:"Cormorant Garamond","Fraunces",Georgia,serif;--sans:"Instrument Sans",system-ui,sans-serif;--hand:"Caveat","Bradley Hand",cursive;
+  --serif:"Fraunces",Georgia,serif;--display:"Lora","Fraunces",Georgia,serif;--sans:"Instrument Sans",system-ui,sans-serif;--hand:"Caveat","Bradley Hand",cursive;
   /* strikkemønster – to rækker "V" masker, meget svagt */
   --knit:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='24' viewBox='0 0 28 24'%3E%3Cg fill='none' stroke='%232B2521' stroke-opacity='.07' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 3l6 8 6-8'/%3E%3Cpath d='M15 3l6 8 6-8'/%3E%3Cpath d='M8 15l6 8 6-8'/%3E%3Cpath d='M-6 15l6 8 6-8'/%3E%3Cpath d='M22 15l6 8 6-8'/%3E%3C/g%3E%3C/svg%3E");
 }
@@ -27,9 +27,9 @@ img{max-width:100%;display:block}
 
 .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
 h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.015em;margin:0;line-height:1.1;font-variation-settings:"SOFT" 60}
-h1{font-family:var(--display);font-weight:600;font-size:clamp(40px,5.4vw,62px);letter-spacing:-.01em;line-height:1.02}
-h2{font-family:var(--display);font-weight:600;font-size:clamp(28px,3vw,36px);letter-spacing:0}
-h3{font-size:20px}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(30px,3.8vw,42px);letter-spacing:-.01em;line-height:1.12}
+h2{font-family:var(--display);font-weight:600;font-size:clamp(22px,2.3vw,27px);letter-spacing:0;line-height:1.25}
+h3{font-family:var(--display);font-size:19px}
 .muted{color:var(--ink-2)}.small{font-size:14px}
 
 /* ---------- Header (sticky) ---------- */
@@ -217,7 +217,7 @@ footer.site .foot-brand p{max-width:34ch;line-height:1.55;margin:0 0 14px;color:
 /* ---------- Mobil ---------- */
 @media (max-width:860px){
   .wrap{padding:0 16px}
-  h1{font-size:clamp(32px,8.5vw,42px)}h2{font-size:26px}
+  h1{font-size:clamp(28px,7vw,34px)}h2{font-size:22px}
   .burger{display:flex}
   .nav nav{display:none;position:absolute;left:0;right:0;top:100%;background:var(--paper);box-shadow:0 20px 40px -20px rgba(43,37,33,.4);border-bottom:1px solid var(--line);max-height:calc(100vh - 60px);overflow:auto}
   .nav nav.open{display:block}
@@ -270,3 +270,19 @@ footer.site .foot-brand p{max-width:34ch;line-height:1.55;margin:0 0 14px;color:
 
 .toplist{padding-left:22px;max-width:66ch}.toplist li{margin:6px 0}.toplist a{font-weight:600;text-decoration:none}.toplist a:hover{text-decoration:underline}
 .spark{width:100%;height:56px;display:block;margin:8px 0 4px}
+
+/* Udforsk mere + forfatterlinje */
+.explore{background:var(--paper);border-radius:20px;padding:26px 30px;box-shadow:var(--shadow)}
+.explore h2{margin-bottom:8px}.explore p{max-width:76ch;margin:0 0 12px;font-size:15.5px;line-height:1.7;color:var(--ink-2)}
+.explore a{color:var(--denim);font-weight:500}
+.byauthor{margin:22px 0 0;font-size:13px}
+/* Til toppen */
+.totop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:0;background:var(--ink);color:#fff;font-size:20px;box-shadow:0 10px 24px -10px rgba(43,37,33,.5);z-index:55;cursor:pointer;transition:opacity .2s,transform .2s}
+.totop[hidden]{display:none}
+.totop:hover{transform:translateY(-2px)}
+body.has-sticky .totop{bottom:82px}
+/* Se flere */
+.more{display:flex;flex-direction:column;align-items:center;gap:10px;margin:28px 0 8px}
+.more .count{font-size:14px;color:var(--ink-2)}
+.more .bar{width:220px;height:4px;background:var(--oat-2);border-radius:2px;overflow:hidden}.more .bar i{display:block;height:100%;background:var(--denim)}
+@media (max-width:860px){.explore{padding:18px 16px}.totop{right:12px;bottom:12px;width:42px;height:42px}}

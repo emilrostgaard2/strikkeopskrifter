@@ -133,7 +133,15 @@
     if(sort&&sort.value==='navn') list.sort((a,b)=>a.name.localeCompare(b.name,'da'));
     if(count) count.textContent=`${list.length} opskrifter`;
     const filtered=t||(cat&&cat.value)||(tgt&&tgt.value)||(des&&des.value)||(free&&free.value);
-    grid.innerHTML=(filtered?'':fixed.join(''))+list.slice(0,P.q?8:240).map(o=>`
+    const key=JSON.stringify([t,cat&&cat.value,tgt&&tgt.value,des&&des.value,free&&free.value,sort&&sort.value]);
+    if(render.lastKey!==key){ render.shown=24; render.lastKey=key; }
+    const limit=P.q?8:render.shown, shown=Math.min(limit,list.length);
+    if(!P.q){
+      let more=document.getElementById('more'); if(!more){ more=document.createElement('div'); more.id='more'; more.className='more'; grid.after(more); }
+      more.innerHTML = list.length>shown ? `<span class="count">Viser ${shown} af ${list.length} opskrifter</span><div class="bar"><i style="width:${Math.round(shown/list.length*100)}%"></i></div><button class="btn btn-ghost" id="more-btn">Vis ${Math.min(24,list.length-shown)} flere</button>` : (list.length?`<span class="count">Det var alle ${list.length} opskrifter</span>`:'');
+      const mb=document.getElementById('more-btn'); if(mb) mb.addEventListener('click',()=>{ render.shown+=24; render(); });
+    }
+    grid.innerHTML=(filtered?'':fixed.join(''))+list.slice(0,shown).map(o=>`
       <a class="card" href="${o.page||o.url}" ${o.page?'':'rel="sponsored nofollow" target="_blank"'}>
         <div class="img" role="img" aria-label="${o.name}" style="background:center/cover url('${o.image}')"></div>
         <b>${o.name}</b><span>${o.designer}${o.sizes?' · '+o.sizes:''}${o.free?' · gratis opskrift':''}</span>
@@ -172,4 +180,28 @@
     if(window.matchMedia('(max-width:860px)').matches){ const li=a.closest('.has-sub'); if(!li.classList.contains('open')){ e.preventDefault(); li.classList.add('open'); } }
   }));
   if(document.querySelector('.sticky-cta')) document.body.classList.add('has-sticky');
+})();
+
+
+// ---- Til toppen ----
+(function(){
+  const b=document.querySelector('.totop'); if(!b) return;
+  const t=()=>{ b.hidden = window.scrollY < 600; };
+  window.addEventListener('scroll',t,{passive:true}); t();
+  b.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+})();
+
+
+// ---- Prishistorik på garnsider (statisk side, JS tilføjer kun grafen) ----
+(function(){
+  const el=document.getElementById('garn-hist'); if(!el||!el.dataset.garn) return;
+  const s=document.querySelector('script[src*="assets/site.js"]'); const ROOT=s.getAttribute('src').startsWith('/')?'/':s.getAttribute('src').replace('assets/site.js','');
+  fetch(ROOT+'data/prishistorik.json').then(r=>r.ok?r.json():null).then(H=>{
+    const h=H&&H[el.dataset.garn]; if(!h) return;
+    const days={}; Object.values(h).forEach(sh=>Object.entries(sh).forEach(([d,p])=>{days[d]=Math.min(days[d]||1e9,p);}));
+    const ds=Object.keys(days).sort().slice(-30); if(ds.length<2) return;
+    const vals=ds.map(d=>days[d]); const lo=Math.min(...vals), hi=Math.max(...vals), cur=vals[vals.length-1]; const f=n=>n.toFixed(2).replace('.',',');
+    const w=300,hh=56,pad=4; const pts=vals.map((v,i)=>`${pad+i*(w-2*pad)/Math.max(1,vals.length-1)},${hi===lo?hh/2:(hh-pad)-(v-lo)/(hi-lo)*(hh-2*pad)}`).join(' ');
+    el.innerHTML=`<b>Laveste pris de sidste ${ds.length} dage: ${f(lo)} kr.</b> <span class="muted small">· højeste ${f(hi)} kr. · i dag ${f(cur)} kr.</span><svg class="spark" viewBox="0 0 ${w} ${hh}" preserveAspectRatio="none" aria-hidden="true"><polyline fill="none" stroke="var(--denim)" stroke-width="2" points="${pts}"/></svg><span class="small muted">${cur<=lo?'Prisen er på det laveste niveau i perioden.':'Prisen har været lavere – sæt en prisalarm.'}</span>`;
+  }).catch(()=>{});
 })();
