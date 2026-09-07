@@ -75,6 +75,8 @@ def split_color(name, feed_color=None):
     """Finder farvenummer + navn. Feed-felt 'color' vinder, ellers produktnavnet."""
     nr, col = parse_color_field(feed_color)
     if nr: return nr, col
+    m = re.search(r"-\s*([^-()]+?)\s*\((\d{2,4})\)\s*$", name)          # 'Önling No 1 - merino og angora garn - Salviegrøn (060)'
+    if m: return m.group(2), m.group(1).strip()
     m = COLOR_RE.search(name)
     if m: return m.group(1), m.group(2).strip()
     m = re.search(r"-\s*([^-]+?)\s*-\s*(\d{1,4})\s*$", name)          # 'Ulysse - Poivre - 01' / 'Drops Air - Off White - 01'
@@ -106,7 +108,9 @@ def load_feed(shop):
         yield {c.tag: clean(c.text) for c in p}
 
 def is_garn(item):
-    k = (item.get("kategorinavn") + " " + item.get("produktnavn")).lower()
+    k = ((item.get("kategorinavn") or "") + " " + (item.get("produktnavn") or "")).lower()
+    if any(w in k for w in ("strikkekit", "garnpakke", "opskrift", "gavekort", "strikkebox")): return False
+    if not item.get("kategorinavn") and any(g["_re"].search(item.get("produktnavn","")) for g in GARN): return True
     if any(w in k for w in ("opskrift", "bog", "pinde", "hæklenål", "tilbehør", "broderi", "pensel", "knap", "garnkit", "maskemark")): return False
     return "garn" in k
 
@@ -115,6 +119,7 @@ priser   = {g["slug"]: {"name": g["name"], "brand": g["brand"], "grams": g["gram
                          "gauge": g["gauge"], "needle": g["needle"], "fiber": g["fiber"], "shops": {}} for g in GARN}
 pakker   = []
 opskrifter = []
+onling_ops = {}
 seen_pakke = set()
 TYPES = [("sweater",r"sweater|trøje|bluse|genser|pullover|tee\b|top\b"),("cardigan",r"cardigan|jakke|bolero"),("vest",r"vest|slipover"),
          ("hue",r"hue|pandebånd|balaclava"),("sjal",r"sjal|tørklæde|halsrør|poncho"),("sokker",r"strømpe|sok"),("vanter",r"vante|luffe|handske"),
@@ -162,6 +167,24 @@ for shop in CFG["shops"]:
                            "sizes": (m.group(3) or "").strip() if m else "", "price": num(it.get("nypris")),
                            "stock": stock(it.get("lagerantal")), "image": it.get("billedurl"),
                            "url": it.get("vareurl"), "desc": cut(it.get("beskrivelse"), 700)})
+            continue
+        # Önling: "X af Y, strikkeopskrift (DK, SE, NO)" + "X, strikkekit i No 1" pr. størrelse
+        nl = name.lower()
+        if shop["key"] == "onling" and ("strikkeopskrift" in nl or "strikkekit" in nl or "garnpakke" in nl):
+            base = re.sub(r",?\s*(strikkeopskrift|strikkekit|garnpakke).*$", "", name, flags=re.I).strip()
+            base = re.sub(r"\s+af\s+.+$", "", base).strip().rstrip(",")
+            key = base.lower()
+            rec = onling_ops.setdefault(key, {"shop": shop["key"], "shop_name": shop["name"], "kind": "opskrift", "name": base,
+                   "designer": it.get("brand") or "Önling", "type": guess_type(name), "target": guess_target(name+" "+it.get("beskrivelse","")),
+                   "level": guess_level(it.get("beskrivelse","")), "free": False, "needles": [], "image": it.get("billedurl"), "url": it.get("vareurl"),
+                   "price": None, "kits": [], "desc": cut(it.get("beskrivelse"), 700), "stock": stock(it.get("lagerantal"))})
+            if "strikkeopskrift" in nl and "kit" not in nl:
+                rec["price"] = num(it.get("nypris")); rec["url"] = it.get("vareurl"); rec["opskrift_id"] = it.get("produktid")
+                if it.get("billedurl"): rec["image"] = it.get("billedurl")
+            else:
+                ym = re.search(r"(?:kit|garnpakke)\s+i\s+(.+?)(?:\s*\(|$)", name, re.I)
+                rec["kits"].append({"yarn": ym.group(1).strip() if ym else "", "size": it.get("size") or "", "price": num(it.get("nypris")),
+                                    "url": it.get("vareurl"), "cart": cart_url(shop, it.get("produktid",""), it.get("vareurl")), "stock": stock(it.get("lagerantal"))})
             continue
         # Løsopskrifter (fx PetiteKnit hos Broen Garn)
         if "strikkeopskrift" in it.get("kategorinavn","").lower() and not is_garn(it):
@@ -225,6 +248,9 @@ for slug in hist:
 json.dump(hist, open(hist_path, "w", encoding="utf-8"), ensure_ascii=False)
 json.dump(priser, open(f"{ROOT}/data/priser.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 json.dump(pakker, open(f"{ROOT}/data/drops-pakker.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+for rec in onling_ops.values():
+    if rec["price"] is None and rec["kits"]: rec["price"] = min(k["price"] for k in rec["kits"] if k["price"]); rec["kind"] = "kit"
+    if rec["price"] is not None: opskrifter.append(rec)
 alle = [o for o in opskrifter + pakker if o.get("stock") != "out_of_stock"]
 for o in alle:  # pinde: fra beskrivelsen + fra garntabellen for de garner, opskriften nævner
     ns = set(o.get("needles") or [])

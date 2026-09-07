@@ -1,9 +1,13 @@
 {
- "generated": "2026-09-06T18:23+00:00",
+ "generated": "2026-09-07T17:16+00:00",
  "shops": {
   "rito": {
-   "garn_items": 11958,
-   "matched": 1098
+   "garn_items": 11865,
+   "matched": 1093
+  },
+  "onling": {
+   "garn_items": 244,
+   "matched": 235
   },
   "kreamok": {
    "garn_items": 800,
@@ -22,7 +26,7 @@
    "matched": 0
   },
   "garnspecialisten": {
-   "garn_items": 384,
+   "garn_items": 370,
    "matched": 0
   }
  },
@@ -31,7 +35,6 @@
    "Lana Grossa Meilenweit": 261,
    "Scheepjes Catona Garn": 230,
    "Scheepjes Catona Garn Unicolor": 113,
-   "Infinity Hearts Rose": 109,
    "Scheepjes Cahlista Yarn Unicolor": 99,
    "Lana Grossa Cool Wool Garn": 94,
    "Scheepjes Colour Crafter Garn Unicolor": 92,
@@ -52,7 +55,12 @@
    "Lammy Cotton": 62,
    "Du Store Alpakka Sterk Garn": 61,
    "Viking Garn Sportsragg": 60,
-   "Scheepjes Scrumptious Garn": 60
+   "Scheepjes Scrumptious Garn": 60,
+   "Scheepjes Truly Scrumptious Garn": 60
+  },
+  "onling": {
+   "Strikkesalon med Önling og Garnblomsten,": 8,
+   "Önling garnholder i træ": 1
   },
   "kreamok": {
    "Lang Yarns Merino": 31,
@@ -165,7 +173,6 @@
   "garnspecialisten": {
    "SMILLA": 15,
    "November": 6,
-   "#StopGarnspild Garnpakke - nøgler (750 g": 6,
    "SIBERIAN Blå,": 6,
    "GIAMAICA Sølvgrå,": 6,
    "Gabi Koksgrå,": 5,
@@ -184,10 +191,11 @@
    "CAIFAST Chokolade,": 3,
    "LYON Lava,": 3,
    "LYON Sennep,": 2,
-   "#StopGarnspild Garnpakke -": 2,
    "Bahamas Merinogarn - Råhvid": 2,
    "Oktober": 2,
-   "#StopGarnspild Effektgarnpakke (3 kg con": 2
+   "Gabi Violet,": 2,
+   "Gabi Ruskind,": 2,
+   "Gabi Nougat,": 2
   }
  }
 }

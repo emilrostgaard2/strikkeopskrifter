@@ -111,7 +111,7 @@ def shop_rows(slug, qty=1):
             v = dict(v)
             v["cart"] = re.sub(r"(%3A|:)1(?=(&|$))", lambda m: m.group(1) + str(qty), v["cart"])
             v["cart"] = re.sub(r"quantity(%3D|=)1(?=(%26|&|$))", lambda m: "quantity" + m.group(1) + str(qty), v["cart"])
-        logo = f'<img class="logo" src="{e(s["logo"])}" alt="" width="40" height="40">' if s.get("logo") else '<span class="logo logo-txt">' + e(s["shop"][:1]) + '</span>'
+        logo = f'<img class="slogo" src="{e(s["logo"])}" alt="" width="40" height="40">' if s.get("logo") else '<span class="slogo logo-txt">' + e(s["shop"][:1]) + '</span>'
         rows.append(f'''<div class="shop {'best' if i==0 else ''}">{logo}<div class="name">{e(s['shop'])}<small>{e(note)}</small></div>
 <div class="price">{kr(s['price'])} kr.<small>pr. nøgle</small></div><a class="go" href="{e(v['cart'] if v else s['url'])}" rel="sponsored nofollow" target="_blank">{f'Læg {qty} i kurven' if v and qty>1 else ('Læg i kurven' if v else 'Gå til butik')}</a></div>''')
     return "".join(rows)
@@ -184,7 +184,7 @@ def alternatives_html(yarns):
         if PRIS.get(g0["slug"], {}).get("from_price"):
             d = PRIS[g0["slug"]]["from_price"] - p["from_price"]
             save = f'<span class="tag save">spar {kr(d)} kr./nøgle</span>' if d >= 2 else ""
-        out.append(f'''<div class="shop"><span class="logo logo-txt">{e(g["name"][6:7] if g["name"].startswith("Drops ") else g["name"][:1])}</span><div class="name"><a href="/garn/{g["slug"]}/">{e(g["name"])}</a> {save}<small>{e(g["fiber"])} · {g["meters"]} m/{g["grams"]} g · {g["gauge"]} m på 10 cm</small></div>
+        out.append(f'''<div class="shop"><span class="slogo logo-txt">{e(g["name"][6:7] if g["name"].startswith("Drops ") else g["name"][:1])}</span><div class="name"><a href="/garn/{g["slug"]}/">{e(g["name"])}</a> {save}<small>{e(g["fiber"])} · {g["meters"]} m/{g["grams"]} g · {g["gauge"]} m på 10 cm</small></div>
 <div class="price">{kr(p["from_price"])} kr.<small>pr. nøgle hos {e(ch["shop"])}</small></div><a class="go" href="/garn/{g["slug"]}/">Se priser</a></div>''')
     if not out: return ""
     return f'''<section style="margin-top:26px"><h3 style="margin-bottom:4px">Alternativer i samme strikkefasthed</h3><p class="small muted" style="margin:0 0 10px">Garner med {g0["gauge"]}±1 masker på 10 cm – strik en prøve, og regn mængden om i meter. <a href="/guides/vaelg-alternativt-garn/">Sådan gør du</a>.</p>{"".join(out)}</section>'''
@@ -289,10 +289,106 @@ def drops_page(o, related):
 <section class="sec"><div class="sec-head"><h2>Flere gratis DROPS-opskrifter – {e(tl)} til {e(tgt)}</h2><a href="/opskrifter/?kategori={o['type']}">Se alle →</a></div><div class="grid">{rel_html}</div></section>'''
     return shell(title, meta, path, body + calc_js, [crumb_ld, faq_ld, product_ld], "drops", o["image"])
 
+# ---------------- kvalitetsregel: kun sider der fortjener at findes ----------------
+MIN_DESC = 150
+def has_priced_yarn(names):
+    return any(slug and PRIS.get(slug, {}).get("shops") for _, slug in names)
+def qualifies(o, yarns):
+    return bool(o.get("image")) and len(o.get("desc","")) >= MIN_DESC and has_priced_yarn(yarns)
+
+# ---------------- betalte opskrifter (Önling, Broen Garn …) ----------------
+def kit_yarns(o):
+    """'No 1', 'No 3 + silk mohair' → [(navn, slug)]"""
+    names = []
+    for k in o.get("kits", []):
+        for part in re.split(r"\s*\+\s*", k.get("yarn","")):
+            part = part.strip()
+            if not part: continue
+            full = ("Önling " + part) if re.match(r"(?i)no\.?\s*\d", part) else ("Önling No 10" if "mohair" in part.lower() else part)
+            if full not in names: names.append(full)
+    if not names:
+        for m in re.finditer(r"(?:Önling\s+)?No\.?\s*(\d{1,2})\b", o.get("name","") + " " + o.get("desc","")):
+            full = "Önling No " + m.group(1)
+            if full not in names: names.append(full)
+    return [(n, next((s_ for s_, g in GARN.items() if g["_re"].search(n)), None)) for n in names]
+
+def pattern_page(o, related):
+    ds = slugify(o.get("designer") or "designer")
+    yarns = kit_yarns(o); tgt = TARGET_LABEL.get(o.get("target","dame"), "damer"); tl = TYPE_LABEL.get(o["type"],"Andet")
+    kits = sorted([k for k in o.get("kits", []) if k.get("price")], key=lambda k: k["price"])
+    kit_min = kits[0]["price"] if kits else None
+    is_kit_only = o.get("kind") == "kit"
+    title = f"{o['name']} af {o['designer']} – strikkeopskrift, garn og pris"
+    meta = f"{o['name']} af {o['designer']}: {'opskrift ' + kr(o['price']) + ' kr.' if not is_kit_only else 'strikkekit'}{(', garnpakke fra ' + kr(kit_min) + ' kr.') if kit_min and not is_kit_only else ''}. Se hvilket garn den er strikket i, hvad garnet koster, og køb opskrift og garn samlet hos {o['shop_name']}."
+    path = o["page"]
+    # garn-blokke
+    yarn_html = ""
+    for name, slug in yarns:
+        g = GARN.get(slug); pr = PRIS.get(slug)
+        spec = f"{g['fiber']} · {g['grams']} g / {g['meters']} m · {g['gauge']} m på 10 cm · pind {g['needle']}" if g else ""
+        link = f'<a href="/garn/{slug}/">{e(name)}</a>' if slug and pr and pr.get("shops") else e(name)
+        rows = shop_rows(slug) if slug else ""
+        yarn_html += f'''<section class="panel" style="margin-bottom:20px"><h3 style="margin-bottom:4px">{link}</h3><p class="muted small" style="margin:0 0 12px">{e(spec)}</p>{rows or '<p class="muted small">Ingen løse priser endnu.</p>'}</section>'''
+    # kits pr. størrelse
+    kit_rows = "".join(f'''<div class="shop"><span class="slogo logo-txt">Ö</span><div class="name">Str. {e(k['size'] or '–')}<small>{e(k['yarn'])}{' · udsolgt' if k['stock']!='in_stock' else ''}</small></div><div class="price">{kr(k['price'])} kr.<small>garn{'' if is_kit_only else ' + opskrift'}</small></div><a class="go" href="{e(k.get('cart') or k['url'])}" rel="sponsored nofollow" target="_blank">{'Læg i kurven' if k.get('cart') else 'Se kittet'}</a></div>''' for i, k in enumerate(o.get("kits", [])) if k.get("price"))
+    kits_html = f'''<section class="panel" style="margin-bottom:20px"><h3 style="margin-bottom:4px">Strikkekit i din størrelse</h3><p class="muted small" style="margin:0 0 12px">{e(o['shop_name'])} sælger garnet til {e(o['name'])} pakket efter størrelse{'' if is_kit_only else ' – opskriften følger med'}. Vælg din størrelse og læg direkte i kurven.</p>{kit_rows}</section>''' if kits else ""
+    pricebox = f'<div class="pricebox">' + (f'<span class="big">{kr(o["price"])} kr.</span><span class="from">opskrift (PDF)</span>' if not is_kit_only else f'<span class="big">fra {kr(o["price"])} kr.</span><span class="from">strikkekit</span>') + (f'<span class="from">· kit med garn fra <b>{kr(kit_min)} kr.</b></span>' if kit_min and not is_kit_only else '') + '</div>'
+    faq = [
+     (f"Hvad koster opskriften til {o['name']}?", f"Opskriften koster {kr(o['price'])} kr. som PDF hos {o['shop_name']}." if not is_kit_only else f"{o['name']} sælges som strikkekit med garn fra {kr(o['price'])} kr. hos {o['shop_name']}."),
+     (f"Hvilket garn skal jeg bruge til {o['name']}?", f"Opskriften er strikket i {', '.join(n for n,_ in yarns) or 'det garn, designeren anbefaler'}. Mængden pr. størrelse står i opskriften – eller køb kittet, hvor garnet er pakket til din størrelse."),
+     (f"Kan jeg strikke {o['name']} i et andet garn?", "Ja, hvis du rammer samme strikkefasthed. Se alternativerne herunder og vores guide til at vælge alternativt garn."),
+    ]
+    if kit_min and not is_kit_only: faq.append((f"Hvad koster det samlet at strikke {o['name']}?", f"Med strikkekit inkl. opskrift: fra {kr(kit_min)} kr. afhængigt af størrelse. Køber du garnet løst, kan det være billigere – sammenlign priserne ovenfor."))
+    faq_html, faq_ld = faq_block(faq, f"Spørgsmål om {o['name']}")
+    crumbs, crumb_ld = breadcrumbs([("Forside","/"),("Opskrifter","/opskrifter/"),(o["designer"], f"/designere/{ds}/"),(o["name"],None)])
+    rel_html = "".join(f'''<a class="card" href="{r['page']}"><div class="img" style="background:center/cover url('{e(img(r['image']))}')"></div><b>{e(r['name'])}</b><span>{e(r['designer'])}</span><em class="price">{'Opskrift ' if r.get('kind')=='opskrift' else 'Kit fra '}{kr(r['price'])} kr.</em></a>''' for r in related)
+    product_ld = {"@context":"https://schema.org","@type":"Product","name":o["name"],"image":o["image"],"description":o.get("desc",""),"brand":{"@type":"Brand","name":o["designer"]},
+                  "offers":{"@type":"AggregateOffer","priceCurrency":"DKK","lowPrice":o["price"],"highPrice":max([o["price"]]+[k["price"] for k in kits]),"offerCount":1+len(kits),"seller":{"@type":"Organization","name":o["shop_name"]}}}
+    body = f'''{crumbs}
+<style>.hero{{display:grid;grid-template-columns:5fr 6fr;gap:48px;padding:24px 0 40px;align-items:start}}.swatch{{aspect-ratio:4/5;background:var(--oat-2) center/cover;border-radius:var(--r);box-shadow:var(--shadow)}}
+.byline{{color:var(--ink-2);margin:10px 0 18px}}.lead{{font-size:17px;max-width:56ch;margin:0 0 24px}}.cta-row{{display:flex;gap:12px;flex-wrap:wrap}}.two{{display:grid;grid-template-columns:7fr 4fr;gap:40px;margin-bottom:48px;align-items:start}}@media(max-width:860px){{.hero,.two{{grid-template-columns:1fr}}}}</style>
+<section class="hero"><div class="swatch" role="img" aria-label="{e(o['name'])}" style="background-image:url('{e(img(o['image']))}')"></div>
+<div><span class="eyebrow">Opskrift · {e(o['designer'])}</span><h1>{e(o['name'])}</h1><p class="byline">Design af <a href="/designere/{ds}/">{e(o['designer'])}</a> · Til {tgt} · {e(tl)}{(' · Niveau: '+e(o['level'])) if o.get('level') else ''}</p>
+{pricebox}<p class="lead">{e(o.get('desc',''))}</p>
+<div class="cta-row"><a class="btn btn-primary" href="#garn">Se garn og pris</a><a class="btn btn-ghost" href="{e(o['url'])}" rel="sponsored nofollow" target="_blank">{'Køb opskriften · ' + kr(o['price']) + ' kr.' if not is_kit_only else 'Se kittet hos ' + e(o['shop_name'])}</a></div>
+<p class="small muted" style="margin-top:12px">Opskriften sælges af {e(o['shop_name'])}. Garnet kan købes samme sted – eller løst, hvor det er billigst.</p></div></section>
+<div class="sticky-cta"><div><div class="small muted">{'Opskrift' if not is_kit_only else 'Kit fra'}</div><div class="big">{kr(o['price'])} kr.</div></div><a class="btn btn-primary btn-sm" href="#garn">Se garn og pris</a></div>
+<section id="garn" class="two"><div><h2 style="margin-bottom:8px">Garnet til {e(o['name'])}</h2><p class="muted" style="margin:0 0 18px;max-width:60ch">{e(TYPE_SENT.get(o['type'],''))} Priser opdateret {UPDATED}.</p>{kits_html}{yarn_html}{alternatives_html(yarns)}
+<p class="disclose">Vi får en lille provision, hvis du køber via vores links. Det ændrer ikke prisen for dig.</p></div>
+<aside class="panel"><h3 style="margin-bottom:6px">Opskriften</h3><p class="muted small" style="margin:0 0 14px">PDF på dansk{', svensk og norsk' if 'SE' in (o.get('name','') + ' ' + o.get('desc','')) else ''} fra {e(o['shop_name'])}. Sendes på mail efter køb.</p>
+<div style="font-family:var(--serif);font-size:30px;font-weight:600;margin-bottom:12px">{kr(o['price'])} kr.</div>
+<a class="btn btn-primary" style="display:block" href="{e(o['url'])}" rel="sponsored nofollow" target="_blank">{'Køb opskriften' if not is_kit_only else 'Se kittet'} hos {e(o['shop_name'])}</a>
+<p class="small muted" style="margin:16px 0 0">Ny i strik? Læs <a href="/guides/hvor-mange-noegler/">hvor mange nøgler du skal bruge</a> og <a href="/guides/vaelg-alternativt-garn/">hvordan du vælger et andet garn</a>.</p></aside></section>
+{faq_html}
+<section class="sec"><div class="sec-head"><h2>Flere opskrifter fra {e(o['designer'])}</h2><a href="/designere/{ds}/">Se alle →</a></div><div class="grid">{rel_html}</div></section>'''
+    return shell(title, meta, path, body, [crumb_ld, faq_ld, product_ld], "opskrifter", o["image"])
+
+def designer_page(name, items):
+    ds = slugify(name); path = f"/designere/{ds}/"
+    free = sum(1 for o in items if o.get("free")); paid = len(items) - free
+    title = f"{name} strikkeopskrifter – alle {len(items)} opskrifter med garn og pris"
+    meta = f"Alle strikkeopskrifter fra {name} samlet: {len(items)} opskrifter{(' ('+str(free)+' gratis)') if free else ''} til dame, børn og baby. Se hvilket garn de er strikket i, og hvad garnet koster i dag."
+    crumbs, crumb_ld = breadcrumbs([("Forside","/"),("Designere","/designere/"),(name,None)])
+    types = {}
+    for o in items: types[o["type"]] = types.get(o["type"], 0) + 1
+    tlist = ", ".join(f"{TYPE_LABEL.get(t,t).lower()} ({n})" for t, n in sorted(types.items(), key=lambda x: -x[1])[:6])
+    prices = sorted(o["price"] for o in items if o.get("price"))
+    intro = f"<p>Her er alle {len(items)} opskrifter fra {e(name)}, vi har med: {e(tlist)}. {'Alle er gratis at hente.' if free==len(items) else ('Opskrifterne koster ' + kr(prices[0]) + '–' + kr(prices[-1]) + ' kr.' if prices else '')} Til hver viser vi garnet, opskriften er strikket i, og hvad det koster i dag hos de butikker, vi sammenligner – så du kan se den samlede pris, før du køber.</p>"
+    grid = "".join(card(o) for o in items)
+    coll_ld = {"@context":"https://schema.org","@type":"CollectionPage","name":title,"url":BASE+path}
+    body = f'''{crumbs}<span class="eyebrow" style="margin-top:14px">Designer</span><h1>{e(name)} strikkeopskrifter</h1><div class="prose intro">{intro}</div><div class="grid" style="margin-top:22px">{grid}</div>'''
+    return shell(title, meta, path, body, [crumb_ld, coll_ld], "opskrifter")
+
+def designers_index(groups):
+    crumbs, crumb_ld = breadcrumbs([("Forside","/"),("Designere",None)])
+    cards = "".join(f'<a class="card" href="/designere/{slugify(n)}/"><div class="img" style="background:center/cover url(\'{e(img(items[0]["image"]))}\')"></div><b>{e(n)}</b><span>{len(items)} opskrifter</span></a>' for n, items in groups)
+    body = f'{crumbs}<h1 style="margin:12px 0 8px">Designere</h1><p class="muted" style="max-width:60ch">Strikkeopskrifter samlet pr. designer – med garn og pris til hver opskrift.</p><div class="grid" style="margin-top:24px">{cards}</div>'
+    return shell("Strikkedesignere – opskrifter fra DROPS, PetiteKnit, Önling, Hanne Falkenberg m.fl.", "Find strikkeopskrifter pr. designer: DROPS Design, PetiteKnit, Katrine Hannibal (Önling), Hanne Falkenberg, Rikke Jönsson og flere – med garnpris.", "/designere/", body, [crumb_ld], "opskrifter")
+
 # ---------------- kategorisider / hubs ----------------
 def card(o):
     sub = f"{e(o.get('designer',''))}{(' · '+e(o['sizes'])) if o.get('sizes') else ''}{' · gratis opskrift' if o.get('free') else ''}"
-    price = f"Garnpakke {kr(o['price'])} kr." if o.get("kind")=="pakke" else f"Opskrift {kr(o['price'])} kr."
+    price = f"Garnpakke {kr(o['price'])} kr." if o.get("kind")=="pakke" else (f"Kit fra {kr(o['price'])} kr." if o.get("kind")=="kit" else f"Opskrift {kr(o['price'])} kr.")
     return f'''<a class="card" href="{e(o.get('page') or o['url'])}"{'' if o.get('page') else ' rel="sponsored nofollow" target="_blank"'}><div class="img" role="img" aria-label="{e(o['name'])}" style="background-image:url('{e(img(o['image']))}')">{'<span class="badge">gratis</span>' if o.get('free') else ''}</div><b>{e(o['name'])}</b><span>{sub}</span><em class="price">{price}</em></a>'''
 
 def match_preset(o, preset):
@@ -376,7 +472,14 @@ def write(path, html_):
     d = f"{ROOT}/{path.strip('/')}"; os.makedirs(d, exist_ok=True)
     open(f"{d}/index.html", "w", encoding="utf-8").write(html_)
 
-pakker = [o for o in OPS if o.get("kind") == "pakke" and o.get("image")]
+for o in OPS: o.pop("page", None); o.pop("slug", None)
+skipped = {"drops": 0, "paid": 0}
+pakker = []
+for o in [o for o in OPS if o.get("kind") == "pakke"]:
+    det = DETAILS.get("/opskrifter/drops/" + slugify(o["name"]) + "/")
+    yn = [(y["name"], next((s_ for s_, g in GARN.items() if g["_re"].search(y["name"])), None)) for y in det["yarns"]] if det and det.get("yarns") else find_yarns(o.get("desc",""))
+    if qualifies(o, yn): pakker.append(o)
+    else: skipped["drops"] += 1
 seen = {}
 for o in pakker:
     s = slugify(o["name"]); n = seen.get(s, 0); seen[s] = n + 1
@@ -390,6 +493,52 @@ for o in pakker:
     rel += [r for r in by_key[(o["type"], o.get("target"))] if r is not o and r not in rel][:4-len(rel)]
     if len(rel) < 4: rel += [r for r in pakker if r["type"] == o["type"] and r not in rel and r is not o][:4-len(rel)]
     write(o["page"], drops_page(o, rel))
+# betalte opskrifter (Önling m.fl.) → /opskrifter/<designer>/<navn>/
+def base_name(n):
+    n = re.sub(r"\s*[-–,]?\s*(?:i\s+)?No\.?\s*\d{1,2}(\s*\+\s*[\w ]+?(?:mohair|silk|tråd|follow|følgetråd))?\s*$", "", n, flags=re.I).strip(" ,-")
+    return n
+merged = {}
+for o in [o for o in OPS if o.get("kind") in ("opskrift","kit") and o.get("image") and o.get("designer")]:
+    key = (o["designer"], base_name(o["name"]).lower())
+    m = merged.get(key)
+    if not m:
+        m = dict(o); m["name"] = base_name(o["name"]); m["kits"] = list(o.get("kits", [])); m["variants"] = [o]; merged[key] = m
+    else:
+        m["kits"] += o.get("kits", []); m["variants"].append(o)
+        if o.get("kind") == "opskrift" and m.get("kind") == "kit": m["kind"] = "opskrift"; m["price"] = o["price"]; m["url"] = o["url"]
+        if len(o.get("desc","")) > len(m.get("desc","")): m["desc"] = o["desc"]
+paid = []
+for m in merged.values():
+    if qualifies(m, kit_yarns(m)): paid.append(m)
+    else: skipped["paid"] += 1
+for m in merged.values():   # alle varianter peger på den samlede side (eller ingen)
+    for v in m["variants"]: v["merged_into"] = m
+seen_p = {}
+for o in paid:
+    sl = f"{slugify(o['designer'])}/{slugify(o['name'])}"; n = seen_p.get(sl, 0); seen_p[sl] = n + 1
+    o["page"] = f"/opskrifter/{sl}{'' if n==0 else '-'+str(n+1)}/"
+    for v in o["variants"]: v["page"] = o["page"]
+# listerne skal vise én post pr. samlet model, ikke pr. variant
+OPS = [o for o in OPS if not (o.get("kind") in ("opskrift","kit") and o.get("merged_into") and o is not o["merged_into"]["variants"][0])]
+for o in OPS:
+    m = o.get("merged_into")
+    if m: o["name"] = m["name"]; o["price"] = m["price"]; o["kind"] = m["kind"]; o["kits"] = m["kits"]; o["desc"] = m.get("desc",""); o.pop("merged_into", None)
+for m in merged.values():
+    for v in m["variants"]: v.pop("merged_into", None)
+    m.pop("variants", None)
+by_des = {}
+for o in paid: by_des.setdefault(o["designer"], []).append(o)
+for o in paid:
+    rel = [r for r in by_des[o["designer"]] if r is not o and r["type"] == o["type"]][:4]
+    rel += [r for r in by_des[o["designer"]] if r is not o and r not in rel][:4-len(rel)]
+    write(o["page"], pattern_page(o, rel))
+# designersider (≥ 4 opskrifter) inkl. DROPS
+groups = {}
+for o in OPS:
+    if o.get("page") and o.get("designer"): groups.setdefault(o["designer"], []).append(o)
+groups = sorted([(k, v) for k, v in groups.items() if len(v) >= 4], key=lambda kv: -len(kv[1]))
+for name, items in groups: write(f"/designere/{slugify(name)}/", designer_page(name, items))
+write("/designere/", designers_index(groups))
 json.dump(OPS, open(f"{ROOT}/data/opskrifter.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 
 for c in C.CATEGORIES: write("/"+c["path"]+"/", cat_page(c))
@@ -406,11 +555,12 @@ write("/om/", om_page())
 
 urls = ["/", "/opskrifter/", "/gratis/", "/garn/", "/garn/drops/", "/guides/", "/om/"] + [f"/{c['path']}/" for c in C.CATEGORIES] + \
        [f"/opskrifter/{t['slug']}/" for t in C.TYPES] + [f"/opskrifter/pind-{n['n'].replace('.','-')}/" for n in C.NEEDLES] + \
-       [f"/guides/{g['slug']}/" for g in C.GUIDES] + [o["page"] for o in pakker] + \
+       [f"/guides/{g['slug']}/" for g in C.GUIDES] + [o["page"] for o in pakker] + [o["page"] for o in paid] + ["/designere/"] + [f"/designere/{slugify(n)}/" for n, _ in groups] + \
        [f"/garn/{s}/" for s, g in PRIS.items() if g.get("shops") and os.path.exists(f"{ROOT}/garn/{s}")]
 open(f"{ROOT}/sitemap.xml", "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"<url><loc>{BASE}{u}</loc><lastmod>{TODAY}</lastmod></url>\n" for u in urls) + "</urlset>\n")
 open(f"{ROOT}/robots.txt", "w").write(f"User-agent: *\nAllow: /\nDisallow: /data/\nSitemap: {BASE}/sitemap.xml\n")
-print(f"Skrev {len(pakker)} opskriftssider, {len(C.CATEGORIES)+2} kategorisider, {len(C.GUIDES)} guides, om-side, sitemap ({len(urls)} URL'er)")
+print(f"Sprunget over (for tynde): {skipped['drops']} Drops, {skipped['paid']} betalte")
+print(f"Skrev {len(pakker)} Drops-sider, {len(paid)} betalte opskriftssider, {len(groups)} designersider, {len(C.CATEGORIES)+2} kategorisider, {len(C.GUIDES)} guides, om-side, sitemap ({len(urls)} URL'er)")
 
 # ---------------- Fælles header/footer på de håndskrevne sider ----------------
 STATIC = {"index.html": "", "opskrifter/index.html": "opskrifter", "garn/index.html": "garn", "opskrifter/rikke-cozy-sweater/index.html": "opskrifter"}

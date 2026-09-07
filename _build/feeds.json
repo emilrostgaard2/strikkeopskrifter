@@ -11,6 +11,16 @@
    "logo": "/assets/img/shops/rito.png"
   },
   {
+   "key": "onling",
+   "name": "Önling",
+   "url": "",
+   "file": "feeds/onling.xml",
+   "platform": "shopify",
+   "cart_base": "https://www.oenling.dk",
+   "free_shipping_from": 600,
+   "logo": ""
+  },
+  {
    "key": "kreamok",
    "name": "Kreamok",
    "url": "",

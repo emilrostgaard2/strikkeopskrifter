@@ -341,6 +341,105 @@
    "gauge": 18,
    "needle": "5",
    "match": "drops\\s+daisy\\b"
+  },
+  {
+   "slug": "onling-no-2",
+   "brand": "Önling",
+   "name": "Önling No 2",
+   "fiber": "100 % merino",
+   "grams": 25,
+   "meters": 120,
+   "gauge": 23,
+   "needle": "3–3.5",
+   "match": "(ö|oe|o)nling\\s+no\\.?\\s*2\\b"
+  },
+  {
+   "slug": "onling-no-3",
+   "brand": "Önling",
+   "name": "Önling No 3",
+   "fiber": "100 % økologisk heavy merino",
+   "grams": 50,
+   "meters": 133,
+   "gauge": 21,
+   "needle": "4–4.5",
+   "match": "(ö|oe|o)nling\\s+no\\.?\\s*3\\b"
+  },
+  {
+   "slug": "onling-no-4",
+   "brand": "Önling",
+   "name": "Önling No 4",
+   "fiber": "100 % økologisk fin merino",
+   "grams": 50,
+   "meters": 200,
+   "gauge": 28,
+   "needle": "3",
+   "match": "(ö|oe|o)nling\\s+no\\.?\\s*4\\b"
+  },
+  {
+   "slug": "onling-no-10",
+   "brand": "Önling",
+   "name": "Önling No 10 silk mohair",
+   "fiber": "70 % mohair, 30 % silke",
+   "grams": 25,
+   "meters": 210,
+   "gauge": 25,
+   "needle": "3.5–4",
+   "match": "(ö|oe|o)nling\\s+no\\.?\\s*10\\b"
+  },
+  {
+   "slug": "onling-no-12",
+   "brand": "Önling",
+   "name": "Önling No 12",
+   "fiber": "55 % uld, 45 % bomuld",
+   "grams": 115,
+   "meters": 800,
+   "gauge": 23,
+   "needle": "3–3.5",
+   "match": "(ö|oe|o)nling\\s+no\\.?\\s*12\\b"
+  },
+  {
+   "slug": "onling-no-16",
+   "brand": "Önling",
+   "name": "Önling No 16 tweed",
+   "fiber": "70 % lammeuld, 30 % mohair",
+   "grams": 75,
+   "meters": 300,
+   "gauge": 22,
+   "needle": "4–4.5",
+   "match": "(ö|oe|o)nling\\s+no\\.?\\s*16\\b"
+  },
+  {
+   "slug": "onling-no-18",
+   "brand": "Önling",
+   "name": "Önling No 18 strømpegarn",
+   "fiber": "75 % uld, 25 % genanvendt polyester",
+   "grams": 100,
+   "meters": 420,
+   "gauge": 32,
+   "needle": "2.5–3",
+   "match": "(ö|oe|o)nling\\s+no\\.?\\s*18\\b"
+  },
+  {
+   "slug": "onling-no-20",
+   "brand": "Önling",
+   "name": "Önling No 20 shetlandsuld",
+   "fiber": "100 % shetlandsuld",
+   "grams": 50,
+   "meters": 225,
+   "gauge": 23,
+   "needle": "3–3.5",
+   "match": "(ö|oe|o)nling\\s+no\\.?\\s*20\\b"
+  },
+  {
+   "slug": "onling-no-21",
+   "brand": "Önling",
+   "name": "Önling No 21",
+   "fiber": "60 % bomuld, 40 % hør",
+   "grams": 50,
+   "meters": 195,
+   "gauge": 26,
+   "needle": "3",
+   "match": "(ö|oe|o)nling\\s+no\\.?\\s*21\\b"
   }
  ]
 }
