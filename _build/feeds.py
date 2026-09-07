@@ -127,6 +127,17 @@ TYPES = [("sweater",r"sweater|trøje|bluse|genser|pullover|tee\b|top\b"),("cardi
 def find_needles(text):
     return sorted({m.group(1).replace(",", ".").rstrip(".0") if m.group(1) not in ("10",) else "10" for m in re.finditer(r"(?:rund)?pind(?:e)?\s*(?:nr\.?\s*)?(\d{1,2}(?:[.,]5)?)\s*(?:mm)?\b", text, re.I)}, key=float)
 
+def clean_pattern_name(n):
+    """'Daisy Vest af Rito Krea - Vest Strikkeopskrift Str. S-XL' → 'Daisy Vest'"""
+    n = re.sub(r"\s*-\s*(dansk|engelsk|english)\s*$", "", n, flags=re.I)
+    n = re.sub(r"\s+af\s+[A-ZÆØÅ][\w&.' -]+?(?=\s*[-–]|\s+strikkeopskrift|$)", "", n)   # 'af Rito Krea'
+    n = re.sub(r"\s*[-–]\s*.*?strikkeopskrift.*$", "", n, flags=re.I)                 # '- Vest Strikkeopskrift Str. …'
+    n = re.sub(r"\s*strikkeopskrift.*$", "", n, flags=re.I)
+    return n.strip(" -–,")
+def pattern_sizes(n):
+    m = re.search(r"str\.?\s*([\w/]+(?:\s*[-–]\s*[\w/]+)?)\s*$", n, re.I)
+    return m.group(1).replace(" ", "") if m else ""
+
 def guess_target(text):
     t=text.lower()
     if re.search(r"\bbaby\b|0-3 mdr|1-3 mdr|præmatur|dåb", t): return "baby"
@@ -189,7 +200,7 @@ for shop in CFG["shops"]:
         # Løsopskrifter (fx PetiteKnit hos Broen Garn)
         if "strikkeopskrift" in it.get("kategorinavn","").lower() and not is_garn(it):
             opskrifter.append({"shop": shop["key"], "shop_name": shop["name"], "kind": "opskrift",
-                               "name": re.sub(r"\s*-\s*(dansk|engelsk|english)\s*$","",name,flags=re.I),
+                               "name": clean_pattern_name(name), "sizes": pattern_sizes(name),
                                "designer": it.get("brand") or "", "type": guess_type(name), "target": guess_target(name+" "+it.get("beskrivelse","")), "level": guess_level(it.get("beskrivelse","")), "free": False, "needles": find_needles(it.get("beskrivelse","")),
                                "price": num(it.get("nypris")), "stock": stock(it.get("lagerantal")),
                                "image": it.get("billedurl"), "url": it.get("vareurl")})

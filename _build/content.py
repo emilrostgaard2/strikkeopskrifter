@@ -20,6 +20,9 @@ CATEGORIES = [
    "En stor del af opskrifterne er gratis. Det gælder alle DROPS-opskrifter, hvor du henter PDF'en uden beregning og kun betaler for garnet. Vil du hellere have en betalt opskrift fra en dansk designer, kan du filtrere på designer og sortere efter, hvad garnet koster – ofte er forskellen mellem billigste og dyreste butik 100–200 kr. på en sweater.",
   ],
   sections=[
+   ("Garn til damestrik: fire typer, du møder igen og igen", "Merino (Baby Merino, Merino Extra Fine, Önling No 3) er det sikre valg – blødt, elastisk, tåler vask. Alpaka (Drops Alpaca, Puna) er varmere og falder tungere. Mohair/silke (Kid-Silk, Önling No 10) holdes sammen med et andet garn og giver den luftige nordiske look. Bomuld og hør (Belle, Safran, Önling No 21) er til sommer. På opskriftssiderne viser vi, hvilken af de fire opskriften bruger, og hvad den koster."),
+   ("Sådan bruger du siden til damestrik", "Vælg først, hvad du vil strikke – sweater, cardigan, vest – og om den skal være gratis. Klik ind på opskriften, vælg din størrelse i beregneren, og se prisen hos hver butik. Er originalgarnet dyrt, står alternativerne lige under. Klik 'Læg i kurven', så lander du i butikkens kurv med det rigtige antal nøgler."),
+
    ("Sådan vælger du den rigtige størrelse", "Danske og nordiske damesweatre strikkes i dag ofte med 10–25 cm positiv ease – altså løsere end din overvidde. Tjek altid opskriftens færdige mål frem for kun bogstavstørrelsen: en M hos én designer kan svare til en L hos en anden. Er du i tvivl, så mål en sweater du allerede er glad for, og vælg den størrelse i opskriften, der kommer tættest på."),
    ("Hvad koster det at strikke en damesweater?", "Regn med 300–600 g garn til en voksensweater afhængigt af tykkelse og pasform. I et budgetgarn som Drops Baby Merino til omkring 23 kr. pr. nøgle lander du på 200–300 kr. I et merino/angora-garn fra Önling eller et Sandnes-garn ligger prisen typisk på 800–1.400 kr. Vores beregner på hver opskriftsside regner det ud for din størrelse og viser, hvor det er billigst."),
    ("Populære teknikker i dameopskrifter lige nu", "Raglan strikket oppefra og ned dominerer, fordi det er nemt at prøve undervejs og kræver ingen sammensyning. Rundt bærestykke med hulmønster eller fair isle er den klassiske nordiske variant. Vendepinde i nakken, italiensk opslagning og dobbeltstrikkede kanter er detaljer, der løfter resultatet – og som vi markerer på opskriftssiden, så du ved, hvad du går ind til."),
@@ -40,6 +43,9 @@ CATEGORIES = [
    "De fleste børneopskrifter her er gratis DROPS-opskrifter, hvor du kun betaler for garnet. Vi viser også PetiteKnits junior-versioner og andre danske designere, når de findes i en børnestørrelse.",
   ],
   sections=[
+   ("Hvor lang tid tager børnestrik?", "En hue: 2–3 timer. En sweater til en 4-årig: 8–12 timer. En cardigan til en 10-årig: 15–20 timer. Det er små projekter, og det er derfor, de er gode til at prøve nye teknikker – hulmønster, striber, raglan – uden at binde 40 timer."),
+   ("Restegarn og børnestrik", "Børnestørrelser er oplagte til restegarn: en 2-års sweater kan strikkes af 3 nøgler. Kig efter opskrifter med striber, så du kan blande farver, og brug beregneren til at se, hvor mange meter du reelt skal bruge."),
+
    ("Vælg et garn, der tåler vask", "Børnetøj bliver vasket ofte. Vælg superwash-behandlet merino (fx Drops Baby Merino eller Merino Extra Fine), en uld/bomuld-blanding eller ren bomuld til sommer. Undgå løst spundet alpaka og mohair til de mindste – det fnugger, og det filter i maskinen."),
    ("Størrelser og vokseplads", "Børnestørrelser angives i alder (2, 4, 6 år …) eller centilong. Strik gerne en størrelse op – et barn på 4 år passer ofte en 5–6-års sweater året ud. Længde er nemmere at justere end vidde, så tag ekstra centimeter på krop og ærmer."),
    ("Nemme projekter at starte med", "Huer, halsrør og en simpel raglan oppefra og ned er de bedste begynderprojekter til børn: få masker, ingen sammensyning, og du kan prøve undervejs. Sokker og vanter kræver lidt mere teknik (hælle, tommelfingre), men garnforbruget er minimalt."),
@@ -60,6 +66,9 @@ CATEGORIES = [
    "Til baby betyder garnvalget mere end noget andet: det skal være blødt mod huden, kunne vaskes, og ikke fnugge. Vi markerer på hver opskrift, hvilket garn den er strikket i, og foreslår alternativer, der opfylder de tre krav.",
   ],
   sections=[
+   ("Gaveidéer til nybagte forældre", "Et tæppe (80 × 80 cm) i superwash-merino, en hue med fold og et par futter er de tre klassikere. Tæppet bruger 250–350 g, huen og futterne ét nøgle hver. Vælg lyse, ensfarvede nuancer – de passer til alt, og forældrene kan vaske dem."),
+   ("Sikkerhed i babystrik", "Undgå lange bånd og løse knapper til de mindste. Strik hellere knapper i skulderen end i front, og vælg garn uden løse fibre (ingen mohair, ingen angora) til det, der er tæt på ansigtet."),
+
    ("Garn til baby: det skal du tjekke", "Vælg superwash-merino eller merino/bomuld i tynd til mellemtyk kvalitet (24–28 masker pr. 10 cm). Drops Baby Merino er den klassiske budgetløsning; Sandnes Sunday og Knitting for Olive Merino er blødere og lidt dyrere. Undgå angora, mohair og løst spundet alpaka til nyfødte."),
    ("Størrelser: 0–1 mdr, 1–3 mdr, 6–9 mdr …", "Babyer vokser hurtigt – strik til den størrelse, barnet har om 2–3 måneder, ikke i dag. Til gaver ved fødslen er 3–6 mdr det sikre valg. Præmatur-størrelser (under 50 cm) findes i udvalgte DROPS-opskrifter og bruges også af hospitaler og Mødrehjælpen."),
    ("Nemme babyprojekter", "Tæpper i retstrik, huer med fold og en bluse med knapper i skulderen er de nemmeste. En babydragt tager længere tid, men er et fantastisk gaveprojekt."),
@@ -80,6 +89,9 @@ CATEGORIES = [
    "Herreopskrifter kræver mere garn end dameopskrifter (typisk 500–800 g til en sweater), så prisforskellen mellem butikkerne betyder mere. Vores beregner viser, hvor de 12–16 nøgler er billigst.",
   ],
   sections=[
+   ("Herrestrik: de fem modeller, der faktisk bliver brugt", "En enkel rundhalssweater i glatstrik, en raglansweater, en hue i rib, et halsrør og en cardigan med lynlås. Det er dem, mænd tager på. Fair isle-bærestykker er flotte, men ender ofte i skabet. Vi har markeret de enkle modeller nedenfor."),
+   ("Garnforbrug og pris til herrestørrelser", "En herresweater i str. L bruger 550–700 g – 11–14 nøgler à 50 g. I Drops Merino Extra Fine (ca. 25 kr.) er det 275–350 kr.; i Önling No 3 (71 kr.) 780–1.000 kr. Beregneren viser tallet for præcis din størrelse."),
+
    ("Pasform til herrer", "De fleste mænd foretrækker en lige, let afslappet pasform uden markant oversize. Tjek opskriftens færdige overvidde og vælg 8–15 cm mere end brystmålet. Ærmelængde og kroplængde er de to ting, der oftest skal justeres – begge er nemme at rette i en top-down-model."),
    ("Garn, der holder til hverdagsbrug", "Vælg et robust garn: uld/nylon til sokker, kamgarnsspundet merino eller en uld/alpaka-blanding til sweatre. Drops Nepal, Drops Alaska og Merino Extra Fine er gode og billige valg. Undgå meget løst spundne garner, der piller."),
    ("Nemme herreprojekter", "En hue i rib eller perlestrik, et halsrør og en enkel raglansweater i glatstrik. Alle tre findes som gratis DROPS-opskrifter nedenfor."),
@@ -99,6 +111,9 @@ CATEGORIES = [
    "Vi anbefaler at starte med et garn i mellemtykkelse (pind 4–5), i en lys ensfarvet nuance, så du kan se maskerne. Til hvert projekt viser vi, hvor meget garn du skal bruge og hvor det er billigst – så det første projekt ikke bliver dyrere end nødvendigt.",
   ],
   sections=[
+   ("Det skal du købe, før du starter", "Én rundpind 4 mm 80 cm, ét eller to nøgler garn i mellemtykkelse (pind 4–5) i en lys farve, en maskemarkør og en stoppenål. Det er det. Køb ikke et pindesæt – vent, til du ved, at du fortsætter."),
+   ("Læs opskriften, før du strikker", "De fleste begynderfejl sker, fordi man læser en linje ad gangen. Læs hele opskriften igennem først, marker hvilken størrelse du strikker (tal i parentes), og tæl masker efter hver udtagning. DROPS har videoer til alle teknikker – linket står i PDF'en."),
+
    ("Rækkefølgen, der virker", "1) En hue eller et halsrør på rundpind – du lærer at strikke rundt og læse en opskrift. 2) Et tæppe eller tørklæde i retstrik – tålmodighed og jævn strikkefasthed. 3) En raglansweater strikket oppefra og ned i glatstrik – din første 'rigtige' trøje uden sammensyning."),
    ("De tre ting, begyndere oftest gør forkert", "Strikker for stramt (skift til en tykkere pind), springer strikkeprøven over (så passer størrelsen ikke), og vælger mørkt eller fnugget garn (så kan du ikke se, hvad der sker). Alle tre er nemme at undgå."),
    ("Hvilke pinde skal jeg købe?", "En rundpind 4 mm 80 cm og en 5 mm 80 cm dækker 80 % af begynderprojekterne. Køb udskiftelige spidser senere, når du ved, at du fortsætter."),
@@ -218,7 +233,10 @@ TYPES = [
   meta="Strikkeopskrifter til sweatre og bluser: raglan oppefra og ned, rundt bærestykke, hulmønster og oversize. Gratis og betalte, med garnforbrug og garnpris.",
   intro=["Sweateren er det projekt, de fleste strikker mest – og det, hvor garnvalget betyder mest for prisen. Her er alle sweater- og bluseopskrifter på siden: raglan strikket oppefra og ned, rundt bærestykke med mønster, lette sommerbluser i bomuld og hør, og tykke vintersweatre i uld og alpaka.",
          "Til hver opskrift viser vi garnet, ca. antal nøgler og dagens pris hos de butikker, vi sammenligner. Filtrér på gratis, hvem den er til, eller sortér efter billigste garn."],
-  sections=[("Raglan eller rundt bærestykke?","Raglan er hurtigst og nemmest at tilpasse undervejs; rundt bærestykke giver plads til mønster og fair isle. Begge strikkes typisk oppefra og ned uden sammensyning, så du kan prøve sweateren, mens du strikker."),
+  sections=[
+   ("Top-down eller bottom-up?", "Strikket oppefra og ned kan du prøve sweateren undervejs og justere længden – det er derfor, næsten alle nye danske opskrifter er top-down. Bottom-up giver mere kontrol over mønstre i bærestykket og var normen indtil for ti år siden."),
+   ("Vask og opspænding", "Merino og uld skal vaskes i hånden eller på uldprogram, presses i et håndklæde og tørres fladt i form. Første vask afgør, om sweateren passer – strik prøven, vask den, og mål først derefter."),
+("Raglan eller rundt bærestykke?","Raglan er hurtigst og nemmest at tilpasse undervejs; rundt bærestykke giver plads til mønster og fair isle. Begge strikkes typisk oppefra og ned uden sammensyning, så du kan prøve sweateren, mens du strikker."),
             ("Garnforbrug til en sweater","300–450 g i tyndt garn (pind 3), 400–600 g i mellemtykt (pind 4–5) og 500–800 g i tykt garn (pind 7–8) til en voksen M. Skal den være oversize, læg 15–20 % til.")],
   faq=[("Hvad er den nemmeste sweateropskrift?","En raglan i glatstrik strikket oppefra og ned i mellemtykt garn. Ingen sammensyning, ingen mønster – og du kan prøve den undervejs."),
        ("Hvor lang tid tager en sweater?","20–40 timer i mellemtykt garn, 40–60 i tyndt. En tyk sweater på pind 8 kan strikkes på en weekend."),
@@ -228,7 +246,10 @@ TYPES = [
   meta="Strikkeopskrifter til cardigans og jakker til dame, herre og børn. Se garnforbrug, knapkant-teknik og dagens garnpris hos danske butikker.",
   intro=["En cardigan er sweaterens praktiske søster: den kan tages på over alt, og den passer altid. Her er cardigan- og jakkeopskrifter fra korte, kropsnære modeller til lange, oversize kofter – med og uden knapper.",
          "Cardigans bruger 10–15 % mere garn end en sweater på grund af knapkanterne, så prisen pr. nøgle betyder ekstra meget. Vi viser billigste butik for hvert garn."],
-  sections=[("Knapkanter uden bøvl","Strik knapkanterne sammen med kroppen (i-cord eller rib) i stedet for at samle op bagefter – det giver et pænere resultat og sparer en time. Knaphuller placeres jævnt, første og sidste 1–2 cm fra kanten."),
+  sections=[
+   ("Knapper: køb dem sidst", "Vent med knapper til knapkanten er strikket, så du kan måle afstanden. Keramik og træ passer til uld; perlemor til bomuld. Vi linker til knapper hos butikkerne, hvor de findes."),
+   ("Cardigan til børn", "Børnecardigans bruger 150–300 g og strikkes ofte med knapper hele vejen, så de er nemme at få på. Se børnesiden for opskrifter i alderen 2–14."),
+("Knapkanter uden bøvl","Strik knapkanterne sammen med kroppen (i-cord eller rib) i stedet for at samle op bagefter – det giver et pænere resultat og sparer en time. Knaphuller placeres jævnt, første og sidste 1–2 cm fra kanten."),
             ("Stål eller steek?","Nordiske cardigans strikkes ofte rundt som en sweater og klippes op (steek). Det lyder farligt, men er nemt i uld, der filter let. I superwash og bomuld skal du sy to gange før du klipper.")],
   faq=[("Hvor mange knapper skal jeg bruge?","6–8 på en voksencardigan, 4–5 på en børne. Køb dem, når du har strikket knapkanten, så du kan måle afstanden."),
        ("Kan jeg lave en sweateropskrift om til cardigan?","Ja – strik kroppen frem og tilbage i stedet for rundt, og læg 8–12 masker til knapkanter. Læg 10–15 % garn til.")]),
@@ -237,7 +258,10 @@ TYPES = [
   meta="Strikkeopskrifter til huer til voksne, børn og baby. Nemme opskrifter i rib og perlestrik, med garnforbrug (typisk ét nøgle) og garnpris.",
   intro=["En hue er det perfekte projekt til en aften: ét nøgle garn, et par timer, og du har noget færdigt. Her er hueopskrifter til voksne, børn og baby – klassisk rib med fold, perlestrik, slouchy modeller og huer med pompon.",
          "De fleste bruger under 100 g, så det er også det oplagte sted at prøve et dyrere garn eller bruge et restenøgle. Vi viser prisen pr. nøgle, så du kan se, om huen koster 25 eller 90 kr."],
-  sections=[("Størrelse: mål hovedet","Voksen: 54–58 cm hovedomkreds → strik 50–52 cm i omkreds (huen skal sidde stramt). Barn 2–6 år: 48–52 cm. Baby: 38–44 cm. Strik den 2–4 cm mindre end hovedet, ribben giver."),
+  sections=[
+   ("Restegarnsprojekt nummer ét", "En hue bruger 40–90 g. Har du et nøgle tilovers fra en sweater, har du en hue. Kig efter huer i samme garn som din sidste sweater – så matcher de."),
+   ("Huer til hele familien", "De fleste hueopskrifter findes i 3–4 størrelser fra baby til voksen. Strik dem alle i samme garn og forskellige farver – det er den nemmeste julegave."),
+("Størrelse: mål hovedet","Voksen: 54–58 cm hovedomkreds → strik 50–52 cm i omkreds (huen skal sidde stramt). Barn 2–6 år: 48–52 cm. Baby: 38–44 cm. Strik den 2–4 cm mindre end hovedet, ribben giver."),
             ("Garn til huer","Uld eller uld/alpaka holder varmen og formen. Ren alpaka bliver slap. Til baby: superwash-merino, der tåler vask.")],
   faq=[("Hvor meget garn skal jeg bruge til en hue?","50 g i de fleste garner – ét nøgle. Til en hue med fold eller i tykt garn: to."),
        ("Hvilken pind til en hue?","Rundpind 40 cm i den størrelse garnet anbefaler, plus strømpepinde eller magic loop til toppen.")]),
@@ -246,7 +270,10 @@ TYPES = [
   meta="Strikkeopskrifter til sjaler, tørklæder og halsrør. Fra nemme retstrik-tørklæder til trekantsjaler i hulmønster – med garnforbrug og pris.",
   intro=["Sjaler og tørklæder har ingen størrelser at ramme, ingen ærmer at sy i, og de bruger lidt garn i forhold til, hvor meget strik du får. Her er opskrifter på trekantsjaler, halvmånesjaler, klassiske tørklæder og halsrør – i alt fra tyndt mohair til tykt uld.",
          "Sjaler strikkes ofte i tyndt garn med stor løbelængde, så to-tre nøgler rækker langt. Vi viser garnet og prisen ved hver opskrift."],
-  sections=[("Fasthed betyder mindre her","I et sjal er strikkefastheden ikke afgørende – bliver det lidt større, er det bare et større sjal. Det gør sjaler til det bedste sted at afprøve et nyt garn."),
+  sections=[
+   ("Hvor stort skal et sjal være?", "Et trekantsjal til at slå om halsen: 150–180 cm i spændvidde. Et sjal til at have over skuldrene: 200+ cm. Et tørklæde: 20–30 cm bredt og 150–200 cm langt. Garnforbruget følger med – tjek beregneren."),
+   ("Sjaler i mohair", "Kid-Silk og Önling No 10 holdt dobbelt giver et sjal, der vejer under 100 g og varmer som uld. Det er det bedste sted at prøve mohair første gang."),
+("Fasthed betyder mindre her","I et sjal er strikkefastheden ikke afgørende – bliver det lidt større, er det bare et større sjal. Det gør sjaler til det bedste sted at afprøve et nyt garn."),
             ("Opspænding gør forskellen","Et sjal i hulmønster ser klemt ud, indtil det er vasket og spændt ud. Brug opspændingstråd eller nåle, lad det tørre fladt – og mønsteret åbner sig.")],
   faq=[("Hvor meget garn til et sjal?","300–600 m til et mellemstort trekantsjal, 200–350 m til et tørklæde, 150–250 m til et halsrør."),
        ("Hvilket garn er bedst til sjaler?","Mohair/silke eller tynd merino til lette sjaler; uld/alpaka til varme tørklæder.")]),
@@ -255,7 +282,10 @@ TYPES = [
   meta="Strikkeopskrifter til sokker og strømper til voksne og børn. Se hvilket strømpegarn der holder, hvor meget du skal bruge, og hvor det er billigst.",
   intro=["Strikkede sokker er den gave, alle bliver glade for – og det projekt, der lærer dig mest på kortest tid: rundstrik, hæl, indtagninger til tå. Her er sokkeopskrifter fra enkle raggsokker til mønstrede knæstrømper.",
          "Det vigtigste valg er garnet: det skal indeholde nylon (typisk 25 %), ellers holder hælen ikke. Vi markerer strømpegarn på siden og viser prisen pr. nøgle."],
-  sections=[("Hæl-typer","Hælflap er klassisk og slidstærk. Kort-række-hæl (short row) er hurtigere og passer bedre til smalle fødder. Begge findes i DROPS' opskrifter med video."),
+  sections=[
+   ("Strømpegarn: hvad skal du kigge efter?", "75 % uld / 25 % nylon, 100 g / ca. 400 m, pind 2,5–3. Drops Fabel og Önling No 18 er standarden. Uden nylon slides hælen igennem på en sæson."),
+   ("Sokker til begyndere", "Start med en hælflap-hæl – den er nemmest at forstå – og strik på magic loop, så du slipper for strømpepinde. DROPS har video til hver del."),
+("Hæl-typer","Hælflap er klassisk og slidstærk. Kort-række-hæl (short row) er hurtigere og passer bedre til smalle fødder. Begge findes i DROPS' opskrifter med video."),
             ("Størrelse","Sokker strikkes 1–2 cm kortere end foden – de strækker sig. Mål fodlængde og gang med 0,9.")],
   faq=[("Hvor meget garn skal jeg bruge til et par sokker?","Et nøgle à 100 g (ca. 400 m) rækker til et par voksensokker. Til knæstrømper: to."),
        ("Kan jeg vaske uldsokker i maskinen?","Ja, hvis garnet er superwash med nylon – uldprogram, 30 grader, ingen tørretumbler.")]),
@@ -264,7 +294,10 @@ TYPES = [
   meta="Strikkeopskrifter til veste og slipovers til dame og herre. Hurtige projekter med lavt garnforbrug – se garn, nøgler og pris.",
   intro=["Vesten er kommet tilbage: slipoveren i rib eller mønster over en skjorte er blevet et fast indslag i garderoben. Den er også et taknemmeligt projekt – ingen ærmer, 4–6 nøgler, og færdig på en uge.",
          "Her er veste- og slipoveropskrifter til dame, herre og børn, med garn og pris. Netop fordi garnforbruget er lavt, er en vest et godt sted at vælge et lidt dyrere garn."],
-  sections=[("V-hals eller rund hals?","V-hals er den klassiske slipover og kræver lidt mere teknik i halskanten. Rund hals er nemmere og passer bedre til børn."),
+  sections=[
+   ("Vesten som lag", "En vest i tyndt garn (pind 3) fungerer over skjorte; en tyk vest (pind 6–8) som ydre lag. Vælg efter, hvornår du vil bruge den."),
+   ("Ribvest eller mønstervest?", "Ribvesten er hurtig og sidder tæt. Mønsterveste (fair isle, snoninger) tager længere, men bruger stadig kun 4–6 nøgler – så det er stedet at prøve en dyrere kvalitet."),
+("V-hals eller rund hals?","V-hals er den klassiske slipover og kræver lidt mere teknik i halskanten. Rund hals er nemmere og passer bedre til børn."),
             ("Pasform","Veste strikkes ofte tættere end sweatre – 0–10 cm ease. Tjek opskriftens færdige mål.")],
   faq=[("Hvor meget garn til en vest?","200–350 g til en voksen M i mellemtykt garn – omtrent halvdelen af en sweater."),
        ("Er en vest et begynderprojekt?","Ja, hvis den er i glatstrik eller rib. Mønstrede veste kræver lidt erfaring.")]),
@@ -276,25 +309,45 @@ NEEDLES = [
   meta="Strikkeopskrifter til pind 3 (2,5–3,5 mm): sweatre, bluser og babytøj i tyndt garn som Baby Merino, Safran og Flora. Gratis opskrifter med garnpris.",
   intro=["Pind 3 giver et fint, tæt maskebillede og er standard til babytøj, sommerbluser og klassiske sweatre i tyndt garn. Det tager længere tid end tykkere pinde, men resultatet holder formen og ser 'købt' ud.",
          "Her er opskrifter, hvor garnet strikkes på pind 2,5–3,5 – typisk Drops Baby Merino, Safran, Flora, Fabel og Alpaca. Vi viser garnet og prisen ved hver."],
+  sections=[
+   ("Hvorfor pind 3 er umagen værd", "Tættere masker betyder, at sweateren holder formen efter vask og ikke bliver posset ved albuerne. Det er også den tykkelse, de fleste betalte danske opskrifter er skrevet til."),
+   ("Tidsforbrug", "Regn med 25–35 % flere timer end på pind 4 til samme model. Til gengæld bruger du 20–30 % færre gram."),
+  ],
   faq=[("Hvilke garner passer til pind 3?","Garner med 24–28 masker pr. 10 cm: Baby Merino, Safran, Flora, Alpaca, Fabel (sokker), Sandnes Sunday, KFO Merino."),("Tager det lang tid?","Ja – regn med 40–60 timer til en voksensweater. Til gengæld bruger du færre gram.")]),
  dict(n="4", kw="strikkeopskrifter pind 4", h1="Strikkeopskrifter til pind 4", title="Strikkeopskrifter pind 4 – den alsidige mellemtykkelse",
   meta="Strikkeopskrifter til pind 4 (3,5–4,5 mm): sweatre, cardigans og huer i mellemtykt garn som Merino Extra Fine, Karisma, Lima og Belle. Med garnpris.",
   intro=["Pind 4 er den mest brugte pindestørrelse i danske opskrifter – hurtig nok til at komme videre, fin nok til pænt strik. Det er også her, udvalget af garn er størst.",
          "Her er alle opskrifter på pind 3,5–4,5: Merino Extra Fine, Karisma, Lima, Belle, Muskat, Cotton Merino og Puna er de typiske garner. Sammenlign prisen pr. nøgle, før du vælger."],
+  sections=[
+   ("Det største garnudvalg", "Pind 4 er der, hvor næsten alle producenter har en kvalitet: Merino Extra Fine, Karisma, Lima, Belle, Önling No 1 og No 3. Det gør det nemt at finde et alternativ, hvis originalgarnet er udsolgt eller for dyrt."),
+   ("Begynderens pind", "Maskerne er store nok til at se fejl, og en sweater tager 20–30 timer. Start her, hvis du er ny."),
+  ],
   faq=[("Hvilke garner passer til pind 4?","Garner med 20–23 masker pr. 10 cm – DK-tykkelse. Drops Merino Extra Fine, Karisma, Lima, Belle, Önling No 1."),("Er pind 4 godt til begyndere?","Ja. Maskerne er nemme at se, og en sweater tager 20–30 timer.")]),
  dict(n="5", kw="gratis strikkeopskrifter pind 5", h1="Strikkeopskrifter til pind 5", title="Strikkeopskrifter pind 5 – hurtigt strik i Air, Nepal og Paris",
   meta="Strikkeopskrifter til pind 5 (4,5–5,5 mm): sweatre og huer i Drops Air, Nepal, Big Merino, Paris og Daisy. Gratis opskrifter med garnforbrug og pris.",
   intro=["På pind 5 vokser strikket hurtigt – en sweater på en uge er realistisk. Garnerne er luftige (Air), varme (Nepal) eller bomuld til sommer (Paris).",
          "Her er opskrifter til pind 4,5–5,5 med garn og pris. Air er det populære valg til lette vintersweatre; Nepal og Big Merino til de mere robuste."],
+  sections=[
+   ("Air, Nepal eller Paris?", "Air (alpaka/uld/polyamid) er let og varm – til vintersweatre. Nepal (uld/alpaka) er tungere og mere robust. Paris (bomuld) er til sommer og til børn. Alle tre strikkes på pind 5 og kan ofte byttes."),
+   ("Pind 5 og oversize", "Mange oversize-modeller er skrevet til pind 5 – garnet må ikke være for tungt, ellers falder sweateren. Air er derfor det typiske valg."),
+  ],
   faq=[("Hvilke garner passer til pind 5?","17–19 masker pr. 10 cm: Drops Air, Nepal, Big Merino, Paris, Daisy, Soft Tweed."),("Hvor meget garn?","450–600 g til en voksen M – flere gram end på pind 3, men langt færre timer.")]),
  dict(n="7", kw="gratis strikkeopskrifter pind 7", h1="Strikkeopskrifter til pind 7", title="Strikkeopskrifter pind 7 – tykt strik på en weekend",
   meta="Strikkeopskrifter til pind 7 (6–7 mm): tykke sweatre, huer og halsrør i Drops Melody, Alaska og Wish. Hurtige projekter med garnpris.",
   intro=["Pind 7 er weekendprojektet: en hue på en time, et halsrør på to, en sweater på et par dage. Garnerne er tykke og bløde – børstet alpaka som Melody, eller ren uld som Alaska.",
          "Her er opskrifter til pind 6–7 med garn og pris. Bemærk at tykt garn koster mere pr. sweater, fordi løbelængden er kort – sammenlign prisen pr. nøgle."],
+  sections=[
+   ("Hurtig strik med omtanke", "På pind 7 er en sweater færdig på en weekend, men garnet er tungt. Vælg en let kvalitet (Melody, Air holdt dobbelt) frem for ren uld, hvis den skal bæres indendørs."),
+   ("Huer og halsrør", "Det er her, pind 7 skinner: en hue på en time, et halsrør på to. Begge bruger 1–2 nøgler."),
+  ],
   faq=[("Hvilke garner til pind 7?","13–16 masker pr. 10 cm: Drops Melody, Alaska, Wish (pind 8), Snow."),("Hvor meget garn?","600–900 g til en voksensweater i tykt garn.")]),
  dict(n="8", kw="gratis strikkeopskrifter pind 8", h1="Strikkeopskrifter til pind 8", title="Strikkeopskrifter pind 8 – chunky sweatre, huer og tæpper",
   meta="Strikkeopskrifter til pind 8 (7–9 mm): chunky sweatre, cardigans, huer og tæpper i Drops Snow, Wish og Polaris. Nemme projekter med garnpris.",
   intro=["Pind 8 er chunky-strik: store masker, hurtigt resultat og et look, der er blevet populært igen. Det er også det mest tilgivende for begyndere – fejl er nemme at se og rette.",
          "Her er opskrifter til pind 7–9 med garn og pris. Snow (tidligere Eskimo), Wish og Polaris er de typiske garner."],
+  sections=[
+   ("Chunky uden at det bliver tungt", "Snow/Eskimo er ren uld og tung; Wish og Polaris er blandinger med alpaka og er lettere. Til en sweater, du vil bruge, vælg den lette."),
+   ("Tæpper på pind 8", "Et tæppe 120 × 150 cm bruger 1.000–1.400 g på pind 8. Det lyder af meget, men det tager kun 10–15 timer."),
+  ],
   faq=[("Hvilke garner til pind 8?","10–13 masker pr. 10 cm: Drops Snow, Wish, Polaris, Andes."),("Er chunky-strik dyrt?","Det kan det være – 50 g rækker kun 50–75 m. Regn med 700–1.000 g til en sweater, og sammenlign prisen pr. nøgle.")]),
 ]
