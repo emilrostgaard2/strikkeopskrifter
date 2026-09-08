@@ -596,9 +596,20 @@ def om_page():
     return shell("Om strikkeopskrifter.dk – hvem vi er, og hvordan vi tjener penge", "Hvem der står bag strikkeopskrifter.dk, hvordan garndata og priser indsamles, og hvordan siden finansieres.", "/om/", body, [crumb_ld, org_ld])
 
 # ---------------- kør ----------------
+LASTMOD_PATH = f"{ROOT}/data/lastmod.json"
+try: LASTMOD = json.load(open(LASTMOD_PATH, encoding="utf-8"))
+except Exception: LASTMOD = {}
+def content_hash(html_):
+    # ignorér "priser opdateret …", tal i prisrækker og lastmod-datoer, så kun reel indholdsændring tæller
+    core = re.sub(r"priser opdateret [^<·]+", "", html_)
+    core = re.sub(r"\d{1,3}(?:\.\d{3})*,\d{2} kr\.", "PRIS", core)
+    core = re.sub(r"\d+ farver på lager", "", core)
+    return hashlib.md5(core.encode("utf-8")).hexdigest()[:12]
 def write(path, html_):
     d = f"{ROOT}/{path.strip('/')}"; os.makedirs(d, exist_ok=True)
     open(f"{d}/index.html", "w", encoding="utf-8").write(html_)
+    h = content_hash(html_); rec = LASTMOD.get(path)
+    if not rec or rec.get("h") != h: LASTMOD[path] = {"h": h, "d": TODAY}
 
 for o in OPS: o.pop("page", None); o.pop("slug", None)
 skipped = {"drops": 0, "paid": 0}
@@ -687,7 +698,10 @@ urls = ["/", "/opskrifter/", "/gratis/", "/garn/", "/garn/drops/", "/guides/", "
        [f"/opskrifter/{t['slug']}/" for t in C.TYPES] + [f"/opskrifter/pind-{n['n'].replace('.','-')}/" for n in C.NEEDLES] + \
        [f"/guides/{g['slug']}/" for g in C.GUIDES] + [o["page"] for o in pakker] + [o["page"] for o in paid] + ["/designere/"] + [f"/designere/{slugify(n)}/" for n, _ in groups] + \
        [f"/garn/{s}/" for s, g in PRIS.items() if g.get("shops") and os.path.exists(f"{ROOT}/garn/{s}")]
-open(f"{ROOT}/sitemap.xml", "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"<url><loc>{BASE}{u}</loc><lastmod>{TODAY}</lastmod></url>\n" for u in urls) + "</urlset>\n")
+for u in ["/", "/opskrifter/", "/garn/"]:
+    if u not in LASTMOD: LASTMOD[u] = {"h": "", "d": TODAY}
+json.dump(LASTMOD, open(LASTMOD_PATH, "w", encoding="utf-8"))
+open(f"{ROOT}/sitemap.xml", "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(f"<url><loc>{BASE}{u}</loc><lastmod>{LASTMOD.get(u, {}).get('d', TODAY)}</lastmod></url>\n" for u in urls) + "</urlset>\n")
 open(f"{ROOT}/robots.txt", "w").write(f"User-agent: *\nAllow: /\nDisallow: /data/\nSitemap: {BASE}/sitemap.xml\n")
 print(f"Sprunget over (for tynde): {skipped['drops']} Drops, {skipped['paid']} betalte")
 print(f"Skrev {len(pakker)} Drops-sider, {len(paid)} betalte opskriftssider, {len(groups)} designersider, {len(C.CATEGORIES)+2} kategorisider, {len(C.GUIDES)} guides, om-side, sitemap ({len(urls)} URL'er)")
