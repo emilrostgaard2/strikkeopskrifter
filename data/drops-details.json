@@ -1348,5 +1348,455 @@
  },
  "/opskrifter/drops/echo-mountain-cardigan/": {
   "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/echo-mountain/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/billy-jean/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/treasure-hunt/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/lila-mist-cardigan/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/lila-mist/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/pearlescent-top/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/pearlescent-cardigan/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/sea-bird-top/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/river-blue-trail/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/blue-peacock/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/blue-peacock-cardigan/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/white-dandelion/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/blue-glass/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/grace-field-top/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/outdoor-love/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/lost-in-the-sky-cardigan/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/lost-in-the-sky-top/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/blue-butterfly/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/piece-of-sky/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/bayou-belle/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/april-awakens/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/spring-peak/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/violet-meadow/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/violet-meadow-cardigan/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/sjobris/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/lightkeeper/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/stone-cables/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/winter-winds/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/atlanterhavsveien/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/ice-island/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/rain-sky/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/blue-river-slipover/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/nordic-nights/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/winter-rapids-slipover/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/flaming-mountain/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/rocky-ridges/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/edge-of-the-woods/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/lucky-wish/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/sea-crest-hat/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/pumpkin-patch-hat/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/firewood-hat/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/winter-mist-hat/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/winter-wander/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/snow-sledders/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/good-morning-slippers/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/meadow-meanderings/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/dancing-chicken-socks/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/candy-stripes-cardigan/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/candy-stripes/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/tree-of-life/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/heart-catcher/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/sunny-song/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/cherished-moments/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/pastel-spring/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/pastel-spring-cardigan/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/wishing-well/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/wishing-well-cardigan/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/colorful-walk/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/nougat-dreams/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/fairy-woods-top/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/fairy-woods-cardigan/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/queen-bee-cardigan/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/queen-bee/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/big-sur-sweater/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/big-sur-cardigan/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/prairie-rose-sweater/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/letters-to-juliet/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/old-pink-road/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/crystal-lattice/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/white-roses-top/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/about-spring/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/sweetness-imprint/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/sweetness-imprint-sweater/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/maggie-s-bricks-cardigan/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/maggie-s-bricks/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/cranberry-smoothie/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/shy-daisy-cardigan/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/shy-daisy/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/wild-and-free/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/sommarfin-sweater/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/time-to-unwind/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/days-to-remember/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/days-to-remember-cardigan/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/forests-edge/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/poetry-night/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/lost-in-summer-sweater/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/lost-in-summer-cardigan/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/stone-island/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/daisy-lane/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/daisy-lane-cardigan/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/lemon-meringue-sweater/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/pink-lemonade-sweater/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/blueberry-cream-sweater/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/mixed-berries-sweater/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/cherry-sorbet-vest/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/berries-and-cream-sweater/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/woof-woof-sweater/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/meow-meow-sweater/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/rosy-cheeks-sweater/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/little-bee-cardigan/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/dream-in-blue/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/dream-in-blue-cardigan/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/sweet-ivy/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/little-pea/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/little-pearl-cardigan/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/little-pearl-socks/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/rosy-cheeks-socks/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/dream-in-blue-socks/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/chocolate-toes/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/little-peanut/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/cutipie-pants/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/little-pearl-hat/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/sweetheart-beanie/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/blue-cloud-beanie/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/chilly-day-balaclava/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/sweet-teddy-balaclava/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/baby-fox/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/baby-fox-onesie/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/afternoon-playdate/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/early-nap-pants/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/baby-diamonds-by-drops-design-baby-taeppe-strikkeopskrift-65-80-cm/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/baby-plum/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/cosy-twists-by-drops-design-baby-taeppe-strikkeopskrift-65-80-cm/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/bonne-nuit-by-drops-design-baby-taeppe-strikkeopskrift-65-80-cm/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/tiny-mitts/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/mister-fox-by-drops-design-bamse-strikkeopskrift-27-cm/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/sleepy-santa-hat/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/baby-blue-note/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/little-fox/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/itsy-bitsy-santa/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/winter-feather/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/miss-summerbee-sweater/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/rain-romance-sweater/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/chaperon-bleu/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/northern-mermaid-cardigan/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/northern-mermaid-sweater/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/salted-caramel/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/autumn-woods/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/cornflower-blues/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/miss-summerbee-cardigan/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/rain-romance-jacket/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/october-breeze/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/cream-wafer/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/early-moorning-mist/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/silver-surfer/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/moody-judy/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/blueberry-harvest/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/november-breeze/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/winter-awakens/": {
+  "error": "no_garnstudio_link"
+ },
+ "/opskrifter/drops/marmalade/": {
+  "error": "no_garnstudio_link"
  }
 }
