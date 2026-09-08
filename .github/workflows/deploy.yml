@@ -36,7 +36,7 @@ jobs:
       - name: Gem cache (drops-details, prishistorik, billeder) tilbage i repoet
         run: |
           git config user.name "strikkebot" && git config user.email "bot@strikkeopskrifter.dk"
-          git add data/drops-details.json data/prishistorik.json assets/img/cache 2>/dev/null || true
+          git add data/drops-details.json data/prishistorik.json data/lastmod.json assets/img/cache 2>/dev/null || true
           git diff --cached --quiet || (git commit -m "data: natlig opdatering" && git push)
 
       - name: Upload med lftp (parallelt)
