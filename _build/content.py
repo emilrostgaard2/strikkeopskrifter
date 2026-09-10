@@ -3,10 +3,22 @@
 så siderne ikke konkurrerer med hinanden. Redigér frit – pages.py bygger HTML'en."""
 
 SITE = "strikkeopskrifter.dk"
-OWNER = "[Dit navn]"           # ← skriv dit fulde navn her (bruges på /om/ og i forfatter-markup)
-OWNER_BIO = ("Jeg har strikket i mere end ti år og driver strikkeopskrifter.dk, fordi jeg selv var træt af at sidde med "
-             "lommeregneren, hver gang jeg skulle finde ud af, hvor mange nøgler en sweater kræver – og hvad det egentlig kostede. "
-             "Alle garndata på siden er tastet ind af mig fra opskrifternes materialelister, og priserne hentes automatisk hver nat.")
+OWNER = "Emil Rostgaard"
+AUTHORS = {
+ "emil": dict(slug="emil-rostgaard", name="Emil Rostgaard", role="Grundlægger · data, priser og teknik",
+   photo="/assets/img/team/emil-rostgaard.jpg", linkedin="https://www.linkedin.com/in/emil-rostgaard-702809195/",
+   bio=("Emil har bygget strikkeopskrifter.dk og står for det, der gør siden anderledes: prisdata fra butikkerne, garntabellen, "
+        "beregneren og den natlige opdatering. Han strikker ikke selv – og skriver det åbent – men han har bygget prissammenligninger "
+        "før og ved, hvad der skal til, for at tal er til at stole på. Alt, der handler om garn og teknik, bliver tjekket af redaktionens strikker."),
+   short="Står for data, priser, SEO og teknik."),
+ "mette": dict(slug="mette-hansen", name="Mette Hansen", role="Strikker · hjælper med garn og strik",
+   photo="", linkedin="",
+   bio=("Mette strikker og hjælper redaktionen, når der er spørgsmål om garn, teknik og hvad der virker i praksis. Hun læser guides "
+        "og garntekster igennem, før de udgives, og siger til, hvis noget lyder forkert. Hun er ikke ansat, og hun sælger ikke garn – "
+        "hun er den, vi spørger, når banderolen og virkeligheden ikke stemmer overens."),
+   short="Læser guides igennem og hjælper med garn- og strikkespørgsmål."),
+}
+OWNER_BIO = AUTHORS["emil"]["bio"]
 
 # ---------- kategorisider under /opskrifter/ ----------
 # preset = de filtre, siden er låst til. Grid'et viser kun opskrifter der matcher.

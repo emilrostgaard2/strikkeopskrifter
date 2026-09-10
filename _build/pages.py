@@ -108,6 +108,24 @@ def explore_html(current, exclude=None):
     paras = "".join(f"<p>{t}</p>" for t in EXPLORE[key])
     return f'<section class="sec explore"><h2>Udforsk mere</h2>{paras}</section>'
 
+def author_box(kind="guide"):
+    a = C.AUTHORS["emil"]; m = C.AUTHORS["mette"]
+    return f'''<section class="authors"><div class="author"><img src="{a['photo']}" alt="{e(a['name'])}" width="56" height="56" loading="lazy"><div><b><a href="/om/{a['slug']}/">{e(a['name'])}</a></b><span>{e(a['short'])}</span></div></div>
+<div class="author"><span class="author-ini" aria-hidden="true">{e(m['name'][0])}</span><div><b><a href="/om/{m['slug']}/">{e(m['name'])}</a></b><span>{e(m['short'])}</span></div></div></section>'''
+def person_ld(a):
+    d = {"@type":"Person","name":a["name"],"jobTitle":a["role"],"url":BASE+"/om/"+a["slug"]+"/"}
+    if a.get("photo"): d["image"] = BASE+a["photo"]
+    if a["slug"] == "emil-rostgaard": d["worksFor"] = {"@type":"Organization","name":"strikkeopskrifter.dk","url":BASE}
+    if a.get("linkedin"): d["sameAs"] = [a["linkedin"]]
+    return d
+def author_page(a):
+    path = f"/om/{a['slug']}/"
+    crumbs, crumb_ld = breadcrumbs([("Forside","/"),("Om siden","/om/"),(a["name"],None)])
+    ld = dict(person_ld(a)); ld["@context"] = "https://schema.org"
+    body = f'''{crumbs}<article class="prose" style="max-width:68ch"><div style="display:flex;gap:22px;align-items:center;margin:18px 0 20px">{('<img src="'+a['photo']+'" alt="'+e(a['name'])+'" width="120" height="120" style="border-radius:50%;box-shadow:var(--shadow)">') if a.get('photo') else ''}<div><span class="eyebrow">{e(a['role'])}</span><h1 style="margin:0">{e(a['name'])}</h1>{('<p class="small" style="margin:6px 0 0"><a href="'+a['linkedin']+'" rel="me noopener" target="_blank">LinkedIn</a></p>') if a.get('linkedin') else ''}</div></div>
+<p>{e(a['bio'])}</p><h2>Rolle på strikkeopskrifter.dk</h2><p>{e(a['short'])} Du kan skrive til redaktionen på <a href="mailto:hej@strikkeopskrifter.dk">hej@strikkeopskrifter.dk</a>, hvis du finder en fejl i noget, {e(a['name'].split()[0])} har haft ansvar for.</p></article>'''
+    return shell(f"{a['name']} – {a['role']}", f"{a['name']}: {a['short']} Læs om rollen på strikkeopskrifter.dk.", path, body, [crumb_ld, ld])
+
 def shell(title, meta, path, body, lds, current="", og_image=None):
     ld_html = "".join(jsonld(x) for x in lds if x)
     og = f'<meta property="og:image" content="{e(og_image)}"><link rel="preload" as="image" href="{e(img(og_image))}">' if og_image else ""
@@ -115,7 +133,7 @@ def shell(title, meta, path, body, lds, current="", og_image=None):
 <html lang="da"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{e(title)} | strikkeopskrifter.dk</title><meta name="description" content="{e(meta)}">
 <link rel="canonical" href="{BASE}{path}"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(meta)}">{og}
-{HEAD}{ld_html}</head><body>{nav(current)}<main class="wrap">{body}{explore_html(current)}<p class="small muted byauthor">Redigeret af <a href="/om/">{e(C.OWNER)}</a> · priser opdateret {UPDATED} · <a href="/om/#kontakt">Fandt du en fejl?</a></p></main>{FOOT}<button class="totop" aria-label="Til toppen" hidden>↑</button><script src="/assets/site.js"></script></body></html>'''
+{HEAD}{ld_html}</head><body>{nav(current)}<main class="wrap">{body}{explore_html(current)}{author_box()}<p class="small muted byauthor">Priser opdateret {UPDATED} · <a href="/om/#kontakt">Fandt du en fejl?</a></p></main>{FOOT}<button class="totop" aria-label="Til toppen" hidden>↑</button><script src="/assets/site.js"></script></body></html>'''
 
 # ---------------- Drops-opskriftssider ----------------
 def find_yarns(text):
@@ -570,10 +588,10 @@ def guide_page(g):
     body_html = "".join(f"<h2>{e(h)}</h2><p>{e(t)}</p>" for h, t in g["body"])
     faq_html, faq_ld = faq_block(g["faq"])
     crumbs, crumb_ld = breadcrumbs([("Forside","/"),("Guides","/guides/"),(g["h1"],None)])
-    art_ld = {"@context":"https://schema.org","@type":"Article","headline":g["title"],"description":g["meta"],"author":{"@type":"Person","name":C.OWNER},"publisher":{"@type":"Organization","name":"strikkeopskrifter.dk"},"url":BASE+path}
+    art_ld = {"@context":"https://schema.org","@type":"Article","headline":g["title"],"description":g["meta"],"author":person_ld(C.AUTHORS["emil"]),"contributor":person_ld(C.AUTHORS["mette"]),"publisher":{"@type":"Organization","name":"strikkeopskrifter.dk","url":BASE},"url":BASE+path,"dateModified":LASTMOD.get(path,{}).get("d",TODAY)}
     img = f"/assets/img/guides/{g['slug']}.jpg" if os.path.exists(f"{ROOT}/assets/img/guides/{g['slug']}.jpg") else None
     hero = f'<div style="aspect-ratio:16/8;background:var(--oat-2) center/cover url({img});border-radius:20px;box-shadow:var(--shadow);margin:20px 0 28px" role="img" aria-label="{e(g["h1"])}"></div>' if img else ""
-    body = f'''{crumbs}<article class="prose" style="max-width:76ch"><span class="eyebrow" style="margin-top:14px">Guide</span><h1 style="margin:0 0 8px">{e(g['h1'])}</h1><p class="muted small">Af {e(C.OWNER)} · strikkeopskrifter.dk</p>{hero}{body_html}</article>{faq_html}'''
+    body = f'''{crumbs}<article class="prose" style="max-width:76ch"><span class="eyebrow" style="margin-top:14px">Guide</span><h1 style="margin:0 0 8px">{e(g['h1'])}</h1><p class="muted small">Skrevet af <a href="/om/emil-rostgaard/">Emil Rostgaard</a> · Læst igennem af <a href="/om/mette-hansen/">Mette Hansen</a> · Opdateret {LASTMOD.get(path,{}).get("d",TODAY)}</p>{hero}{body_html}</article>{faq_html}'''
     art_ld["image"] = BASE + img if img else None
     return shell(g["title"], g["meta"], path, body, [crumb_ld, art_ld, faq_ld], "guides", BASE + img if img else None)
 
@@ -585,13 +603,16 @@ def guides_index():
 
 def om_page():
     crumbs, crumb_ld = breadcrumbs([("Forside","/"),("Om siden",None)])
-    org_ld = {"@context":"https://schema.org","@type":"Organization","name":"strikkeopskrifter.dk","url":BASE,"founder":{"@type":"Person","name":C.OWNER}}
+    org_ld = {"@context":"https://schema.org","@type":"Organization","name":"strikkeopskrifter.dk","url":BASE,"logo":BASE+"/assets/img/logo.svg","email":"hej@strikkeopskrifter.dk","founder":person_ld(C.AUTHORS["emil"])}
     body = f'''{crumbs}<article class="prose" style="max-width:68ch"><h1 style="margin:12px 0 16px">Om strikkeopskrifter.dk</h1>
 <p>strikkeopskrifter.dk samler danske og nordiske strikkeopskrifter og viser det, opskrifterne selv ikke gør: hvad garnet koster i dag, hvor det er billigst, og hvor mange nøgler du skal bruge til din størrelse.</p>
-<h2>Hvem står bag</h2><p>{e(C.OWNER)}. {e(C.OWNER_BIO)}</p>
+<h2>Hvem står bag</h2>
+<div class="team">{"".join(f'<div class="member">' + (f'<img src="{a["photo"]}" alt="{e(a["name"])}" width="96" height="96" loading="lazy">' if a.get("photo") else f'<span class="member-ini" aria-hidden="true">{e(a["name"][0])}</span>') + f'<div><b><a href="/om/{a["slug"]}/">{e(a["name"])}</a></b><span class="muted small" style="display:block">{e(a["role"])}</span><p class="small" style="margin:6px 0 0">{e(a["bio"])}</p></div></div>' for a in C.AUTHORS.values())}</div>
+<p class="small muted">Vi skriver åbent, hvem der gør hvad: Emil bygger og vedligeholder data og teknik og skriver teksterne; Mette læser dem igennem og hjælper med spørgsmål om garn og strik. Ingen af os er ansat af eller ejer andele i de butikker, vi sammenligner.</p>
 <h2>Sådan arbejder vi</h2><p>Garndata (løbelængde, strikkefasthed, mængde pr. størrelse) tastes ind manuelt fra opskrifternes materialelister og kontrolleres mod producentens banderole. Priser, lager og farver hentes automatisk hver nat fra butikkernes produktfeeds. Vi ændrer aldrig i priserne, og vi viser altid den billigste butik først – uanset hvad vi tjener på den.</p>
 <h2 id="provision">Sådan tjener vi penge</h2><p>Når du klikker videre til en butik og køber, får vi en lille provision (typisk 5–10 %). Det koster ikke dig noget ekstra, og det påvirker ikke rækkefølgen af butikkerne. Vi har ingen betalte placeringer og ingen annoncer. Hvis vi ikke har en aftale med en butik, kan den mangle i sammenligningen – det skriver vi, når det er tilfældet.</p>
 <h2>Opskrifterne</h2><p>Opskrifterne tilhører designerne og butikkerne. Vi kopierer dem ikke; vi linker til dem, og vi bruger kun billeder, som butikkerne stiller til rådighed i deres produktfeeds. Er du designer og vil have din opskrift tilføjet, rettet eller fjernet, så skriv.</p>
+<h2>Rettelser</h2><p>Finder vi eller læserne en fejl, retter vi den og noterer det her.</p><ul class="toplist small"><li>September 2026: Sitet lanceret med prisdata fra Rito, Önling, Hobbygarn, Kreamok, Broen Garn og Kreativgarn.</li></ul>
 <h2 id="kontakt">Kontakt</h2><p>Fejl i en pris, en mængde eller et link? Skriv til <a href="mailto:hej@strikkeopskrifter.dk">hej@strikkeopskrifter.dk</a>. Vi retter typisk inden for et døgn.</p></article>'''
     return shell("Om strikkeopskrifter.dk – hvem vi er, og hvordan vi tjener penge", "Hvem der står bag strikkeopskrifter.dk, hvordan garndata og priser indsamles, og hvordan siden finansieres.", "/om/", body, [crumb_ld, org_ld])
 
@@ -693,8 +714,9 @@ write("/garn/drops/", cat_page(C.DROPS, "drops"))
 for g in C.GUIDES: write(f"/guides/{g['slug']}/", guide_page(g))
 write("/guides/", guides_index())
 write("/om/", om_page())
+for a in C.AUTHORS.values(): write(f"/om/{a['slug']}/", author_page(a))
 
-urls = ["/", "/opskrifter/", "/gratis/", "/garn/", "/garn/drops/", "/guides/", "/om/"] + [f"/{c['path']}/" for c in C.CATEGORIES] + \
+urls = ["/", "/opskrifter/", "/gratis/", "/garn/", "/garn/drops/", "/guides/", "/om/"] + [f"/om/{a['slug']}/" for a in C.AUTHORS.values()] + [f"/{c['path']}/" for c in C.CATEGORIES] + \
        [f"/opskrifter/{t['slug']}/" for t in C.TYPES] + [f"/opskrifter/pind-{n['n'].replace('.','-')}/" for n in C.NEEDLES] + \
        [f"/guides/{g['slug']}/" for g in C.GUIDES] + [o["page"] for o in pakker] + [o["page"] for o in paid] + ["/designere/"] + [f"/designere/{slugify(n)}/" for n, _ in groups] + \
        [f"/garn/{s}/" for s, g in PRIS.items() if g.get("shops") and os.path.exists(f"{ROOT}/garn/{s}")]
@@ -726,7 +748,7 @@ for rel, cur in STATIC.items():
     orig = t = open(f, encoding="utf-8").read()
     if rel == "index.html": t = ssr_home(t)
     if 'class="sec explore"' not in t:
-        t = t.replace("</main>", explore_html({"index.html":"opskrifter","opskrifter/index.html":"opskrifter","garn/index.html":"garn"}[rel]) + f'<p class="small muted byauthor">Redigeret af <a href="/om/">{e(C.OWNER)}</a> · priser opdateret {UPDATED}</p></main>', 1)
+        t = t.replace("</main>", explore_html({"index.html":"opskrifter","opskrifter/index.html":"opskrifter","garn/index.html":"garn"}[rel]) + author_box() + f'<p class="small muted byauthor">Priser opdateret {UPDATED}</p></main>', 1)
         t = t.replace("</body>", '<button class="totop" aria-label="Til toppen" hidden>↑</button></body>')
     t2 = re.sub(r"<header class=\"site\">.*?</header>", lambda m: nav(cur), t, flags=re.S)
     t2 = re.sub(r"<footer class=\"site\">.*?</footer>", lambda m: FOOT, t2, flags=re.S)
