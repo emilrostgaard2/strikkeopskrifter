@@ -121,7 +121,9 @@ pakker   = []
 opskrifter = []
 onling_ops = {}
 seen_pakke = set()
-TYPES = [("sweater",r"sweater|trøje|bluse|genser|pullover|tee\b|top\b"),("cardigan",r"cardigan|jakke|bolero"),("vest",r"vest|slipover"),
+TYPES = [("karklud",r"karklud|grydelap|vaskeklud|opvaskeklud"),("taeppe",r"tæppe|plaid|babytæppe"),("hjemmesko",r"hjemmesko|sutsko|tøfler|futter|slippers"),
+         ("legetoj",r"bamse|dukke|legetøj|kanin|bjørn|elefant|abe\b|kat\b|hund\b|nisse(?!hue)"),("jul",r"jule|nissehue|advent|christmas|julesok|julekugle|julepynt"),("halsedisse",r"halsedisse|halsrør|hals\b|cowl|snood"),
+         ("sweater",r"sweater|trøje|bluse|genser|pullover|tee\b|top\b"),("cardigan",r"cardigan|jakke|bolero"),("vest",r"vest|slipover"),
          ("hue",r"hue|pandebånd|balaclava"),("sjal",r"sjal|tørklæde|halsrør|poncho"),("sokker",r"strømpe|sok"),("vanter",r"vante|luffe|handske"),
          ("baby",r"baby|dåb|body|dragt"),("børn",r"junior|børn|barn"),("kjole",r"kjole|nederdel"),("hjem",r"pude|tæppe|plaid|dukke")]
 def find_needles(text):

@@ -2,7 +2,7 @@
 """Genererer alle statiske sider ud fra data/*.json og _build/content.py.
    Kør efter feeds.py:  python3 _build/pages.py
 """
-import json, os, re, html, unicodedata, sys
+import json, os, re, html, unicodedata, sys, hashlib
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, f"{ROOT}/_build")
 import content as C
@@ -41,14 +41,19 @@ def img(url):
     return f"/assets/img/cache/{k}.webp" if os.path.exists(f"{ROOT}/assets/img/cache/{k}.webp") else url
 def jsonld(obj): return f'<script type="application/ld+json">{json.dumps(obj, ensure_ascii=False)}</script>'
 
-TYPE_LABEL = {"sweater":"Sweatre & bluser","cardigan":"Cardigans","vest":"Veste","hue":"Huer","sjal":"Sjaler & tørklæder","sokker":"Sokker",
+TYPE_LABEL = {"karklud":"Karklude","taeppe":"Tæpper","hjemmesko":"Hjemmesko","legetoj":"Bamser & legetøj","jul":"Julestrik","halsedisse":"Halsedisser","sweater":"Sweatre & bluser","cardigan":"Cardigans","vest":"Veste","hue":"Huer","sjal":"Sjaler & tørklæder","sokker":"Sokker",
               "vanter":"Vanter","baby":"Baby","børn":"Børn","kjole":"Kjoler","hjem":"Hjem","andet":"Andet"}
 TARGET_LABEL = {"dame":"damer","herre":"herrer","børn":"børn","baby":"baby"}
 
-HEAD = '''<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Fraunces:opsz,wght,SOFT@9..144,600;9..144,700,100&family=Instrument+Sans:wght@400;500;600&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+FONTS_URL = "https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Fraunces:opsz,wght,SOFT@9..144,600;9..144,700,100&family=Instrument+Sans:wght@400;500;600&family=Caveat:wght@500;600&display=swap"
+CSS_INLINE = open(f"{ROOT}/assets/style.css", encoding="utf-8").read()
+JS_HASH = hashlib.md5(open(f"{ROOT}/assets/site.js", "rb").read()).hexdigest()[:8]
+FONT_HEAD = f'''<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="{FONTS_URL}" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{FONTS_URL}"></noscript>'''
+HEAD = FONT_HEAD + f'''
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/assets/style.css">'''
+<style>{CSS_INLINE}</style>'''
 def nav(current=""):
     def a(href, label, key, extra=""): return f'<a href="{href}"{" aria-current=page" if key==current else ""}{extra}>{label}</a>'
     return f'''<header class="site"><div class="wrap nav"><a class="logo" href="/">strikke<span>opskrifter</span>.dk</a>
@@ -56,7 +61,7 @@ def nav(current=""):
 <nav id="mainnav"><ul>
 <li class="has-sub">{a("/opskrifter/","Opskrifter","opskrifter",' aria-haspopup="true"')}<button class="sub-toggle" aria-label="Vis undermenu">▾</button>
 <div class="sub"><div class="sub-col"><b>Til hvem</b><a href="/opskrifter/dame/">Damer</a><a href="/opskrifter/boern/">Børn</a><a href="/opskrifter/baby/">Baby</a><a href="/opskrifter/herre/">Herrer</a><a href="/opskrifter/begynder/">Begyndere</a></div>
-<div class="sub-col"><b>Type</b><a href="/opskrifter/sweater/">Sweatre & bluser</a><a href="/opskrifter/cardigan/">Cardigans</a><a href="/opskrifter/vest/">Veste</a><a href="/opskrifter/hue/">Huer</a><a href="/opskrifter/sjal/">Sjaler & tørklæder</a><a href="/opskrifter/sokker/">Sokker</a></div>
+<div class="sub-col"><b>Type</b><a href="/opskrifter/sweater/">Sweatre & bluser</a><a href="/opskrifter/cardigan/">Cardigans</a><a href="/opskrifter/vest/">Veste</a><a href="/opskrifter/hue/">Huer</a><a href="/opskrifter/sjal/">Sjaler & tørklæder</a><a href="/opskrifter/halsedisser/">Halsedisser</a><a href="/opskrifter/sokker/">Sokker</a><a href="/opskrifter/vanter/">Vanter</a><a href="/opskrifter/hjemmesko/">Hjemmesko</a><a href="/opskrifter/karklude/">Karklude</a><a href="/opskrifter/taepper/">Tæpper</a><a href="/opskrifter/julestrik/">Julestrik</a><a href="/opskrifter/bamser-og-legetoj/">Bamser & legetøj</a></div>
 <div class="sub-col"><b>Pind</b><a href="/opskrifter/pind-3/">Pind 3</a><a href="/opskrifter/pind-4/">Pind 4</a><a href="/opskrifter/pind-5/">Pind 5</a><a href="/opskrifter/pind-7/">Pind 7</a><a href="/opskrifter/pind-8/">Pind 8</a></div></div></li>
 <li>{a("/gratis/","Gratis","gratis")}</li><li>{a("/garn/","Garn","garn")}</li><li>{a("/garn/drops/","DROPS","drops")}</li><li>{a("/guides/","Guides","guides")}</li>
 </ul></nav></div></header>'''
@@ -64,7 +69,7 @@ FOOT = '''<footer class="site"><div class="wrap foot-grid">
 <div class="foot-brand"><a class="logo" href="/">strikke<span>opskrifter</span>.dk</a><p>Find opskriften, regn garnet ud, og køb det hvor det er billigst. Priser hentes hver nat fra danske garnbutikker.</p>
 <form class="foot-news" action="#" onsubmit="return false"><input type="email" placeholder="din@mail.dk" aria-label="E-mail"><button class="btn btn-primary btn-sm" type="submit">Få prisfald</button></form></div>
 <div><b>Opskrifter</b><a href="/opskrifter/dame/">Til damer</a><a href="/opskrifter/boern/">Til børn</a><a href="/opskrifter/baby/">Til baby</a><a href="/opskrifter/herre/">Til herrer</a><a href="/opskrifter/begynder/">Begyndere</a><a href="/gratis/">Gratis opskrifter</a><a href="/garn/drops/">DROPS-opskrifter</a></div>
-<div><b>Typer</b><a href="/opskrifter/sweater/">Sweatre & bluser</a><a href="/opskrifter/cardigan/">Cardigans</a><a href="/opskrifter/vest/">Veste</a><a href="/opskrifter/hue/">Huer</a><a href="/opskrifter/sjal/">Sjaler</a><a href="/opskrifter/sokker/">Sokker</a></div>
+<div><b>Typer</b><a href="/opskrifter/sweater/">Sweatre & bluser</a><a href="/opskrifter/cardigan/">Cardigans</a><a href="/opskrifter/vest/">Veste</a><a href="/opskrifter/hue/">Huer</a><a href="/opskrifter/sjal/">Sjaler</a><a href="/opskrifter/halsedisser/">Halsedisser</a><a href="/opskrifter/sokker/">Sokker</a><a href="/opskrifter/vanter/">Vanter</a><a href="/opskrifter/hjemmesko/">Hjemmesko</a><a href="/opskrifter/karklude/">Karklude</a><a href="/opskrifter/taepper/">Tæpper</a><a href="/opskrifter/julestrik/">Julestrik</a><a href="/opskrifter/bamser-og-legetoj/">Bamser & legetøj</a></div>
 <div><b>Garn & guides</b><a href="/garn/">Sammenlign garnpriser</a><a href="/garn/drops-baby-merino/">Drops Baby Merino</a><a href="/garn/drops-air/">Drops Air</a><a href="/guides/vaelg-alternativt-garn/">Vælg alternativt garn</a><a href="/guides/hvor-mange-noegler/">Hvor mange nøgler?</a><a href="/guides/alternativer-onling-no-1/">Alternativer til Önling No 1</a></div>
 <div><b>Pinde</b><a href="/opskrifter/pind-3/">Pind 3</a><a href="/opskrifter/pind-4/">Pind 4</a><a href="/opskrifter/pind-5/">Pind 5</a><a href="/opskrifter/pind-7/">Pind 7</a><a href="/opskrifter/pind-8/">Pind 8</a></div>
 <div><b>Om</b><a href="/om/">Om siden</a><a href="/om/#provision">Sådan tjener vi penge</a><a href="/om/#kontakt">Kontakt</a></div>
@@ -84,7 +89,7 @@ def faq_block(faq, h="Ofte stillede spørgsmål"):
 EXPLORE = {
  "opskrifter": [
   "Leder du efter noget bestemt? Vi har samlet <a href='/opskrifter/dame/'>strikkeopskrifter til damer</a>, <a href='/opskrifter/boern/'>til børn</a>, <a href='/opskrifter/baby/'>til baby</a> og <a href='/opskrifter/herre/'>til herrer</a> – og er du ny i strik, så start med <a href='/opskrifter/begynder/'>de nemme opskrifter til begyndere</a>. Alle <a href='/gratis/'>gratis strikkeopskrifter</a> ligger på én side, og <a href='/garn/drops/'>DROPS' opskrifter</a> har deres egen, fordi de er så mange.",
-  "Efter type: <a href='/opskrifter/sweater/'>sweatre og bluser</a>, <a href='/opskrifter/cardigan/'>cardigans</a>, <a href='/opskrifter/vest/'>veste og slipovers</a>, <a href='/opskrifter/hue/'>huer</a>, <a href='/opskrifter/sjal/'>sjaler og tørklæder</a> og <a href='/opskrifter/sokker/'>sokker</a>. Strikker du helst på en bestemt pind, så se opskrifter til <a href='/opskrifter/pind-3/'>pind 3</a>, <a href='/opskrifter/pind-4/'>pind 4</a>, <a href='/opskrifter/pind-5/'>pind 5</a>, <a href='/opskrifter/pind-7/'>pind 7</a> eller <a href='/opskrifter/pind-8/'>pind 8</a>.",
+  "Efter type: <a href='/opskrifter/sweater/'>sweatre og bluser</a>, <a href='/opskrifter/cardigan/'>cardigans</a>, <a href='/opskrifter/vest/'>veste og slipovers</a>, <a href='/opskrifter/hue/'>huer</a>, <a href='/opskrifter/sjal/'>sjaler og tørklæder</a>, <a href='/opskrifter/halsedisser/'>halsedisser</a>, <a href='/opskrifter/sokker/'>sokker</a>, <a href='/opskrifter/vanter/'>vanter</a> og <a href='/opskrifter/hjemmesko/'>hjemmesko</a> – eller de små projekter: <a href='/opskrifter/karklude/'>karklude</a>, <a href='/opskrifter/taepper/'>tæpper</a>, <a href='/opskrifter/bamser-og-legetoj/'>bamser</a> og <a href='/opskrifter/julestrik/'>julestrik</a>. Strikker du helst på en bestemt pind, så se opskrifter til <a href='/opskrifter/pind-3/'>pind 3</a>, <a href='/opskrifter/pind-4/'>pind 4</a>, <a href='/opskrifter/pind-5/'>pind 5</a>, <a href='/opskrifter/pind-7/'>pind 7</a> eller <a href='/opskrifter/pind-8/'>pind 8</a>.",
   "Garnet betyder mere for prisen end opskriften. På <a href='/garn/'>garnsiderne</a> sammenligner vi prisen pr. nøgle hos danske butikker – fx <a href='/garn/drops-baby-merino/'>Drops Baby Merino</a>, <a href='/garn/drops-air/'>Drops Air</a> og <a href='/garn/onling-no-1/'>Önling No 1</a> – og i guiderne kan du læse, <a href='/guides/hvor-mange-noegler/'>hvor mange nøgler du skal bruge</a>, og <a href='/guides/vaelg-alternativt-garn/'>hvordan du vælger et billigere garn</a>.",
  ],
  "garn": [
@@ -133,7 +138,7 @@ def shell(title, meta, path, body, lds, current="", og_image=None):
 <html lang="da"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{e(title)} | strikkeopskrifter.dk</title><meta name="description" content="{e(meta)}">
 <link rel="canonical" href="{BASE}{path}"><meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(meta)}">{og}
-{HEAD}{ld_html}</head><body>{nav(current)}<main class="wrap">{body}{explore_html(current)}{author_box()}<p class="small muted byauthor">Priser opdateret {UPDATED} · <a href="/om/#kontakt">Fandt du en fejl?</a></p></main>{FOOT}<button class="totop" aria-label="Til toppen" hidden>↑</button><script src="/assets/site.js"></script></body></html>'''
+{HEAD}{ld_html}</head><body>{nav(current)}<main class="wrap">{body}{explore_html(current)}{author_box()}<p class="small muted byauthor">Priser opdateret {UPDATED} · <a href="/om/#kontakt">Fandt du en fejl?</a></p></main>{FOOT}<button class="totop" aria-label="Til toppen" hidden>↑</button><script src="/assets/site.js?v={JS_HASH}" defer></script></body></html>'''
 
 # ---------------- Drops-opskriftssider ----------------
 def find_yarns(text):
@@ -173,6 +178,12 @@ TYPE_SENT = {
  "børn":"Børnetøj bliver vasket ofte – vælg et garn, der tåler maskinvask på uldprogram.",
  "kjole":"En strikket kjole bruger mere garn end en sweater – regn med 12–18 nøgler til en voksenstørrelse.",
  "hjem":"Tæpper og puder tilgiver ujævn strikkefasthed og er gode projekter til restegarn.",
+ "karklud":"Karklude er det hurtigste strikkeprojekt, der findes: 30–50 g bomuld, en time, og du har noget brugbart.",
+ "taeppe":"Et tæppe bruger meget garn, men ingen svære teknikker – prisen pr. nøgle betyder alt.",
+ "hjemmesko":"Hjemmesko strikkes ofte i tykt garn og filtes – tjek at garnet er ren uld uden superwash, hvis de skal filtes.",
+ "legetoj":"Bamser og legetøj bruger småt garn og små pinde – restegarn er oplagt.",
+ "jul":"Julestrik er sæsonvare: start i oktober, så er det færdigt til december.",
+ "halsedisse":"En halsedisse bruger 1–3 nøgler og er færdig på en aften eller to.",
  "andet":"",
 }
 
@@ -210,8 +221,8 @@ def materials_panel(o, yarns):
                         f"<br><span class='small muted'>{balls} × {kr(cheapest['price'])} kr. = <b>{kr(balls*cheapest['price'])} kr.</b> hos {e(cheapest['shop'])} (billigst)</span></td></tr>")
         else:
             rows.append(f"<tr><th>{e(name)}</th><td>fra {kr(cheapest['price'])} kr. pr. nøgle hos {e(cheapest['shop'])} – mængde pr. størrelse står i opskriften</td></tr>")
-    n = needles(o.get("desc",""))
-    rows.append(f"<tr><th>Pinde</th><td>{'Rundpind ' + ' og '.join(x+' mm' for x in n) if n else 'Se opskriften'}</td></tr>")
+    n = needles(o.get("desc","")) or sorted({x for _, sl in yarns if sl and GARN.get(sl) for x in re.findall(r"\d+(?:\.\d)?", GARN[sl]["needle"].replace(",", "."))}, key=float)
+    rows.append(f"<tr><th>Pinde</th><td>{('Pind ' + ' og '.join(x.replace('.',',')+' mm' for x in n) + ' (garnets anbefaling – opskriften kan afvige)') if n else 'Se opskriften'}</td></tr>")
     rows.append(f"<tr><th>Størrelser</th><td>{e(o.get('sizes') or 'Se opskriften')}</td></tr>")
     rows.append("<tr><th>Opskrift</th><td>Gratis PDF fra DROPS Design (dansk)</td></tr>")
     note = "<p class='small muted' style='margin:10px 0 0'>Nøgleantallet er beregnet ud fra garnpakkens pris og gælder mindste størrelse – større størrelser bruger mere. Den præcise mængde pr. størrelse står i opskriften.</p>" if len(yarns)==1 else ""
@@ -307,6 +318,118 @@ def gen_desc(o, yarns, det=None, kits=None):
     if lvl: parts.append(_pick(n, {"begynder":["Teknisk er den enkel og egner sig til nye strikkere.","Ingen svære teknikker – et godt første projekt."],"let øvet":["Niveauet er let øvet: kan du strikke ret, vrang og tage ind, kan du strikke den.","Den kræver lidt erfaring, men ingen specielle teknikker."],"øvet":["Der er teknikker, der kræver lidt øvelse – se opskriftens beskrivelse.","Den er til dig, der har strikket et par projekter før."]}.get(lvl, [""]), 5))
     return " ".join(x for x in parts if x)
 
+# ---------------- Dybt indhold pr. opskrift: udledt af data, ikke skabelon-fyld ----------------
+TECH = [("topdown", r"oppefra og ned|top[- ]?down|ovenfra"), ("bottomup", r"nedefra og op|bottom[- ]?up|nedefra"), ("raglan", r"raglan"),
+        ("baerestykke", r"bærestykke|rundt bærestyk|yoke"), ("hulmoenster", r"hulmønster|lace|hulmønstre"), ("snoning", r"snoning|kabel|cable|fletning"),
+        ("rib", r"\brib\b|ribkant"), ("striber", r"strib"), ("fairisle", r"fair isle|norsk mønster|flerfarvet|mønsterstrik|jacquard"),
+        ("vendepinde", r"vendepind|kortrækker|short row"), ("perlestrik", r"perlestrik"), ("retstrik", r"retstrik"), ("filt", r"filte"), ("mohair", r"mohair"), ("dobbelt", r"dobbelt tråd|holdt sammen|to tråde|dobbelttråd")]
+def techniques(text):
+    t = (text or "").lower(); return [k for k, rx in TECH if re.search(rx, t)]
+
+def steps_for(o, tech, yarns, g0):
+    tl = o["type"]; n = o["name"]
+    st = []
+    if g0: st.append(f"Strik en prøve på {g0['gauge']} masker i bredden og vask den, som du vil vaske det færdige – {'bomuld kan blive længere' if 'bomuld' in g0['fiber'].lower() else ('alpaka og mohair åbner sig efter vask' if ('alpaka' in g0['fiber'].lower() or 'mohair' in g0['fiber'].lower()) else 'uld sætter sig først efter vask')}. Passer fastheden ikke, så skift pind, ikke garn.")
+    else: st.append("Strik en strikkeprøve, vask den, og mål først derefter.")
+    if tl in ("sweater","cardigan","vest","kjole"):
+        if "topdown" in tech or "raglan" in tech or "baerestykke" in tech:
+            st.append("Slå op til halsen og strik " + ("bærestykket med udtagninger i fire raglanlinjer" if "raglan" in tech else ("det runde bærestykke med jævnt fordelte udtagninger" if "baerestykke" in tech else "bærestykket oppefra")) + (" – vendepindene i nakken gør, at ryggen sidder højere" if "vendepinde" in tech else "") + ".")
+            st.append("Del til ærmer og krop, sæt ærmemaskerne på hjælpetråd, og prøv trøjen på – det er nu, du kan justere vidden.")
+            st.append("Strik kroppen ned til ønsket længde" + (" – husk knapkanterne undervejs" if tl=="cardigan" else "") + ", og slut med " + ("rib" if "rib" in tech else "kant") + ".")
+            if tl != "vest": st.append("Tag ærmemaskerne op og strik ærmerne ned. Strik dem 1–2 cm kortere, end du tror – uld giver sig.")
+        else:
+            st.append("Strik " + ("for- og bagstykke nedefra" if "bottomup" in tech else "delene") + " efter opskriften, og sy dem sammen med madrassting.")
+            if tl != "vest": st.append("Strik ærmerne og sy dem i. Tag halskanten op til sidst.")
+        if "hulmoenster" in tech: st.append("Hulmønsteret: tæl masker efter hver mønsterrapport, og brug en maskemarkør pr. rapport – det sparer optrævling.")
+        if "snoning" in tech: st.append("Snoningerne strikkes med hjælpepind; læg mærke til, om de krydser til højre eller venstre i diagrammet.")
+        if "fairisle" in tech: st.append("Ved flerfarvet strik: hold trådene løse bagpå, og fang dem for hver 4–5 masker, så trøjen ikke trækker sig.")
+        if "mohair" in tech or "dobbelt" in tech: st.append("Holdes to tråde sammen, så tag begge fra hver sit nøgle, og hold dem jævnt – ellers bliver maskerne ujævne.")
+        st.append("Vask og spænd ud i de færdige mål fra opskriften. Det er her, trøjen får sit fald.")
+    elif tl == "hue":
+        st.append("Slå op på rundpind 40 cm og strik kanten" + (" i rib" if "rib" in tech else "") + " – 2–4 cm mindre i omkreds end hovedet, så huen sidder.")
+        st.append("Strik lige op til indtagningerne begynder; skift til strømpepinde eller magic loop, når der bliver for få masker.")
+        st.append("Tag ind som beskrevet, træk tråden gennem de sidste masker, og hæft enderne inde i huen." + (" Sy pomponen fast med garnet, ikke med sytråd." if "pompon" in (o.get("desc","").lower()) else ""))
+    elif tl == "sokker":
+        st.append("Slå op og strik skaftet i rib – det holder sokken oppe.")
+        st.append("Strik hælen" + (" med kortrækker" if "vendepinde" in tech else " med hælflap og kile") + " – tæl maskerne igen, før du fortsætter foden.")
+        st.append("Strik foden til 4–5 cm før ønsket længde, og tag ind til tåen. Luk med grafting (kitchener), så der ikke er en søm under tæerne.")
+        st.append("Strik den anden sok med det samme – ellers bliver den aldrig strikket.")
+    elif tl in ("sjal","halsedisse"):
+        st.append("Slå løst op – kanten skal kunne spændes ud." if tl=="sjal" else "Slå op på rundpind 40–60 cm og strik rundt – ingen sammensyning.")
+        if "hulmoenster" in tech: st.append("Strik hulmønsteret med maskemarkører mellem rapporterne; tæl efter hver mønsterpind.")
+        st.append("Luk løst af (evt. med en pind større), og spænd " + ("sjalet" if tl=="sjal" else "halsedissen") + " ud på et håndklæde, til det er tørt – det er dér, mønsteret åbner sig.")
+    elif tl == "vanter":
+        st.append("Strik kanten i rib på strømpepinde eller magic loop, og strik lige op til tommelen.")
+        st.append("Sæt tommelmaskerne på hjælpetråd" + (" eller tag ud til tommelkile" if "kile" in o.get("desc","").lower() else "") + ", strik hånden færdig, og tag ind til toppen.")
+        st.append("Tag tommelmaskerne op og strik tommelen. Hæft enderne på vrangen, og strik den anden vante spejlvendt.")
+    elif tl == "hjemmesko":
+        st.append("Strik hjemmeskoene efter opskriften" + (" – 30–40 % for store, de krymper i filtningen" if "filt" in tech else "") + ".")
+        if "filt" in tech: st.append("Filt i vaskemaskinen ved 40–60 grader med et par håndklæder. Form dem våde, og lad dem tørre i facon.")
+        st.append("Sy skridsikre såler under, eller påfør latex – det forlænger levetiden markant.")
+    elif tl == "karklud":
+        st.append("Slå op med en kant på 3–4 masker i retstrik, så kluden ikke ruller.")
+        st.append("Strik mønsteret til kluden er kvadratisk (20–25 cm), luk af, og hæft enderne godt – de skal tåle kogevask.")
+    elif tl == "taeppe":
+        st.append("Strik " + ("firkanterne og sy dem sammen med madrassting" if "firkant" in o.get("desc","").lower() or "patchwork" in o.get("desc","").lower() else "tæppet på lang rundpind i ét stykke") + ". Hold jævn fasthed – det ses på et tæppe.")
+        st.append("Vask og spænd ud til de færdige mål. Bomuld og superwash kan maskinvaskes; uld vaskes i hånden.")
+    elif tl == "legetoj":
+        st.append("Strik delene på en pind mindre end anbefalet, så fyldet ikke kan ses gennem maskerne.")
+        st.append("Fyld med vaskbart fyld, sy delene sammen med madrassting, og broder ansigtet – ingen løse dele til de mindste.")
+    elif tl == "jul":
+        st.append("Strik efter opskriften; til julekugler og småpynt bruges rester, så vælg farverne først.")
+        st.append("Hæft enderne grundigt – julepynt hænger i mange år.")
+    else:
+        st.append("Følg opskriftens rækkefølge, og prøv undervejs, hvor det er muligt.")
+        st.append("Vask og spænd ud i de færdige mål til sidst.")
+    return st
+
+def care_for(g0):
+    if not g0: return ""
+    f = g0["fiber"].lower()
+    if "bomuld" in f or "hør" in f or "viskose" in f: return "Bomuld, hør og viskose har ingen elasticitet: strik en pind mindre, hvis kanterne bølger, og regn med at plagget bliver 2–4 cm længere efter første vask. Maskinvask på skåneprogram, tør fladt."
+    if "mohair" in f or "silke" in f: return "Mohair og silke vaskes i hånden i lunkent vand uden at gnide – ellers filter det. Pres vandet ud i et håndklæde, og tør fladt. Kradser det, så læg det i fryseren et døgn; det lægger fibrene."
+    if "alpaka" in f: return "Alpaka er varmere end uld, men tungere og uden samme spændstighed: strik rib lidt strammere, og hold plagget fladt, når det tørrer, så det ikke strækker sig."
+    if "superwash" in f: return "Superwash-merino kan maskinvaskes på uldprogram ved 30 grader. Det bliver blødere med tiden, men kan også strække sig – tør fladt, aldrig på bøjle."
+    if "polyamid" in f or "nylon" in f: return "Nylonandelen gør garnet slidstærkt – det er derfor, det bruges til sokker og hæle. Maskinvask på uldprogram, ingen tørretumbler."
+    if "uld" in f or "merino" in f: return "Ubehandlet uld vaskes i hånden eller på uldprogram uden centrifugering. Det filter, hvis det får varme og gnidning på én gang – brug lunkent vand og uldsæbe, og tør fladt."
+    return "Følg banderolens vaskeanvisning – og vask altid strikkeprøven først, så du ved, hvordan garnet opfører sig."
+
+def fit_for(o):
+    tg = o.get("target","dame"); tl = o["type"]
+    if tl in ("sweater","cardigan","vest","kjole"):
+        if tg == "baby": return "Babystørrelser angives i måneder. Strik til den størrelse, barnet har om 2–3 måneder – og vælg gerne knapper i skulderen, så det er nemt at få på."
+        if tg == "børn": return "Børn vokser i længden først: strik krop og ærmer 2–3 cm længere end opskriften, så holder trøjen en sæson mere. Vidden passer typisk aldersstørrelsen."
+        if tg == "herre": return "De fleste mænd foretrækker 8–15 cm positiv ease – tjek opskriftens færdige overvidde mod brystmålet, ikke bogstavstørrelsen. Ærmelængden er det, der oftest skal justeres."
+        return "Vælg størrelse efter opskriftens færdige mål, ikke bogstavet: en M kan svare til 100 cm overvidde hos én designer og 115 hos en anden. Mål en trøje, du er glad for, og gå efter den."
+    if tl == "hue": return "Voksen: 54–58 cm hovedomkreds → strik 50–52 cm. Børn: 48–52 cm. Ribben giver, så huen skal være mindre end hovedet."
+    if tl == "sokker": return "Sokken strikkes 1–2 cm kortere end foden. Mål fodlængden, og gang med 0,9 – strikket strækker sig."
+    if tl == "vanter": return "Mål håndens omkreds uden tommel, og strik 1–2 cm mindre. Tommelen sættes lidt højere til store hænder."
+    if tl == "halsedisse": return "Voksen: 55–65 cm i omkreds, 20–30 cm høj. Barn: 40–50 cm. I rib giver den sig; i glatstrik skal den kunne gå over hovedet."
+    return ""
+
+def deep_content(o, yarns, det, tech):
+    g0 = next((GARN[sl] for _, sl in yarns if sl and GARN.get(sl)), None)
+    n = o["name"]; tl_lab = TYPE_LABEL.get(o["type"],"andet").lower(); tg = o.get("target","dame"); tgl = TARGET_LABEL.get(tg,"damer")
+    steps = steps_for(o, tech, yarns, g0)
+    steps_html = "".join(f"<li>{e(x)}</li>" for x in steps)
+    tech_lab = {"topdown":"strikket oppefra og ned","bottomup":"strikket nedefra","raglan":"raglan","baerestykke":"rundt bærestykke","hulmoenster":"hulmønster","snoning":"snoninger","rib":"rib","striber":"striber","fairisle":"flerfarvet mønster","vendepinde":"vendepinde","perlestrik":"perlestrik","retstrik":"retstrik","filt":"filtning","mohair":"mohair holdt sammen","dobbelt":"to tråde"}
+    tl_list = [tech_lab[t] for t in tech if t in tech_lab]
+    tech_html = f"<p>{e(n)} bruger {', '.join(tl_list[:-1]) + ' og ' + tl_list[-1] if len(tl_list)>1 else tl_list[0]}. " + ("Ingen af delene kræver erfaring ud over ret, vrang og ud-/indtagninger." if o.get("level")=="begynder" else ("DROPS har videoer til hver teknik – linket står i opskriftens PDF." if o.get("free") else "Designeren beskriver teknikkerne i opskriften; er du i tvivl, så søg teknikkens navn på YouTube – de findes alle som video.")) + "</p>" if tl_list else ""
+    care = care_for(g0); fit = fit_for(o)
+    # pind-side link
+    needle_link = ""
+    if g0:
+        nn = re.findall(r"\d+", g0["needle"])
+        if nn and os.path.exists(f"{ROOT}/opskrifter/pind-{nn[0]}"): needle_link = f' Flere <a href="/opskrifter/pind-{nn[0]}/">opskrifter til pind {nn[0]}</a>.'
+    type_slug = {"sweater":"sweater","cardigan":"cardigan","vest":"vest","hue":"hue","sjal":"sjal","sokker":"sokker","vanter":"vanter","hjemmesko":"hjemmesko","karklud":"karklude","taeppe":"taepper","legetoj":"bamser-og-legetoj","jul":"julestrik","halsedisse":"halsedisser"}.get(o["type"])
+    target_slug = {"dame":"dame","børn":"boern","baby":"baby","herre":"herre"}.get(tg,"dame")
+    links = f'<p>Se flere <a href="/opskrifter/{type_slug}/">{e(tl_lab)}</a> og <a href="/opskrifter/{target_slug}/">strikkeopskrifter til {e(tgl)}</a>' if type_slug else f'<p>Se flere <a href="/opskrifter/{target_slug}/">strikkeopskrifter til {e(tgl)}</a>'
+    links += (f', alle <a href="/gratis/">gratis opskrifter</a>' if o.get("free") else f', alle opskrifter fra <a href="/designere/{slugify(o["designer"])}/">{e(o["designer"])}</a>') + (f' eller <a href="/garn/{yarns[0][1]}/">andre opskrifter i {e(yarns[0][0])}</a>' if yarns and yarns[0][1] and PRIS.get(yarns[0][1],{}).get("shops") else "") + "." + needle_link + "</p>"
+    return f'''<section class="sec prose deep"><h2>Sådan strikker du {e(n)} – trin for trin</h2>{tech_html}<ol class="steps-list">{steps_html}</ol>
+{('<h3>Størrelse og pasform</h3><p>' + e(fit) + '</p>') if fit else ''}
+{('<h3>Garnet: ' + e(g0['fiber']) + '</h3><p>' + e(care) + '</p>') if g0 else ''}
+{links}</section>'''
+
 def drops_page(o, related):
     det = DETAILS.get(o.get("page"))
     calc, calc_js = calc_html(o, det)
@@ -334,7 +457,7 @@ def drops_page(o, related):
         yarn_html = '<p class="muted">Garnet fremgår ikke af beskrivelsen – materialelisten står i opskriften. Garnpakken til højre indeholder det hele.</p>'
     yarn_names = ", ".join(n for n, _ in yarns) or "det garn, DROPS anbefaler"
     faq = [
-     (f"Er opskriften til {o['name']} gratis?", f"Ja. {o['name']} er designet af DROPS Design, og hele deres katalog er gratis. Du henter PDF'en på dansk via linket øverst og betaler kun for garnet."),
+     (f"Er opskriften til {o['name']} gratis?", f"Ja. {o['name']} er designet af DROPS Design, og hele deres katalog er gratis på garnstudio.com. {'Linket øverst går direkte til opskriften.' if det and det.get('src') else 'Du finder PDF-linket på butikkens side – vi linker direkte, så snart vi har hentet det.'} Du betaler kun for garnet."),
      (f"Hvilket garn skal jeg bruge til {o['name']}?", f"Opskriften er strikket i {yarn_names}. Den præcise mængde pr. størrelse står i opskriftens materialeliste – og garnpakken fra {o['shop_name']} indeholder garnet til den størrelse, du vælger."),
      (f"Kan jeg strikke {o['name']} i et andet garn?", f"Ja, hvis du rammer samme strikkefasthed som opskriften angiver. Regn mængden om i meter frem for gram. Se vores guide til at vælge alternativt garn."),
      (f"Hvad koster det at strikke {o['name']}?", f"Garnpakken med alt garn koster {kr(o['price'])} kr. hos {o['shop_name']}. Køber du nøglerne enkeltvis, kan det være billigere – sammenlign priserne ovenfor."),
@@ -355,7 +478,7 @@ def drops_page(o, related):
         sw = [v for v in ch["variants"] if v.get("image")][:24] if ch else []
         if sw:
             colors_html = f'<p class="small muted" style="margin:14px 0 0">Farver hos {e(ch["shop"])} – klik på en farve for at gå direkte til den:</p><div class="colors">' + "".join(
-                f'<a href="{e(v.get("cart") or v["url"])}" rel="sponsored nofollow" target="_blank" title="{e(v["nr"])} {e(v["color"])}{"" if v["stock"]=="in_stock" else " (udsolgt)"}" class="{"" if v["stock"]=="in_stock" else "out"}" style="background-image:url(\'{e(v["image"])}\')"></a>' for v in sw) + "</div>"
+                f'<a href="{e(v.get("cart") or v["url"])}" rel="sponsored nofollow" target="_blank" title="{e(v["nr"])} {e(v["color"])}{"" if v["stock"]=="in_stock" else " (udsolgt)"}" aria-label="Farve {e(v["nr"])} {e(v["color"])} hos {e(ch["shop"])}{"" if v["stock"]=="in_stock" else " – udsolgt"}" class="{"" if v["stock"]=="in_stock" else "out"}" style="background-image:url(\'{e(img(v["image"]))}\')"></a>' for v in sw) + "</div>"
     faq_html, faq_ld = faq_block(faq, f"Spørgsmål om {o['name']}")
     crumbs, crumb_ld = breadcrumbs([("Forside","/"),("Opskrifter","/opskrifter/"),("DROPS","/garn/drops/"),(TYPE_LABEL.get(o['type'],'Andet'), f"/opskrifter/?kategori={o['type']}"),(o['name'],None)])
     rel_html = "".join(f'''<a class="card" href="{r['page']}"><div class="img" style="background:center/cover url('{e(img(r['image']))}')"></div><b>{e(r['name'])}</b><span>DROPS Design · gratis · {TARGET_LABEL.get(r.get('target',''),'')}</span><em class="price">Garnpakke {kr(r['price'])} kr.</em></a>''' for r in related)
@@ -368,8 +491,8 @@ def drops_page(o, related):
 <div><span class="eyebrow">Gratis opskrift · til {tgt}</span><h1>{e(o['name'])}</h1><p class="byline">Design af DROPS Design{(' · Str. '+e(o['sizes'])) if o.get('sizes') else ''} · Niveau: {e(o.get('level','let øvet'))}</p>
 {pricebox}
 <p class="lead">{e(lead)}</p>
-<div class="cta-row"><a class="btn btn-primary" href="#garn">Se garn og pris</a><a class="btn btn-ghost" href="{e(o['url'])}" rel="sponsored nofollow" target="_blank">Hent opskriften gratis</a></div>
-<p class="small muted" style="margin-top:12px">Opskriften er gratis hos DROPS. Garnet køber du hvor det er billigst – eller som samlet pakke.</p></div></section>
+<div class="cta-row"><a class="btn btn-primary" href="#garn">Se garn og pris</a>{('<a class="btn btn-ghost" href="' + e(det['src']) + '" rel="noopener" target="_blank">Hent opskriften gratis hos DROPS</a>') if det and det.get('src') else ('<a class="btn btn-ghost" href="' + e(o['url']) + '" rel="sponsored nofollow" target="_blank">Hent opskriften gratis</a>')}</div>
+<p class="small muted" style="margin-top:12px">Opskriften er gratis fra DROPS Design{' – linket går direkte til garnstudio.com' if det and det.get('src') else ' – du finder PDF-linket på butikkens side'}. Garnet køber du hvor det er billigst, eller som samlet pakke.</p></div></section>
 <div class="sticky-cta"><div><div class="small muted">Garn fra</div><div class="big">{kr(cheapest_total)} kr.</div></div><a class="btn btn-primary btn-sm" href="#garn">Se garn og pris</a></div>
 {calc}
 <section id="garn" class="two"><div><h2 style="margin-bottom:8px">Garnet til {e(o['name'])}</h2><p class="muted" style="margin:0 0 18px;max-width:60ch">{e(TYPE_SENT.get(o['type'],''))} Priser opdateret {UPDATED}.</p>{materials_panel(o, yarns)}{yarn_html}{colors_html}{alternatives_html(yarns)}
@@ -378,6 +501,7 @@ def drops_page(o, related):
 <div style="font-family:var(--serif);font-size:30px;font-weight:600;margin-bottom:12px">{kr(o['price'])} kr.</div>
 <a class="btn btn-primary" style="display:block" href="{e(o['url'])}" rel="sponsored nofollow" target="_blank">Se garnpakken hos {e(o['shop_name'])}</a>
 <p class="small muted" style="margin:16px 0 0">Ny i strik? Læs <a href="/guides/hvor-mange-noegler/">hvor mange nøgler du skal bruge</a> og <a href="/guides/vaelg-alternativt-garn/">hvordan du vælger et andet garn</a>.</p></aside></section>
+{deep_content(o, yarns, det, techniques(o.get("desc","") + " " + o["name"]))}
 {faq_html}
 <section class="sec"><div class="sec-head"><h2>Flere gratis DROPS-opskrifter – {e(tl)} til {e(tgt)}</h2><a href="/opskrifter/?kategori={o['type']}">Se alle →</a></div><div class="grid">{rel_html}</div></section>'''
     return shell(title, meta, path, body + calc_js, [crumb_ld, faq_ld, product_ld], "drops", o["image"])
@@ -453,6 +577,7 @@ def pattern_page(o, related):
 <div style="font-family:var(--serif);font-size:30px;font-weight:600;margin-bottom:12px">{kr(o['price'])} kr.</div>
 <a class="btn btn-primary" style="display:block" href="{e(o['url'])}" rel="sponsored nofollow" target="_blank">{'Køb opskriften' if not is_kit_only else 'Se kittet'} hos {e(o['shop_name'])}</a>
 <p class="small muted" style="margin:16px 0 0">Ny i strik? Læs <a href="/guides/hvor-mange-noegler/">hvor mange nøgler du skal bruge</a> og <a href="/guides/vaelg-alternativt-garn/">hvordan du vælger et andet garn</a>.</p></aside></section>
+{deep_content(o, yarns, None, techniques(o.get("desc","") + " " + o["name"]))}
 {faq_html}
 <section class="sec"><div class="sec-head"><h2>Flere opskrifter fra {e(o['designer'])}</h2><a href="/designere/{ds}/">Se alle →</a></div><div class="grid">{rel_html}</div></section>'''
     return shell(title, meta, path, body, [crumb_ld, faq_ld, product_ld], "opskrifter", o["image"])
@@ -488,7 +613,7 @@ def garn_page(slug, g):
     colors = ""
     if ch:
         sw = [v for v in ch["variants"] if v.get("image")][:36]
-        colors = '<div class="colors" style="grid-template-columns:repeat(9,1fr)">' + "".join(f'<a href="{e(v.get("cart") or v["url"])}" rel="sponsored nofollow" target="_blank" title="{e(v["nr"])} {e(v["color"])}{"" if v["stock"]=="in_stock" else " (udsolgt)"}" class="{"" if v["stock"]=="in_stock" else "out"}" style="background-image:url(\'{e(img(v["image"]))}\')"></a>' for v in sw) + '</div>'
+        colors = '<div class="colors" style="grid-template-columns:repeat(9,1fr)">' + "".join(f'<a href="{e(v.get("cart") or v["url"])}" rel="sponsored nofollow" target="_blank" title="{e(v["nr"])} {e(v["color"])}{"" if v["stock"]=="in_stock" else " (udsolgt)"}" aria-label="Farve {e(v["nr"])} {e(v["color"])} hos {e(ch["shop"])}{"" if v["stock"]=="in_stock" else " – udsolgt"}" class="{"" if v["stock"]=="in_stock" else "out"}" style="background-image:url(\'{e(img(v["image"]))}\')"></a>' for v in sw) + '</div>'
     # opskrifter i dette garn
     using = [o for o in OPS if o.get("page") and any(sl == slug for _, sl in (find_yarns(o.get("desc","")) if o.get("kind")=="pakke" else kit_yarns(o)))][:8]
     alt = [(s_, GARN[s_]) for s_ in GARN if s_ != slug and abs(GARN[s_]["gauge"] - g["gauge"]) <= 1 and PRIS.get(s_, {}).get("from_price")]
@@ -590,13 +715,13 @@ def guide_page(g):
     crumbs, crumb_ld = breadcrumbs([("Forside","/"),("Guides","/guides/"),(g["h1"],None)])
     art_ld = {"@context":"https://schema.org","@type":"Article","headline":g["title"],"description":g["meta"],"author":person_ld(C.AUTHORS["emil"]),"contributor":person_ld(C.AUTHORS["mette"]),"publisher":{"@type":"Organization","name":"strikkeopskrifter.dk","url":BASE},"url":BASE+path,"dateModified":LASTMOD.get(path,{}).get("d",TODAY)}
     img = f"/assets/img/guides/{g['slug']}.jpg" if os.path.exists(f"{ROOT}/assets/img/guides/{g['slug']}.jpg") else None
-    hero = f'<div style="aspect-ratio:16/8;background:var(--oat-2) center/cover url({img});border-radius:20px;box-shadow:var(--shadow);margin:20px 0 28px" role="img" aria-label="{e(g["h1"])}"></div>' if img else ""
+    hero = f'<img src="/assets/img/guides/{g["slug"]}-800.webp" srcset="/assets/img/guides/{g["slug"]}-400.webp 400w, /assets/img/guides/{g["slug"]}-800.webp 800w" sizes="(max-width:860px) 100vw, 760px" width="800" height="550" alt="{e(g["h1"])}" fetchpriority="high" style="width:100%;height:auto;aspect-ratio:16/11;object-fit:cover;border-radius:20px;box-shadow:var(--shadow);margin:20px 0 28px">' if img else ""
     body = f'''{crumbs}<article class="prose" style="max-width:76ch"><span class="eyebrow" style="margin-top:14px">Guide</span><h1 style="margin:0 0 8px">{e(g['h1'])}</h1><p class="muted small">Skrevet af <a href="/om/emil-rostgaard/">Emil Rostgaard</a> · Læst igennem af <a href="/om/mette-hansen/">Mette Hansen</a> · Opdateret {LASTMOD.get(path,{}).get("d",TODAY)}</p>{hero}{body_html}</article>{faq_html}'''
     art_ld["image"] = BASE + img if img else None
     return shell(g["title"], g["meta"], path, body, [crumb_ld, art_ld, faq_ld], "guides", BASE + img if img else None)
 
 def guides_index():
-    cards = "".join(f'<a class="card" href="/guides/{g["slug"]}/"><div class="img wide" style="background-image:url(/assets/img/guides/{g["slug"]}.jpg)"></div><b>{e(g["h1"])}</b><span>{e(g["meta"][:90])}…</span></a>' for g in C.GUIDES)
+    cards = "".join(f'<a class="card" href="/guides/{g["slug"]}/"><div class="img wide" style="background-image:url(/assets/img/guides/{g["slug"]}-400.webp)"></div><b>{e(g["h1"])}</b><span>{e(g["meta"][:90])}…</span></a>' for g in C.GUIDES)
     crumbs, crumb_ld = breadcrumbs([("Forside","/"),("Guides",None)])
     body = f'{crumbs}<h1 style="margin:12px 0 8px">Guides til garn og strik</h1><p class="muted" style="max-width:60ch">Korte, praktiske guides om det, folk oftest spørger om: garnvalg, mængder og omregning.</p><div class="grid grid-3" style="margin-top:24px">{cards}</div>'
     return shell("Guides: garnvalg, garnforbrug og alternativer", "Praktiske guides om at vælge garn, regne garnforbrug ud og erstatte garnet i en strikkeopskrift.", "/guides/", body, [crumb_ld], "guides")
@@ -747,6 +872,11 @@ for rel, cur in STATIC.items():
     if not os.path.exists(f): continue
     orig = t = open(f, encoding="utf-8").read()
     if rel == "index.html": t = ssr_home(t)
+    t = re.sub(r'<link rel="preconnect" href="https://fonts.googleapis.com">\s*<link href="https://fonts.googleapis.com/css2\?[^"]+" rel="stylesheet">', lambda m: FONT_HEAD, t)
+    t = re.sub(r'<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\s*<link rel="preload" as="style"[^>]*>\s*<noscript>.*?</noscript>', lambda m: FONT_HEAD, t, flags=re.S)
+    t = re.sub(r'<link rel="stylesheet" href="/assets/style.css">', lambda m: '<style>' + CSS_INLINE + '</style>', t)
+    t = re.sub(r'<style>:root\{\s*--oat.*?</style>', lambda m: '<style>' + CSS_INLINE + '</style>', t, flags=re.S)
+    t = re.sub(r'<script src="/?assets/site.js(?:\?v=\w+)?"( defer)?></script>', f'<script src="/assets/site.js?v={JS_HASH}" defer></script>', t)
     if 'class="sec explore"' not in t:
         t = t.replace("</main>", explore_html({"index.html":"opskrifter","opskrifter/index.html":"opskrifter","garn/index.html":"garn"}[rel]) + author_box() + f'<p class="small muted byauthor">Priser opdateret {UPDATED}</p></main>', 1)
         t = t.replace("</body>", '<button class="totop" aria-label="Til toppen" hidden>↑</button></body>')
