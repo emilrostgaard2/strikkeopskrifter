@@ -1,0 +1,480 @@
+{
+ "_doc": "Materialelister til 'garnalternativer'-sider. Kilde = designerens offentlige opskriftsside (materialer er fakta, ikke ophavsret). grams = pr. størrelse i samme rækkefølge som sizes. role: hoved | foelgetraad. Tilføj en opskrift = én blok her. prefer = regex; garner der matcher (navn+fiber) vises først.",
+ "opskrifter": [
+  {
+   "slug": "mary-svoeb",
+   "name": "Mary Svøb",
+   "designer": "Familie Journal (Marianne Knorborg)",
+   "free": true,
+   "source": "https://www.familiejournal.dk/haandarbejde/strik/strik-til-boern/strik-marys-royale-babysvoeb-der-ogsaa-er-et-fint-sjal",
+   "type": "taeppe",
+   "target": "baby",
+   "gauge_note": "Ingen fast strikkefasthed – tæppet bliver blot større eller mindre",
+   "needle": "4 (3,5 hvis du strikker løst eller i bomuld)",
+   "sizes": [
+    "125 × 125 cm"
+   ],
+   "about": "Mary Svøb er det strikkede babysvøb, kongefamilien har svøbt alle deres børn i – 125 × 125 cm i hulmønster, strikket fra midten og ud. Opskriften er gratis hos Familie Journal, og den bruges lige så meget som sjal. Det er et af de mest strikkede projekter i Danmark, og det er derfor, spørgsmålet om garn er så stort: opskriften siger bare 'tyndt uldgarn, ca. 200 m pr. 50 g' – og så skal du selv vælge.",
+   "yarns": [
+    {
+     "role": "hoved",
+     "name": "Tyndt uldgarn, 200 m/50 g",
+     "meters": 200,
+     "grams_per_ball": 50,
+     "grams": [
+      400
+     ],
+     "family": "animal",
+     "gauge": 24,
+     "note": "Opskriften angiver ikke et bestemt garn. Drops Baby Merino (175 m) er det klassiske valg – så skal du bruge 9 nøgler i stedet for 8."
+    }
+   ]
+  },
+  {
+   "slug": "novice-sweater-mohair-edition",
+   "name": "Novice Sweater – Mohair Edition",
+   "designer": "PetiteKnit",
+   "free": false,
+   "source": "https://www.petiteknit.com/products/novice-sweater-mohair-edition",
+   "type": "sweater",
+   "target": "dame",
+   "gauge_note": "21 masker × 28 pinde i glatstrik på pind 4 mm med to tråde silk mohair = 10 × 10 cm",
+   "needle": "3 og 4",
+   "sizes": [
+    "XS",
+    "S",
+    "M",
+    "L",
+    "XL",
+    "2XL",
+    "3XL"
+   ],
+   "about": "Novice Sweater – Mohair Edition er PetiteKnits begynder-sweater strikket i to tråde silk mohair alene: rundt bærestykke, oppefra og ned, glatstrik og ribkanter. Sværhedsgrad 1 af 5, og der er video til hvert trin. Garnforbruget er lavt i gram, fordi mohair er let – men mohair er dyrt pr. nøgle, så der er penge at spare på valget.",
+   "yarns": [
+    {
+     "role": "hoved",
+     "name": "Silk Mohair (Isager) / Tynn Silk Mohair (Sandnes) – to tråde",
+     "meters": 212,
+     "grams_per_ball": 25,
+     "grams": [
+      175,
+      200,
+      200,
+      225,
+      225,
+      275,
+      325
+     ],
+     "family": "mohair",
+     "gauge": 21,
+     "note": "Strikkes med to tråde samtidig; gram er det samlede forbrug. Lange ærmer i stedet for ¾: læg ca. 25 g til."
+    }
+   ]
+  },
+  {
+   "slug": "novice-slipover",
+   "name": "Novice Slipover",
+   "designer": "PetiteKnit",
+   "free": false,
+   "source": "https://www.petiteknit.com/products/novice-slipover",
+   "type": "vest",
+   "target": "dame",
+   "gauge_note": "17 masker × 25 pinde i glatstrik på pind 5 mm = 10 × 10 cm efter vask",
+   "needle": "4, 4,5 og 5",
+   "sizes": [
+    "XS",
+    "S",
+    "M",
+    "L",
+    "XL",
+    "2XL",
+    "3XL",
+    "4XL",
+    "5XL",
+    "6XL"
+   ],
+   "about": "Novice Slipover er den ærmeløse udgave af Novice – rundt bærestykke, oppefra og ned, i et mellemtykt garn holdt sammen med mohair. Den er skrevet til begyndere og bruger 4–8 nøgler, så det er et godt sted at prøve et lidt dyrere garn.",
+   "yarns": [
+    {
+     "role": "hoved",
+     "name": "Double Sunday (Sandnes), 108 m/50 g",
+     "meters": 108,
+     "grams_per_ball": 50,
+     "grams": [
+      300,
+      300,
+      350,
+      350,
+      350,
+      400,
+      400,
+      450,
+      500,
+      500
+     ],
+     "family": "animal",
+     "gauge": 17,
+     "match": "sandnes-double-sunday",
+     "note": "Forslag 2 i opskriften. Forslag 1 er Pelsuld 5,5/2 fra Hjelholt (275 m/100 g): 200–400 g."
+    },
+    {
+     "role": "foelgetraad",
+     "name": "Soft Silk Mohair (KFO) / Tynn Silk Mohair / Isager Silk Mohair",
+     "meters": 212,
+     "grams_per_ball": 25,
+     "grams": [
+      75,
+      75,
+      100,
+      100,
+      100,
+      100,
+      125,
+      125,
+      125,
+      125
+     ],
+     "family": "mohair",
+     "gauge": 17,
+     "note": "Holdes sammen med hovedgarnet hele vejen."
+    }
+   ]
+  },
+  {
+   "slug": "jenny-sweater",
+   "name": "Jenny Sweater",
+   "designer": "PetiteKnit",
+   "free": false,
+   "source": "https://www.petiteknit.com/products/jenny-sweater",
+   "type": "sweater",
+   "target": "dame",
+   "gauge_note": "Smockmønster: 30–31 masker × 25–26 pinde på pind 4 mm = 10 × 10 cm efter vask",
+   "needle": "3,5 og 4",
+   "sizes": [
+    "XS",
+    "S",
+    "M",
+    "L",
+    "XL",
+    "2XL",
+    "3XL",
+    "4XL"
+   ],
+   "about": "Jenny Sweater er PetiteKnits smockstrikkede sweater i tyndt garn holdt sammen med mohair – tæt, struktureret og garnkrævende: 400–600 g hovedgarn plus 175–275 g mohair. Netop derfor er garnvalget det, der afgør, om den koster 600 eller 1.800 kr.",
+   "yarns": [
+    {
+     "role": "hoved",
+     "name": "Tynn Peer Gynt (Sandnes), 205 m/50 g",
+     "meters": 205,
+     "grams_per_ball": 50,
+     "grams": [
+      400,
+      450,
+      450,
+      500,
+      500,
+      550,
+      550,
+      600
+     ],
+     "family": "animal",
+     "gauge": 30,
+     "note": "Alternativ i opskriften: Pelsuld 8/2 fra Hjelholt (400 m/100 g), 400–600 g."
+    },
+    {
+     "role": "foelgetraad",
+     "name": "Soft Silk Mohair (KFO) / Tynn Silk Mohair",
+     "meters": 212,
+     "grams_per_ball": 25,
+     "grams": [
+      175,
+      200,
+      200,
+      225,
+      225,
+      250,
+      275,
+      275
+     ],
+     "family": "mohair",
+     "gauge": 30,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "slug": "november-balaclava",
+   "name": "November Balaclava",
+   "designer": "PetiteKnit",
+   "free": false,
+   "source": "https://www.petiteknit.com/products/november-balaclava",
+   "type": "hue",
+   "target": "dame",
+   "gauge_note": "16 masker × 36 pinde i halvpatent på pind 4,5 mm = 10 × 10 cm før vask",
+   "needle": "4,5",
+   "sizes": [
+    "S/M",
+    "L/XL"
+   ],
+   "about": "November Balaclava er PetiteKnits elefanthue i halvpatent – ét mellemtykt uldgarn holdt sammen med mohair. To nøgler garn og ét nøgle mohair, færdig på en weekend. Den blev et af de mest strikkede projekter i vinteren 2023–24.",
+   "yarns": [
+    {
+     "role": "hoved",
+     "name": "Peruvian Highland Wool (Filcolana), 100 m/50 g – eller Peer Gynt (91 m/50 g)",
+     "meters": 100,
+     "grams_per_ball": 50,
+     "grams": [
+      100,
+      100
+     ],
+     "family": "animal",
+     "gauge": 16,
+     "match": "filcolana-peruvian-highland-wool",
+     "note": ""
+    },
+    {
+     "role": "foelgetraad",
+     "name": "Silk Mohair (Isager) / Tynn Silk Mohair (Sandnes)",
+     "meters": 212,
+     "grams_per_ball": 25,
+     "grams": [
+      25,
+      25
+     ],
+     "family": "mohair",
+     "gauge": 16,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "slug": "marble-sweater",
+   "name": "Marble Sweater",
+   "designer": "PetiteKnit",
+   "free": false,
+   "source": "https://www.petiteknit.com/products/marble-sweater",
+   "type": "sweater",
+   "target": "dame",
+   "gauge_note": "9 masker × 14 pinde i glatstrik på pind 10 mm = 10 × 10 cm (tre tråde holdt sammen)",
+   "needle": "10",
+   "sizes": [
+    "XS",
+    "S",
+    "M",
+    "L",
+    "XL",
+    "2XL",
+    "3XL",
+    "4XL",
+    "5XL"
+   ],
+   "about": "Marble Sweater er PetiteKnits chunky raglansweater på pind 10 – tre garner holdt sammen (tyk mohair, håndspundet alpaka og Eco Soft), oppefra og ned med vendepinde i nakken. Den er hurtig at strikke, men dyr i garn: tre kvaliteter, hvoraf to er luksusgarner. Det er derfor, den er en af de mest søgte 'garnalternativer'-opskrifter – og hvorfor besparelsen kan være over 1.000 kr.",
+   "yarns": [
+    {
+     "role": "hoved",
+     "name": "Fatty Mohair (Yarnie) / Fat Mohair (Sysleriget), 200 m/100 g",
+     "meters": 200,
+     "grams_per_ball": 100,
+     "grams": [
+      300,
+      300,
+      300,
+      400,
+      400,
+      400,
+      500,
+      500,
+      600
+     ],
+     "family": "mohair",
+     "gauge": 9,
+     "note": "Tyk mohair – tredje tråd i sweateren. Ranges (fx 300-400 g) er angivet som det højeste tal."
+    },
+    {
+     "role": "hoved",
+     "name": "Håndspundet Alpaka (Frisenvang), 110–140 m/100 g",
+     "meters": 125,
+     "grams_per_ball": 100,
+     "grams": [
+      400,
+      400,
+      400,
+      500,
+      500,
+      600,
+      600,
+      700,
+      800
+     ],
+     "family": "animal",
+     "gauge": 9,
+     "note": "Tykt, ubehandlet alpaka. Regnet med 125 m/100 g.",
+     "prefer": "alpaka|nepal|snow|alaska"
+    },
+    {
+     "role": "hoved",
+     "name": "Eco Soft (Isager), 125 m/50 g",
+     "meters": 125,
+     "grams_per_ball": 50,
+     "grams": [
+      250,
+      250,
+      250,
+      300,
+      300,
+      350,
+      400,
+      400,
+      500
+     ],
+     "family": "animal",
+     "gauge": 9,
+     "match": "isager-eco-soft",
+     "note": "Opskriften nævner selv Kos fra Sandnes (150 m/50 g: 200–400 g) og Double Soft Merino fra KFO (125 m/50 g: 250–500 g) som alternativer til Eco Soft.",
+     "prefer": "air|alpaka|brushed|nepal"
+    }
+   ]
+  },
+  {
+   "slug": "cloud-sweater",
+   "name": "Cloud Sweater",
+   "designer": "PetiteKnit",
+   "free": false,
+   "source": "https://www.petiteknit.com/products/cloud-sweater",
+   "type": "sweater",
+   "target": "dame",
+   "gauge_note": "17 masker × 26 pinde i glatstrik på pind 4,5 mm = 10 × 10 cm",
+   "needle": "4,5",
+   "sizes": [
+    "XXS",
+    "XS",
+    "S",
+    "M",
+    "L",
+    "XL",
+    "2XL",
+    "3XL",
+    "4XL",
+    "5XL"
+   ],
+   "about": "Cloud Sweater er PetiteKnits bløde, tætstrikkede sweater med skulderhældning i vendepinde og en høj glatstrikket krave – strikket i et 'blow yarn' (Eco Soft eller Snefnug) holdt sammen med silk mohair. Den ser filtet og dyr ud, og det er den også: Eco Soft koster 60–70 kr. pr. nøgle. Med et alternativ i samme fasthed kan garnprisen halveres.",
+   "yarns": [
+    {
+     "role": "hoved",
+     "name": "Eco Soft (Isager), 125 m/50 g",
+     "meters": 125,
+     "grams_per_ball": 50,
+     "grams": [
+      350,
+      350,
+      400,
+      400,
+      450,
+      450,
+      500,
+      550,
+      550,
+      600
+     ],
+     "family": "animal",
+     "gauge": 17,
+     "match": "isager-eco-soft",
+     "note": "Alternativ i opskriften: Snefnug fra CaMaRose (110 m/50 g), ca. 8–13 nøgler afhængigt af størrelse.",
+     "prefer": "air|alpaka|brushed|nepal|bouclé"
+    },
+    {
+     "role": "foelgetraad",
+     "name": "Silk Mohair (Isager), 212 m/25 g",
+     "meters": 212,
+     "grams_per_ball": 25,
+     "grams": [
+      100,
+      100,
+      125,
+      125,
+      125,
+      150,
+      150,
+      150,
+      175,
+      175
+     ],
+     "family": "mohair",
+     "gauge": 17,
+     "note": "Eller Soft Silk Mohair fra Knitting for Olive (225 m/25 g) i lidt mindre mængde."
+    }
+   ]
+  },
+  {
+   "slug": "louisiana-sweater",
+   "name": "Louisiana Sweater",
+   "designer": "PetiteKnit",
+   "free": false,
+   "source": "https://www.petiteknit.com/products/louisiana-sweater",
+   "type": "sweater",
+   "target": "dame",
+   "gauge_note": "10 masker × 14 pinde i glatstrik på pind 9 mm i to tråde Børstet Alpakka = 10 × 10 cm",
+   "needle": "8 og 9",
+   "sizes": [
+    "XS",
+    "S",
+    "M",
+    "L",
+    "XL",
+    "2XL",
+    "3XL"
+   ],
+   "about": "Louisiana Sweater er PetiteKnits korte, luftige raglansweater med ombukket halskant og ballonærmer – strikket i to tråde Børstet Alpakka på pind 9. Den er en begynderopskrift og hurtig, men to tråde børstet alpaka i 400–650 g er ikke billigt. Drops Air og Nepal er de oplagte, billigere garner med samme løbelængde.",
+   "yarns": [
+    {
+     "role": "hoved",
+     "name": "Børstet Alpakka (Sandnes), 110 m/50 g – to tråde",
+     "meters": 110,
+     "grams_per_ball": 50,
+     "grams": [
+      400,
+      450,
+      500,
+      500,
+      500,
+      600,
+      650
+     ],
+     "family": "animal",
+     "gauge": 10,
+     "note": "Strikkes med dobbelt tråd; gram er det samlede forbrug.",
+     "prefer": "brushed|air|alpaka|melody|bouclé"
+    }
+   ]
+  }
+ ],
+ "_todo": [
+  "Anker's Trøje",
+  "Dagmar Jacket",
+  "Kumulus Bluse",
+  "Lykke Jumper",
+  "Sunday Sweater",
+  "Sweater No. 14",
+  "Terrazzo Sweater",
+  "Poppy Tee",
+  "Holiday Slipover",
+  "Louvre Sweater",
+  "Porcelain Sweater",
+  "Celeste Sweater",
+  "Melange Sweater",
+  "Moby Sweater",
+  "Sophie Scarf",
+  "Sophie Shawl",
+  "Spot Sweater",
+  "Anemone Sweater",
+  "Zipper Sweater",
+  "Oslo Hat",
+  "Monday Sweater",
+  "Ivy Sweater",
+  "Maggie Cardigan",
+  "Frankie Sweater",
+  "Pelican Sweater",
+  "Hoya Sweater",
+  "Gynt Sweater"
+ ]
+}

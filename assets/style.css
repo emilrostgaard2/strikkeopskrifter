@@ -312,3 +312,7 @@ body.has-sticky .totop{bottom:82px}
 .steps-list li:first-child{border-top:0}
 .steps-list li::before{content:counter(st);position:absolute;left:0;top:8px;width:32px;height:32px;border-radius:50%;background:var(--denim);color:#fff;display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:15px}
 @media (max-width:860px){.deep{padding:18px 16px}}
+
+.alt-table{font-size:14px;min-width:560px}.alt-table th,.alt-table td{padding:8px 10px;vertical-align:top;text-align:left}
+.alt-table thead th{font-weight:600;color:var(--ink);border-bottom:2px solid var(--line)}.alt-table tbody th{font-weight:600;width:auto;color:var(--ink)}
+.alt-table tbody tr:nth-child(odd){background:rgba(43,37,33,.025)}

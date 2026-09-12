@@ -63,14 +63,14 @@ def nav(current=""):
 <div class="sub"><div class="sub-col"><b>Til hvem</b><a href="/opskrifter/dame/">Damer</a><a href="/opskrifter/boern/">Børn</a><a href="/opskrifter/baby/">Baby</a><a href="/opskrifter/herre/">Herrer</a><a href="/opskrifter/begynder/">Begyndere</a></div>
 <div class="sub-col"><b>Type</b><a href="/opskrifter/sweater/">Sweatre & bluser</a><a href="/opskrifter/cardigan/">Cardigans</a><a href="/opskrifter/vest/">Veste</a><a href="/opskrifter/hue/">Huer</a><a href="/opskrifter/sjal/">Sjaler & tørklæder</a><a href="/opskrifter/halsedisser/">Halsedisser</a><a href="/opskrifter/sokker/">Sokker</a><a href="/opskrifter/vanter/">Vanter</a><a href="/opskrifter/hjemmesko/">Hjemmesko</a><a href="/opskrifter/karklude/">Karklude</a><a href="/opskrifter/taepper/">Tæpper</a><a href="/opskrifter/julestrik/">Julestrik</a><a href="/opskrifter/bamser-og-legetoj/">Bamser & legetøj</a></div>
 <div class="sub-col"><b>Pind</b><a href="/opskrifter/pind-3/">Pind 3</a><a href="/opskrifter/pind-4/">Pind 4</a><a href="/opskrifter/pind-5/">Pind 5</a><a href="/opskrifter/pind-7/">Pind 7</a><a href="/opskrifter/pind-8/">Pind 8</a></div></div></li>
-<li>{a("/gratis/","Gratis","gratis")}</li><li>{a("/garn/","Garn","garn")}</li><li>{a("/garn/drops/","DROPS","drops")}</li><li>{a("/guides/","Guides","guides")}</li>
+<li>{a("/gratis/","Gratis","gratis")}</li><li>{a("/garn/","Garn","garn")}</li><li>{a("/garnalternativer/","Alternativer","alternativer")}</li><li>{a("/garn/drops/","DROPS","drops")}</li><li>{a("/guides/","Guides","guides")}</li>
 </ul></nav></div></header>'''
 FOOT = '''<footer class="site"><div class="wrap foot-grid">
 <div class="foot-brand"><a class="logo" href="/">strikke<span>opskrifter</span>.dk</a><p>Find opskriften, regn garnet ud, og køb det hvor det er billigst. Priser hentes hver nat fra danske garnbutikker.</p>
 <form class="foot-news" action="#" onsubmit="return false"><input type="email" placeholder="din@mail.dk" aria-label="E-mail"><button class="btn btn-primary btn-sm" type="submit">Få prisfald</button></form></div>
 <div><b>Opskrifter</b><a href="/opskrifter/dame/">Til damer</a><a href="/opskrifter/boern/">Til børn</a><a href="/opskrifter/baby/">Til baby</a><a href="/opskrifter/herre/">Til herrer</a><a href="/opskrifter/begynder/">Begyndere</a><a href="/gratis/">Gratis opskrifter</a><a href="/garn/drops/">DROPS-opskrifter</a></div>
 <div><b>Typer</b><a href="/opskrifter/sweater/">Sweatre & bluser</a><a href="/opskrifter/cardigan/">Cardigans</a><a href="/opskrifter/vest/">Veste</a><a href="/opskrifter/hue/">Huer</a><a href="/opskrifter/sjal/">Sjaler</a><a href="/opskrifter/halsedisser/">Halsedisser</a><a href="/opskrifter/sokker/">Sokker</a><a href="/opskrifter/vanter/">Vanter</a><a href="/opskrifter/hjemmesko/">Hjemmesko</a><a href="/opskrifter/karklude/">Karklude</a><a href="/opskrifter/taepper/">Tæpper</a><a href="/opskrifter/julestrik/">Julestrik</a><a href="/opskrifter/bamser-og-legetoj/">Bamser & legetøj</a></div>
-<div><b>Garn & guides</b><a href="/garn/">Sammenlign garnpriser</a><a href="/garn/drops-baby-merino/">Drops Baby Merino</a><a href="/garn/drops-air/">Drops Air</a><a href="/guides/vaelg-alternativt-garn/">Vælg alternativt garn</a><a href="/guides/hvor-mange-noegler/">Hvor mange nøgler?</a><a href="/guides/alternativer-onling-no-1/">Alternativer til Önling No 1</a></div>
+<div><b>Garn & guides</b><a href="/garn/">Sammenlign garnpriser</a><a href="/garnalternativer/">Garnalternativer</a><a href="/garnalternativer/sandnes-peer-gynt-alternativ/">Alternativ til Peer Gynt</a><a href="/garnalternativer/sandnes-double-sunday-alternativ/">Alternativ til Double Sunday</a><a href="/garn/drops-baby-merino/">Drops Baby Merino</a><a href="/garn/drops-air/">Drops Air</a><a href="/guides/vaelg-alternativt-garn/">Vælg alternativt garn</a><a href="/guides/hvor-mange-noegler/">Hvor mange nøgler?</a><a href="/guides/alternativer-onling-no-1/">Alternativer til Önling No 1</a></div>
 <div><b>Pinde</b><a href="/opskrifter/pind-3/">Pind 3</a><a href="/opskrifter/pind-4/">Pind 4</a><a href="/opskrifter/pind-5/">Pind 5</a><a href="/opskrifter/pind-7/">Pind 7</a><a href="/opskrifter/pind-8/">Pind 8</a></div>
 <div><b>Om</b><a href="/om/">Om siden</a><a href="/om/#provision">Sådan tjener vi penge</a><a href="/om/#kontakt">Kontakt</a></div>
 </div><div class="wrap foot-bottom">© strikkeopskrifter.dk · Opskrifterne tilhører designerne og butikkerne. Vi linker til dem og får provision ved køb – det ændrer ikke din pris.</div></footer>'''
@@ -90,7 +90,7 @@ EXPLORE = {
  "opskrifter": [
   "Leder du efter noget bestemt? Vi har samlet <a href='/opskrifter/dame/'>strikkeopskrifter til damer</a>, <a href='/opskrifter/boern/'>til børn</a>, <a href='/opskrifter/baby/'>til baby</a> og <a href='/opskrifter/herre/'>til herrer</a> – og er du ny i strik, så start med <a href='/opskrifter/begynder/'>de nemme opskrifter til begyndere</a>. Alle <a href='/gratis/'>gratis strikkeopskrifter</a> ligger på én side, og <a href='/garn/drops/'>DROPS' opskrifter</a> har deres egen, fordi de er så mange.",
   "Efter type: <a href='/opskrifter/sweater/'>sweatre og bluser</a>, <a href='/opskrifter/cardigan/'>cardigans</a>, <a href='/opskrifter/vest/'>veste og slipovers</a>, <a href='/opskrifter/hue/'>huer</a>, <a href='/opskrifter/sjal/'>sjaler og tørklæder</a>, <a href='/opskrifter/halsedisser/'>halsedisser</a>, <a href='/opskrifter/sokker/'>sokker</a>, <a href='/opskrifter/vanter/'>vanter</a> og <a href='/opskrifter/hjemmesko/'>hjemmesko</a> – eller de små projekter: <a href='/opskrifter/karklude/'>karklude</a>, <a href='/opskrifter/taepper/'>tæpper</a>, <a href='/opskrifter/bamser-og-legetoj/'>bamser</a> og <a href='/opskrifter/julestrik/'>julestrik</a>. Strikker du helst på en bestemt pind, så se opskrifter til <a href='/opskrifter/pind-3/'>pind 3</a>, <a href='/opskrifter/pind-4/'>pind 4</a>, <a href='/opskrifter/pind-5/'>pind 5</a>, <a href='/opskrifter/pind-7/'>pind 7</a> eller <a href='/opskrifter/pind-8/'>pind 8</a>.",
-  "Garnet betyder mere for prisen end opskriften. På <a href='/garn/'>garnsiderne</a> sammenligner vi prisen pr. nøgle hos danske butikker – fx <a href='/garn/drops-baby-merino/'>Drops Baby Merino</a>, <a href='/garn/drops-air/'>Drops Air</a> og <a href='/garn/onling-no-1/'>Önling No 1</a> – og i guiderne kan du læse, <a href='/guides/hvor-mange-noegler/'>hvor mange nøgler du skal bruge</a>, og <a href='/guides/vaelg-alternativt-garn/'>hvordan du vælger et billigere garn</a>.",
+  "Er garnet udsolgt eller for dyrt? Se <a href='/garnalternativer/'>garnalternativer</a> – fx <a href='/garnalternativer/sandnes-peer-gynt-alternativ/'>alternativ til Peer Gynt</a>, <a href='/garnalternativer/sandnes-double-sunday-alternativ/'>Double Sunday</a> eller <a href='/garnalternativer/isager-eco-soft-alternativ/'>Isager Eco Soft</a>. Garnet betyder mere for prisen end opskriften. På <a href='/garn/'>garnsiderne</a> sammenligner vi prisen pr. nøgle hos danske butikker – fx <a href='/garn/drops-baby-merino/'>Drops Baby Merino</a>, <a href='/garn/drops-air/'>Drops Air</a> og <a href='/garn/onling-no-1/'>Önling No 1</a> – og i guiderne kan du læse, <a href='/guides/hvor-mange-noegler/'>hvor mange nøgler du skal bruge</a>, og <a href='/guides/vaelg-alternativt-garn/'>hvordan du vælger et billigere garn</a>.",
  ],
  "garn": [
   "Skal garnet bruges til noget bestemt? Find opskrifter til <a href='/opskrifter/dame/'>damer</a>, <a href='/opskrifter/boern/'>børn</a>, <a href='/opskrifter/baby/'>baby</a> og <a href='/opskrifter/herre/'>herrer</a>, eller gå efter type: <a href='/opskrifter/sweater/'>sweatre</a>, <a href='/opskrifter/cardigan/'>cardigans</a>, <a href='/opskrifter/hue/'>huer</a>, <a href='/opskrifter/sjal/'>sjaler</a> og <a href='/opskrifter/sokker/'>sokker</a>.",
@@ -656,6 +656,121 @@ def garn_page(slug, g):
 {faq_html}'''
     return shell(title, meta, path, body, [crumb_ld, faq_ld, prod_ld], "garn", img(ch["image"]) if ch and ch.get("image") else None)
 
+# ---------------- Garnalternativer: /garnalternativer/<slug>-alternativ/ ----------------
+def fam(fiber):
+    f = fiber.lower()
+    animal = bool(re.search(r"\buld\b|lammeuld|merino|alpaka|angora|kashmir|yak", f))
+    hairy  = bool(re.search(r"mohair|silke", f))
+    plant  = bool(re.search(r"bomuld|hør\b|viskose|bambus|tencel|polyester|akryl", f))
+    if hairy and not animal: return "mohair"
+    if plant and not animal: return "plant"
+    return "animal"
+def alt_page(g):
+    slug = g["slug"]; name = g["name"]; path = f"/garnalternativer/{slug}-alternativ/"
+    fam0 = fam(g["fiber"])
+    cands = [(s_, GARN[s_]) for s_ in GARN if s_ != slug and not GARN[s_].get("ref") and abs(GARN[s_]["gauge"] - g["gauge"]) <= 1 and PRIS.get(s_, {}).get("from_price")]
+    cands.sort(key=lambda x: (fam(x[1]["fiber"]) != fam0, PRIS[x[0]]["from_price"]))
+    near = [(s_, GARN[s_]) for s_ in GARN if s_ != slug and not GARN[s_].get("ref") and abs(GARN[s_]["gauge"] - g["gauge"]) == 2 and PRIS.get(s_, {}).get("from_price")]
+    near.sort(key=lambda x: (fam(x[1]["fiber"]) != fam0, PRIS[x[0]]["from_price"]))
+    meters_sweater = 1300
+    def row(s_, a, i):
+        p = PRIS[s_]; ch = next(v for v in p["shops"].values() if v["price"])
+        balls = -(-meters_sweater // a["meters"]); total = balls * ch["price"]
+        per100 = round(a["meters"] * 100 / a["grams"])
+        return f'''<div class="shop {'best' if i==0 else ''}"><span class="slogo logo-txt">{e(a["name"][6:7] if a["name"].startswith("Drops ") else a["name"][:1])}</span><div class="name"><a href="/garn/{s_}/">{e(a["name"])}</a><small>{e(a["fiber"])} · {a["meters"]} m/{a["grams"]} g ({per100} m pr. 100 g) · {a["gauge"]} m på 10 cm · pind {e(a["needle"])}</small></div>
+<div class="price">{kr(ch["price"])} kr.<small>pr. nøgle · sweater ≈ {balls} ngl. = {kr(total)} kr.</small></div><a class="go" href="/garn/{s_}/">Se priser</a></div>'''
+    rows = "".join(row(s_, a, i) for i, (s_, a) in enumerate(cands[:6]))
+    near_rows = "".join(row(s_, a, 99) for s_, a in near[:3])
+    per100_ref = round(g["meters"] * 100 / g["grams"])
+    title = f"Alternativ til {name} – {len(cands)} garner i samme strikkefasthed, med pris"
+    meta = f"Leder du efter et alternativ til {name} ({g['fiber']}, {g['meters']} m/{g['grams']} g, {g['gauge']} m)? Her er garner med samme strikkefasthed, hvad de koster i dag, og hvordan du regner mængden om."
+    intro = f"<p>{e(g.get('about',''))}</p><p>Det, der skal passe, er strikkefastheden: {name} strikkes til <b>{g['gauge']} masker på 10 cm</b> på pind {e(g['needle'])}, og har {g['meters']} m på {g['grams']} g – altså {per100_ref} m pr. 100 g. Alle garner herunder rammer {g['gauge']}±1 masker og kan bruges i de samme opskrifter; regn mængden om i meter, ikke i gram, for løbelængden er forskellig.</p>"
+    faq = [
+     (f"Hvad er det bedste alternativ til {name}?", (f"Det billigste med samme fasthed er {cands[0][1]['name']} ({kr(PRIS[cands[0][0]]['from_price'])} kr. pr. nøgle). Vil du tættest på udtrykket, så vælg det garn i listen, der har samme fiber som {name} ({g['fiber'].split(',')[0].lower()})." if cands else "Vi har ingen prissatte garner i samme fasthed endnu.")),
+     (f"Hvor mange nøgler af alternativet skal jeg bruge?", f"Gang opskriftens antal nøgler {name} med {g['meters']} m, og del med alternativets løbelængde. Eksempel: 10 nøgler {name} = {10*g['meters']} m; i et garn med 175 m/50 g skal du bruge {-(-10*g['meters']//175)} nøgler."),
+     (f"Bliver resultatet det samme?", f"Fastheden bliver den samme, hvis du rammer {g['gauge']} masker. Fald, varme og overflade følger fiberen: {'uld holder formen og er varm' if 'uld' in g['fiber'].lower() else ('alpaka falder tungere og er varmere' if 'alpaka' in g['fiber'].lower() else ('bomuld og hør er køligere og uden elasticitet' if 'bomuld' in g['fiber'].lower() else 'merino er blødt og elastisk'))}. Strik en prøve, vask den, og sammenlign."),
+     ("Kan jeg blande to garner for at ramme fastheden?", "Ja – et tyndt garn holdt sammen med mohair eller en anden tynd tråd rammer ofte fastheden på et mellemtykt garn. Se guiden til alternativt garn."),
+    ]
+    faq_html, faq_ld = faq_block(faq, f"Spørgsmål om alternativer til {name}")
+    crumbs, crumb_ld = breadcrumbs([("Forside","/"),("Garnalternativer","/garnalternativer/"),(f"Alternativ til {name}",None)])
+    art_ld = {"@context":"https://schema.org","@type":"Article","headline":title,"description":meta,"author":person_ld(C.AUTHORS["emil"]),"contributor":person_ld(C.AUTHORS["mette"]),"publisher":{"@type":"Organization","name":"strikkeopskrifter.dk","url":BASE},"url":BASE+path,"dateModified":LASTMOD.get(path,{}).get("d",TODAY)}
+    body = f'''{crumbs}<span class="eyebrow" style="margin-top:14px">Garnalternativer</span><h1>Alternativ til {e(name)}</h1><p class="muted small">Skrevet af <a href="/om/emil-rostgaard/">Emil Rostgaard</a> · Læst igennem af <a href="/om/mette-hansen/">Mette Hansen</a> · Priser opdateret {UPDATED}</p>
+<div class="prose intro">{intro}</div>
+<div class="specs" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0 28px"><div class="panel" style="padding:12px 14px"><b style="font-family:var(--serif);font-size:19px;display:block">{g['grams']} g</b><small class="muted">{g['meters']} m</small></div><div class="panel" style="padding:12px 14px"><b style="font-family:var(--serif);font-size:19px;display:block">{g['gauge']} m</b><small class="muted">på 10 cm</small></div><div class="panel" style="padding:12px 14px"><b style="font-family:var(--serif);font-size:19px;display:block">Pind {e(g['needle'])}</b><small class="muted">anbefalet</small></div><div class="panel" style="padding:12px 14px"><b style="font-family:var(--serif);font-size:19px;display:block">{len(cands)}</b><small class="muted">alternativer med pris</small></div></div>
+<h2 style="margin-bottom:6px">Garner med samme strikkefasthed ({g['gauge']}±1 masker)</h2><p class="small muted" style="margin:0 0 12px">Samme fibertype først ({'uld, merino og alpaka' if fam0=='animal' else ('bomuld, hør og viskose' if fam0=='plant' else 'mohair og silke')}), derefter efter pris pr. nøgle. "Sweater ≈" er en voksen M på ca. {meters_sweater} m.</p>{rows or '<p class="muted">Ingen prissatte garner i denne fasthed endnu.</p>'}
+{('<h3 style="margin:26px 0 6px">Tæt på – kræver anden pind (' + str(g['gauge']) + '±2 masker)</h3><p class="small muted" style="margin:0 0 10px">Kan bruges, hvis du går en pind op eller ned – strik en prøve først.</p>' + near_rows) if near_rows else ''}
+<section class="sec prose"><h2>Sådan regner du om fra {e(name)}</h2><ol class="steps-list"><li>Find antal nøgler i din størrelse i opskriften, og gang med {g['meters']} m. Det er det samlede antal meter.</li><li>Del med alternativets løbelængde pr. nøgle (står i listen ovenfor), og rund op.</li><li>Køb ét nøgle ekstra – farvepartier varierer, og uåbnede nøgler kan som regel returneres.</li><li>Strik en prøve på 12 × 12 cm, vask den, og mål de midterste 10 cm. Passer det ikke, skift pind – ikke garn.</li></ol></section>
+{faq_html}'''
+    return shell(title, meta, path, body, [crumb_ld, art_ld, faq_ld], "garn")
+
+# ---------------- Opskrift-garnalternativer: /garnalternativer/<opskrift>-garnalternativer/ ----------------
+OPG = json.load(open(f"{ROOT}/data/opskrift-garn.json", encoding="utf-8"))["opskrifter"] if os.path.exists(f"{ROOT}/data/opskrift-garn.json") else []
+SOCK = {"drops-fabel", "onling-no-18"}
+def yarn_alts(y, n=4, ptype=""):
+    """Kandidater: samme fiberfamilie, løbelængde pr. 100 g inden for ±25 %, med priser. Strømpegarn kun til sokker."""
+    ref100 = y["meters"] * 100 / y["grams_per_ball"]
+    out = []
+    for s_, g in GARN.items():
+        if g.get("ref") or not PRIS.get(s_, {}).get("from_price"): continue
+        if s_ in SOCK and ptype != "sokker": continue
+        if fam(g["fiber"]) != y.get("family", "animal"): continue
+        g100 = g["meters"] * 100 / g["grams"]
+        if abs(g100 - ref100) / ref100 > 0.25: continue
+        out.append((s_, g))
+    pref = re.compile(y["prefer"], re.I) if y.get("prefer") else None
+    out.sort(key=lambda x: (not (pref and pref.search(x[1]["name"] + " " + x[1]["fiber"])), PRIS[x[0]]["from_price"]))
+    return out[:n]
+def opskrift_alt_page(o):
+    path = f"/garnalternativer/{o['slug']}-garnalternativer/"; name = o["name"]
+    sizes = o["sizes"]
+    blocks = ""; ld_offers = []
+    for y in o["yarns"]:
+        alts = yarn_alts(y, ptype=o.get("type",""))
+        # tabel: størrelse | original (g / m) | alt1 (nøgler / kr) | alt2 | alt3
+        head = "".join(f'<th>{e(GARN[s_]["name"])}<br><small class="muted">{GARN[s_]["meters"]} m/{GARN[s_]["grams"]} g · {kr(PRIS[s_]["from_price"])} kr.</small></th>' for s_, _ in alts)
+        rows = ""
+        for i, sz in enumerate(sizes):
+            gr = y["grams"][min(i, len(y["grams"])-1)]; m = gr / y["grams_per_ball"] * y["meters"]
+            cells = "".join(f'<td><b>{-(-m // GARN[s_]["meters"]):.0f} ngl.</b><br><small class="muted">{kr(-(-m // GARN[s_]["meters"]) * PRIS[s_]["from_price"])} kr.</small></td>' for s_, _ in alts)
+            rows += f'<tr><th>{e(sz)}</th><td>{gr} g<br><small class="muted">≈ {m:.0f} m</small></td>{cells}</tr>'
+        orig_shop = ""
+        if y.get("match") and PRIS.get(y["match"], {}).get("shops"):
+            orig_shop = f'<p class="small" style="margin:8px 0 0">Vil du strikke i originalgarnet? <a href="/garn/{y["match"]}/">Se priser på {e(GARN[y["match"]]["name"])}</a> hos {len(PRIS[y["match"]]["shops"])} butikker.</p>'
+        alt_links = ", ".join(f'<a href="/garn/{s_}/">{e(g["name"])}</a>' for s_, g in alts)
+        blocks += f'''<section class="panel" style="margin:0 0 22px;overflow:auto"><h3 style="margin-bottom:4px">{'Hovedgarn' if y['role']=='hoved' else 'Følgetråd'}: {e(y['name'])}</h3><p class="muted small" style="margin:0 0 12px">{e(y.get('note',''))} Alternativerne har samme fibertype og en løbelængde inden for ±25 % – nøgleantallet er regnet om i meter for hver størrelse.</p>
+<table class="alt-table"><thead><tr><th>Str.</th><th>Opskriftens forbrug</th>{head}</tr></thead><tbody>{rows}</tbody></table>{orig_shop}
+<p class="small muted" style="margin:10px 0 0">Priser pr. nøgle er dagens laveste hos de butikker, vi følger – klik på garnet for alle butikker og farver: {alt_links}.</p></section>'''
+    total_hint = ""
+    if len(o["yarns"]) == 1 and yarn_alts(o["yarns"][0], ptype=o.get("type","")):
+        y = o["yarns"][0]; a = yarn_alts(y, ptype=o.get("type",""))[0]; i = min(2, len(sizes)-1); m = y["grams"][min(i,len(y["grams"])-1)]/y["grams_per_ball"]*y["meters"]
+        total_hint = f" I {GARN[a[0]]['name']} koster garnet til str. {sizes[i]} ca. {kr(-(-m//GARN[a[0]]['meters'])*PRIS[a[0]]['from_price'])} kr."
+    title = f"{name} garnalternativer – {'gratis opskrift, ' if o.get('free') else ''}hvilket garn og hvor meget"
+    meta = f"Garn til {name} af {o['designer']}: opskriftens garnforbrug pr. størrelse, alternativer i samme fibertype med dagens pris, og omregning i meter.{total_hint}"
+    faq = [
+     (f"Hvilket garn bruges til {name}?", f"Opskriften er skrevet til {' og '.join(y['name'].split(' –')[0] for y in o['yarns'])}. Strikkefasthed: {o['gauge_note']}."),
+     (f"Hvor meget garn skal jeg bruge til {name}?", " ".join(f"{y['name'].split(',')[0]}: {y['grams'][0]}–{y['grams'][-1]} g afhængigt af størrelse." for y in o["yarns"]) + " Tabellen ovenfor viser det pr. størrelse og regner om til alternativer."),
+     (f"Kan jeg strikke {name} i et billigere garn?", f"Ja. Vælg et garn med samme fibertype og løbelængde, og regn mængden om i meter – tabellen gør det for dig. Strik altid en prøve og ram opskriftens strikkefasthed."),
+     (f"Hvor køber jeg opskriften til {name}?", (f"Opskriften er gratis hos {o['designer']} – se linket øverst." if o.get("free") else f"Opskriften købes som PDF hos {o['designer']} (se linket øverst) eller hos forhandlere som Önling og Broen Garn.")),
+    ]
+    faq_html, faq_ld = faq_block(faq, f"Spørgsmål om garn til {name}")
+    crumbs, crumb_ld = breadcrumbs([("Forside","/"),("Garnalternativer","/garnalternativer/"),(f"{name} garnalternativer",None)])
+    art_ld = {"@context":"https://schema.org","@type":"Article","headline":title,"description":meta,"author":person_ld(C.AUTHORS["emil"]),"contributor":person_ld(C.AUTHORS["mette"]),"publisher":{"@type":"Organization","name":"strikkeopskrifter.dk","url":BASE},"url":BASE+path,"dateModified":LASTMOD.get(path,{}).get("d",TODAY)}
+    own = next((x for x in OPS if x.get("page") and x["name"].lower().startswith(name.lower().split(" –")[0].lower())), None)
+    body = f'''{crumbs}<span class="eyebrow" style="margin-top:14px">Garnalternativer · {e(o['designer'])}</span><h1>Garn til {e(name)}</h1><p class="muted small">Skrevet af <a href="/om/emil-rostgaard/">Emil Rostgaard</a> · Læst igennem af <a href="/om/mette-hansen/">Mette Hansen</a> · Priser opdateret {UPDATED}</p>
+<div class="prose intro"><p>{e(o['about'])}</p><p>Opskriftens strikkefasthed: <b>{e(o['gauge_note'])}</b>. Pinde: {e(o['needle'])}. Materialelisten herunder er designerens egne tal – <a href="{e(o['source'])}" rel="noopener" target="_blank">{'hent opskriften gratis' if o.get('free') else 'se opskriften'} hos {e(o['designer'])}</a>{(' · <a href="' + own['page'] + '">se den hos os med kit-priser</a>') if own else ''}.</p></div>
+<h2 style="margin:22px 0 12px">Garnforbrug pr. størrelse – og hvad alternativerne koster</h2>{blocks}
+<section class="sec prose"><h2>Sådan vælger du</h2><p>Ram strikkefastheden først – den bestemmer, om størrelsen passer. Derefter fiber: {'mohair giver glød og luft, og de fleste mohair/silke-garner kan byttes én til én' if any(y['family']=='mohair' for y in o['yarns']) else 'uld holder formen, merino er blødere, alpaka er varmere og tungere'}. Til sidst pris: forskellen mellem det dyreste og billigste garn i tabellen er ofte 50–70 % på hele projektet. Læs også <a href="/guides/vaelg-alternativt-garn/">guiden til at vælge alternativt garn</a> og <a href="/guides/hvor-mange-noegler/">hvor mange nøgler du skal bruge</a>.</p></section>
+{faq_html}'''
+    return shell(title, meta, path, body, [crumb_ld, art_ld, faq_ld], "garn")
+
+def alt_index(refs):
+    crumbs, crumb_ld = breadcrumbs([("Forside","/"),("Garnalternativer",None)])
+    cards = "".join(f'<a class="card" href="/garnalternativer/{g["slug"]}-alternativ/"><div class="img wide" style="background:var(--oat-2);display:grid;place-items:center;font-family:var(--serif);font-size:22px;color:var(--denim);padding:14px;text-align:center">{e(g["name"])}</div><b>Alternativ til {e(g["name"])}</b><span>{e(g["fiber"])} · {g["gauge"]} m på 10 cm</span></a>' for g in refs)
+    ocards = "".join(f'<a class="card" href="/garnalternativer/{o["slug"]}-garnalternativer/"><div class="img wide" style="background:var(--oat-2);display:grid;place-items:center;font-family:var(--serif);font-size:20px;color:var(--denim);padding:14px;text-align:center">{e(o["name"])}</div><b>Garn til {e(o["name"])}</b><span>{e(o["designer"])} · {"gratis opskrift" if o.get("free") else "betalt opskrift"} · forbrug pr. størrelse</span></a>' for o in OPG)
+    cards = f'<h2 style="margin:28px 0 12px">Garn til populære opskrifter</h2><div class="grid">{ocards}</div><h2 style="margin:40px 0 12px">Alternativ til et bestemt garn</h2><div class="grid">' + cards + '</div>'
+    body = f'''{crumbs}<span class="eyebrow" style="margin-top:14px">Garnalternativer</span><h1>Alternativ til dit garn</h1><div class="prose intro"><p>Er garnet udsolgt, for dyrt eller klør det? Her finder du alternativer med samme strikkefasthed til de garner, danske opskrifter oftest er skrevet til – med dagens pris pr. nøgle hos de butikker, vi sammenligner, og en omregning i meter, så du køber det rigtige antal.</p><p>Alle sider bygger på samme regel: samme antal masker pr. 10 cm, og mængden regnet om i meter. Fiberen bestemmer resten – fald, varme og overflade – og det skriver vi ved hvert garn.</p></div>{cards}'''
+    return shell("Garnalternativer – find et garn i samme strikkefasthed, med pris", "Alternativer til Peer Gynt, Double Sunday, Isager Eco Soft, Snefnug, Peruvian Highland Wool og flere – samme strikkefasthed, omregnet i meter, med dagens pris hos danske butikker.", "/garnalternativer/", body, [crumb_ld], "garn")
+
 # ---------------- kategorisider / hubs ----------------
 def card(o):
     sub = f"{e(o.get('designer',''))}{(' · '+e(o['sizes'])) if o.get('sizes') else ''}{' · gratis opskrift' if o.get('free') else ''}"
@@ -828,6 +943,10 @@ json.dump(OPS, open(f"{ROOT}/data/opskrifter.json", "w", encoding="utf-8"), ensu
 
 for slug, g in PRIS.items():
     if g.get("shops"): write(f"/garn/{slug}/", garn_page(slug, g))
+REFS = [g for g in GARN.values() if g.get("ref")]
+for g in REFS: write(f"/garnalternativer/{g['slug']}-alternativ/", alt_page(g))
+for o in OPG: write(f"/garnalternativer/{o['slug']}-garnalternativer/", opskrift_alt_page(o))
+write("/garnalternativer/", alt_index(REFS))
 for c in C.CATEGORIES: write("/"+c["path"]+"/", cat_page(c))
 for t in C.TYPES:
     write(f"/opskrifter/{t['slug']}/", cat_page(dict(t, path=f"opskrifter/{t['slug']}", preset=dict(type=t["type"]), sections=t.get("sections",[]))))
@@ -841,7 +960,7 @@ write("/guides/", guides_index())
 write("/om/", om_page())
 for a in C.AUTHORS.values(): write(f"/om/{a['slug']}/", author_page(a))
 
-urls = ["/", "/opskrifter/", "/gratis/", "/garn/", "/garn/drops/", "/guides/", "/om/"] + [f"/om/{a['slug']}/" for a in C.AUTHORS.values()] + [f"/{c['path']}/" for c in C.CATEGORIES] + \
+urls = ["/", "/opskrifter/", "/gratis/", "/garn/", "/garn/drops/", "/guides/", "/om/", "/garnalternativer/"] + [f"/garnalternativer/{g['slug']}-alternativ/" for g in REFS] + [f"/garnalternativer/{o['slug']}-garnalternativer/" for o in OPG] + [f"/om/{a['slug']}/" for a in C.AUTHORS.values()] + [f"/{c['path']}/" for c in C.CATEGORIES] + \
        [f"/opskrifter/{t['slug']}/" for t in C.TYPES] + [f"/opskrifter/pind-{n['n'].replace('.','-')}/" for n in C.NEEDLES] + \
        [f"/guides/{g['slug']}/" for g in C.GUIDES] + [o["page"] for o in pakker] + [o["page"] for o in paid] + ["/designere/"] + [f"/designere/{slugify(n)}/" for n, _ in groups] + \
        [f"/garn/{s}/" for s, g in PRIS.items() if g.get("shops") and os.path.exists(f"{ROOT}/garn/{s}")]
