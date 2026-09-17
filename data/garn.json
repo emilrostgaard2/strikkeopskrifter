@@ -51,7 +51,7 @@
    "name": "Drops Air",
    "fiber": "65 % alpaka, 28 % polyamid, 7 % uld",
    "grams": 50,
-   "meters": 125,
+   "meters": 150,
    "gauge": 17,
    "needle": "5",
    "match": "drops\\s+air\\b"

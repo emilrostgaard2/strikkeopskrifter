@@ -205,3 +205,46 @@
     el.innerHTML=`<b>Laveste pris de sidste ${ds.length} dage: ${f(lo)} kr.</b> <span class="muted small">· højeste ${f(hi)} kr. · i dag ${f(cur)} kr.</span><svg class="spark" viewBox="0 0 ${w} ${hh}" preserveAspectRatio="none" aria-hidden="true"><polyline fill="none" stroke="var(--denim)" stroke-width="2" points="${pts}"/></svg><span class="small muted">${cur<=lo?'Prisen er på det laveste niveau i perioden.':'Prisen har været lavere – sæt en prisalarm.'}</span>`;
   }).catch(()=>{});
 })();
+
+
+// ---- Nyhedsbrev: ajax-tilmelding til Brevo (fald tilbage til alm. POST hvis fetch fejler) ----
+(function(){
+  function wire(form){
+    form.addEventListener('submit', function(ev){
+      ev.preventDefault();
+      const btn=form.querySelector('button'); const email=form.querySelector('input[type=email]');
+      if(!email.value||!/.+@.+\..+/.test(email.value)){ email.focus(); return; }
+      const fd=new FormData(form);
+      if(form.dataset.garn) fd.append('GARN', form.dataset.garn);
+      btn.disabled=true; const old=btn.textContent; btn.textContent='Sender …';
+      fetch(form.action,{method:'POST',body:fd,mode:'cors'}).then(r=>r.json().catch(()=>({success:r.ok}))).then(j=>{
+        if(j && (j.success||j.errors===undefined&&j.message)){ form.innerHTML='<span class="ok">Tak – du er tilmeldt. Vi skriver, når garnet falder i pris.</span>'; try{localStorage.setItem('nl_done','1');}catch(e){} }
+        else { btn.disabled=false; btn.textContent=old; let e=form.querySelector('.err'); if(!e){e=document.createElement('span');e.className='err';form.appendChild(e);} e.textContent=(j&&j.errors&&(j.errors.EMAIL||j.errors.generic))||'Noget gik galt – prøv igen.'; }
+      }).catch(()=>{ form.removeEventListener('submit',arguments.callee); form.submit(); });
+    });
+  }
+  document.querySelectorAll('form.nl').forEach(wire);
+
+  // Tak-besked hvis Brevo sendte os tilbage med ?tilmeldt=1
+  if(location.search.includes('tilmeldt=1')){ const t=document.createElement('div'); t.className='panel'; t.style.cssText='position:fixed;left:50%;top:80px;transform:translateX(-50%);z-index:90;padding:14px 20px'; t.innerHTML='<b>Tak – du er tilmeldt.</b> <span class="muted small">Vi skriver, når garnet falder i pris.</span>'; document.body.appendChild(t); setTimeout(()=>t.remove(),6000); try{localStorage.setItem('nl_done','1');}catch(e){} }
+
+  // Popup: én gang pr. 30 dage, efter 25 s eller exit-intent (desktop) – aldrig hvis allerede tilmeldt
+  const pop=document.getElementById('nl-popup'); if(!pop) return;
+  let seen=null; try{ seen=localStorage.getItem('nl_seen'); if(localStorage.getItem('nl_done')) return; }catch(e){}
+  if(seen && Date.now()-(+seen) < 30*864e5) return;
+  const garnEl=document.querySelector('#garn-hist[data-garn]') ? document.querySelector('h1') : null;
+  const opsk=document.querySelector('.calc, .pricebox') ? document.querySelector('h1') : null;
+  const what = garnEl ? garnEl.textContent.trim() : (opsk ? 'garnet til '+opsk.textContent.trim() : null);
+  const tmpl=document.querySelector('form.nl'); if(!tmpl) return;
+  function show(){
+    if(!pop.hidden) return;
+    pop.innerHTML=`<div class="head"><button class="x" aria-label="Luk">×</button><span class="eyebrow"><span class="yarn" aria-hidden="true">🧶</span>${what?'Prisalarm':'Garn på tilbud'}</span><h3>${what?('Få besked, når '+what+' falder i pris'):'Ét mail om ugen med garn på tilbud'}</h3></div><div class="body"><p style="margin-top:8px">${what?'Vi tjekker priserne hver nat hos danske butikker og skriver kun, når der er noget at spare.':'De bedste garnpriser fra danske butikker – ingen spam, afmeld når som helst.'}</p>
+      <form class="nl" action="${tmpl.action}" method="post"${what?' data-garn="'+what.replace(/"/g,'')+'"':''}><input type="email" name="EMAIL" placeholder="din@mail.dk" aria-label="E-mail" required autocomplete="email"><input type="text" name="email_address_check" value="" class="nl-hp" tabindex="-1" autocomplete="off"><input type="hidden" name="locale" value="da"><button class="btn btn-primary btn-sm" type="submit">${what?'Sæt prisalarm':'Tilmeld'}</button></form><p class="fine">Ingen spam. Afmeld med ét klik.</p></div>`;
+    pop.hidden=false; wire(pop.querySelector('form'));
+    pop.querySelector('.x').addEventListener('click',()=>{ pop.hidden=true; try{localStorage.setItem('nl_seen',String(Date.now()));}catch(e){} });
+    try{localStorage.setItem('nl_seen',String(Date.now()));}catch(e){}
+  }
+  const mobile=window.matchMedia('(max-width:860px)').matches;
+  setTimeout(show, mobile?40000:25000);
+  if(!mobile) document.addEventListener('mouseout',e=>{ if(!e.relatedTarget && e.clientY<10) show(); });
+})();
