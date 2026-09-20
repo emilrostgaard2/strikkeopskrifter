@@ -230,7 +230,7 @@ footer.site .foot-brand p{max-width:34ch;line-height:1.55;margin:0 0 14px;color:
 /* ---------- Mobil ---------- */
 @media (max-width:860px){
   .wrap{padding:0 16px}
-  h1{font-size:clamp(28px,7vw,34px)}h2{font-size:22px}
+  h1{font-size:clamp(28px,7vw,34px);overflow-wrap:anywhere}h2{font-size:22px}
   .burger{display:flex}
   .nav nav{display:none;position:absolute;left:0;right:0;top:100%;background:var(--paper);box-shadow:0 20px 40px -20px rgba(43,37,33,.4);border-bottom:1px solid var(--line);max-height:calc(100vh - 60px);overflow:auto}
   .nav nav.open{display:block}
@@ -238,6 +238,7 @@ footer.site .foot-brand p{max-width:34ch;line-height:1.55;margin:0 0 14px;color:
   .nav ul a{display:block;padding:12px 14px;font-size:17px;border-radius:12px}
   .nav ul a[aria-current]{background:var(--ink);color:#fff}
   .has-sub{display:grid;grid-template-columns:1fr auto;align-items:center}
+  .has-sub > a[aria-current]{background:var(--ink);color:#fff}
   .sub-toggle{display:block;border:0;background:transparent;font-size:20px;padding:8px 14px;color:var(--ink-2)}
   .has-sub .sub,.has-sub:hover .sub,.has-sub:focus-within .sub{display:none;position:static;box-shadow:none;background:var(--oat);border-radius:12px;padding:12px 14px;min-width:0;grid-column:1/-1;flex-direction:column;gap:14px;margin:2px 6px 8px}
   .has-sub.open .sub,.has-sub.open:hover .sub,.has-sub.open:focus-within .sub{display:flex}
@@ -323,6 +324,31 @@ body.has-sticky .totop{bottom:82px}
 .steps-list li:first-child{border-top:0}
 .steps-list li::before{content:counter(st);position:absolute;left:0;top:8px;width:32px;height:32px;border-radius:50%;background:var(--denim);color:#fff;display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:15px}
 @media (max-width:860px){.deep{padding:18px 16px}}
+
+.alt-table{font-size:14px;min-width:560px}.alt-table th,.alt-table td{padding:8px 10px;vertical-align:top;text-align:left}
+.alt-table thead th{font-weight:600;color:var(--ink);border-bottom:2px solid var(--line)}.alt-table tbody th{font-weight:600;width:auto;color:var(--ink)}
+.alt-table tbody tr:nth-child(odd){background:rgba(43,37,33,.025)}
+
+/* Nyhedsbrev */
+.nl-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.nl .ok{font-size:14px;color:var(--moss);font-weight:600}
+.nl .err{font-size:13px;color:#8a2f2f}
+#nl-popup{position:fixed;z-index:80;right:18px;bottom:18px;width:min(400px,calc(100vw - 24px));background:var(--paper);border-radius:20px;box-shadow:0 30px 70px -22px rgba(43,37,33,.5),0 0 0 1px var(--line);padding:0;overflow:hidden;animation:nlin .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes nlin{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+#nl-popup .head{background:var(--denim);background-image:var(--knit);color:#fff;padding:18px 22px 14px;position:relative}
+#nl-popup .head .eyebrow{color:#fff;opacity:.95;font-size:22px}
+#nl-popup .head h3{color:#fff;font-size:20px;margin:2px 0 0;padding-right:28px;line-height:1.25}
+#nl-popup .body{padding:16px 22px 18px}
+#nl-popup .yarn{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.18);font-size:18px;margin-right:8px;vertical-align:middle}
+#nl-popup[hidden]{display:none}
+#nl-popup .x{position:absolute;right:8px;top:6px;width:34px;height:34px;border:0;background:rgba(255,255,255,.18);font-size:20px;color:#fff;cursor:pointer;border-radius:50%;line-height:1}
+#nl-popup .x:hover{background:rgba(255,255,255,.32)}
+#nl-popup p{margin:0 0 12px;font-size:14px;color:var(--ink-2)}
+#nl-popup form{display:flex;gap:8px}
+#nl-popup input[type=email]{flex:1;min-width:0;font:inherit;padding:11px 14px;border-radius:999px;border:1.5px solid var(--line);background:#fff}
+#nl-popup .fine{font-size:12px;color:var(--ink-2);margin:10px 0 0}
+body.has-sticky #nl-popup{bottom:82px}
+@media (max-width:860px){#nl-popup{right:12px;left:12px;bottom:12px;width:auto;padding:18px 16px 14px}#nl-popup form{flex-direction:column}}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hvorfor er der forskel på prisen fra butik til butik?", "acceptedAnswer": {"@type": "Answer", "text": "Butikkerne køber ind til forskellige priser, kører forskellige kampagner og har forskellige fragtgrænser. Vejledende pris er kun et udgangspunkt."}}, {"@type": "Question", "name": "Er fragt regnet med?", "acceptedAnswer": {"@type": "Answer", "text": "Nej – prisen er pr. nøgle. Vi viser fragtgrænsen ved hver butik, så du kan se, om dit køb udløser fri fragt."}}, {"@type": "Question", "name": "Hvor tit opdateres priserne?", "acceptedAnswer": {"@type": "Answer", "text": "Hver nat. Ser du en pris, der ikke stemmer, når du klikker videre, så skriv til os – så tjekker vi feedet."}}, {"@type": "Question", "name": "Hvad betyder 'Læg i kurven'?", "acceptedAnswer": {"@type": "Answer", "text": "At butikkens system lader os sende dig direkte i kurven med det rigtige antal nøgler. Det virker hos Shopify- og WooCommerce-butikker. Hos andre lander du på produktsiden."}}]}</script>
 </head>
@@ -331,7 +357,7 @@ body.has-sticky .totop{bottom:82px}
 <button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="mainnav"><span></span><span></span><span></span></button>
 <nav id="mainnav"><ul>
 <li class="has-sub"><a href="/opskrifter/" aria-haspopup="true">Opskrifter</a><button class="sub-toggle" aria-label="Vis undermenu">▾</button>
-<div class="sub"><div class="sub-col"><b>Til hvem</b><a href="/opskrifter/dame/">Damer</a><a href="/opskrifter/boern/">Børn</a><a href="/opskrifter/baby/">Baby</a><a href="/opskrifter/herre/">Herrer</a><a href="/opskrifter/begynder/">Begyndere</a></div>
+<div class="sub"><div class="sub-col"><b>Til hvem</b><a href="/opskrifter/">Alle opskrifter</a><a href="/opskrifter/dame/">Damer</a><a href="/opskrifter/boern/">Børn</a><a href="/opskrifter/baby/">Baby</a><a href="/opskrifter/herre/">Herrer</a><a href="/opskrifter/begynder/">Begyndere</a></div>
 <div class="sub-col"><b>Type</b><a href="/opskrifter/sweater/">Sweatre & bluser</a><a href="/opskrifter/cardigan/">Cardigans</a><a href="/opskrifter/vest/">Veste</a><a href="/opskrifter/hue/">Huer</a><a href="/opskrifter/sjal/">Sjaler & tørklæder</a><a href="/opskrifter/halsedisser/">Halsedisser</a><a href="/opskrifter/sokker/">Sokker</a><a href="/opskrifter/vanter/">Vanter</a><a href="/opskrifter/hjemmesko/">Hjemmesko</a><a href="/opskrifter/karklude/">Karklude</a><a href="/opskrifter/taepper/">Tæpper</a><a href="/opskrifter/julestrik/">Julestrik</a><a href="/opskrifter/bamser-og-legetoj/">Bamser & legetøj</a></div>
 <div class="sub-col"><b>Pind</b><a href="/opskrifter/pind-3/">Pind 3</a><a href="/opskrifter/pind-4/">Pind 4</a><a href="/opskrifter/pind-5/">Pind 5</a><a href="/opskrifter/pind-7/">Pind 7</a><a href="/opskrifter/pind-8/">Pind 8</a></div></div></li>
 <li><a href="/gratis/">Gratis</a></li><li><a href="/garn/" aria-current=page>Garn</a></li><li><a href="/garnalternativer/">Alternativer</a></li><li><a href="/garn/drops/">DROPS</a></li><li><a href="/guides/">Guides</a></li>
@@ -363,7 +389,7 @@ body.has-sticky .totop{bottom:82px}
     </div>
 <section class="sec faq"><h2>Ofte stillede spørgsmål</h2><details><summary>Hvorfor er der forskel på prisen fra butik til butik?</summary><p>Butikkerne køber ind til forskellige priser, kører forskellige kampagner og har forskellige fragtgrænser. Vejledende pris er kun et udgangspunkt.</p></details><details><summary>Er fragt regnet med?</summary><p>Nej – prisen er pr. nøgle. Vi viser fragtgrænsen ved hver butik, så du kan se, om dit køb udløser fri fragt.</p></details><details><summary>Hvor tit opdateres priserne?</summary><p>Hver nat. Ser du en pris, der ikke stemmer, når du klikker videre, så skriv til os – så tjekker vi feedet.</p></details><details><summary>Hvad betyder &#x27;Læg i kurven&#x27;?</summary><p>At butikkens system lader os sende dig direkte i kurven med det rigtige antal nøgler. Det virker hos Shopify- og WooCommerce-butikker. Hos andre lander du på produktsiden.</p></details></section>
 <section class="sec explore"><h2>Udforsk mere</h2><p>Skal garnet bruges til noget bestemt? Find opskrifter til <a href='/opskrifter/dame/'>damer</a>, <a href='/opskrifter/boern/'>børn</a>, <a href='/opskrifter/baby/'>baby</a> og <a href='/opskrifter/herre/'>herrer</a>, eller gå efter type: <a href='/opskrifter/sweater/'>sweatre</a>, <a href='/opskrifter/cardigan/'>cardigans</a>, <a href='/opskrifter/hue/'>huer</a>, <a href='/opskrifter/sjal/'>sjaler</a> og <a href='/opskrifter/sokker/'>sokker</a>.</p><p>Over 900 af opskrifterne er <a href='/gratis/'>gratis</a> – de fleste fra <a href='/garn/drops/'>DROPS Design</a>, hvor du kun betaler for garnet. Er du usikker på mængden, så læs <a href='/guides/hvor-mange-noegler/'>hvor mange nøgler du skal bruge</a>; skal du erstatte et garn, så se <a href='/guides/vaelg-alternativt-garn/'>guiden til alternativt garn</a> eller <a href='/guides/alternativer-onling-no-1/'>alternativerne til Önling No 1</a>.</p></section><section class="authors"><div class="author"><img src="/assets/img/team/emil-rostgaard.jpg" alt="Emil Rostgaard" width="56" height="56" loading="lazy"><div><b><a href="/om/emil-rostgaard/">Emil Rostgaard</a></b><span>Står for data, priser, SEO og teknik.</span></div></div>
-<div class="author"><img src="/assets/img/team/mette-hansen.jpg" alt="Mette Hansen" width="56" height="56" loading="lazy"><div><b><a href="/om/mette-hansen/">Mette Hansen</a></b><span>Tjekker guides, garnvalg og mængder fagligt.</span></div></div></section><p class="small muted byauthor">Priser opdateret 7. september 2026 kl. 19:32</p></main>
+<div class="author"><span class="author-ini" aria-hidden="true">M</span><div><b><a href="/om/mette-hansen/">Mette Hansen</a></b><span>Læser guides igennem og hjælper med garn- og strikkespørgsmål.</span></div></div></section><p class="small muted byauthor">Priser opdateret 20. september 2026 kl. 15:58</p></main>
 <footer class="site"><div class="wrap foot-grid">
 <div class="foot-brand"><a class="logo" href="/">strikke<span>opskrifter</span>.dk</a><p>Find opskriften, regn garnet ud, og køb det hvor det er billigst. Priser hentes hver nat fra danske garnbutikker.</p>
 <form class="foot-news nl" action="https://9b9ec015.sibforms.com/serve/MUIFAORQaHiwpckMv0mbdg89ygAXicN7FGmQajpiynr9Pcz29_-CNqTx2424QpAOieROfC3J4llDasqvFQR722BgB-zdGUmzJ6RBEpBdUzaMeNvUSZuZMdsxGVtP7NBLb_NF8u9Hdgkp6um8Bs08Sy-cLLvRHfpZzyHzaW7johT8b0OuC_Nhhy8aQHbPR-MktYc4WwBeZ28IEI3Bfg==?isAjax=1" method="post"><input type="email" name="EMAIL" placeholder="din@mail.dk" aria-label="E-mail" required autocomplete="email"><input type="text" name="email_address_check" value="" class="nl-hp" tabindex="-1" autocomplete="off"><input type="hidden" name="locale" value="da"><button class="btn btn-primary btn-sm" type="submit">Få prisfald</button></form></div>
@@ -373,6 +399,6 @@ body.has-sticky .totop{bottom:82px}
 <div><b>Pinde</b><a href="/opskrifter/pind-3/">Pind 3</a><a href="/opskrifter/pind-4/">Pind 4</a><a href="/opskrifter/pind-5/">Pind 5</a><a href="/opskrifter/pind-7/">Pind 7</a><a href="/opskrifter/pind-8/">Pind 8</a></div>
 <div><b>Om</b><a href="/om/">Om siden</a><a href="/om/#provision">Sådan tjener vi penge</a><a href="/om/#kontakt">Kontakt</a></div>
 </div><div class="wrap foot-bottom">© strikkeopskrifter.dk · Opskrifterne tilhører designerne og butikkerne. Vi linker til dem og får provision ved køb – det ændrer ikke din pris.</div></footer>
-<script src="/assets/site.js?v=3e59524b" defer></script>
-<button class="totop" aria-label="Til toppen" hidden>↑</button><button class="totop" aria-label="Til toppen" hidden>↑</button></body>
+<script src="/assets/site.js?v=888adcc8" defer></script>
+<button class="totop" aria-label="Til toppen" hidden>↑</button><div id="nl-popup" hidden></div><button class="totop" aria-label="Til toppen" hidden>↑</button><div id="nl-popup" hidden></div></body>
 </html>

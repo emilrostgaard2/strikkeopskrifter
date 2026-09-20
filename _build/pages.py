@@ -60,7 +60,7 @@ def nav(current=""):
 <button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="mainnav"><span></span><span></span><span></span></button>
 <nav id="mainnav"><ul>
 <li class="has-sub">{a("/opskrifter/","Opskrifter","opskrifter",' aria-haspopup="true"')}<button class="sub-toggle" aria-label="Vis undermenu">▾</button>
-<div class="sub"><div class="sub-col"><b>Til hvem</b><a href="/opskrifter/dame/">Damer</a><a href="/opskrifter/boern/">Børn</a><a href="/opskrifter/baby/">Baby</a><a href="/opskrifter/herre/">Herrer</a><a href="/opskrifter/begynder/">Begyndere</a></div>
+<div class="sub"><div class="sub-col"><b>Til hvem</b><a href="/opskrifter/">Alle opskrifter</a><a href="/opskrifter/dame/">Damer</a><a href="/opskrifter/boern/">Børn</a><a href="/opskrifter/baby/">Baby</a><a href="/opskrifter/herre/">Herrer</a><a href="/opskrifter/begynder/">Begyndere</a></div>
 <div class="sub-col"><b>Type</b><a href="/opskrifter/sweater/">Sweatre & bluser</a><a href="/opskrifter/cardigan/">Cardigans</a><a href="/opskrifter/vest/">Veste</a><a href="/opskrifter/hue/">Huer</a><a href="/opskrifter/sjal/">Sjaler & tørklæder</a><a href="/opskrifter/halsedisser/">Halsedisser</a><a href="/opskrifter/sokker/">Sokker</a><a href="/opskrifter/vanter/">Vanter</a><a href="/opskrifter/hjemmesko/">Hjemmesko</a><a href="/opskrifter/karklude/">Karklude</a><a href="/opskrifter/taepper/">Tæpper</a><a href="/opskrifter/julestrik/">Julestrik</a><a href="/opskrifter/bamser-og-legetoj/">Bamser & legetøj</a></div>
 <div class="sub-col"><b>Pind</b><a href="/opskrifter/pind-3/">Pind 3</a><a href="/opskrifter/pind-4/">Pind 4</a><a href="/opskrifter/pind-5/">Pind 5</a><a href="/opskrifter/pind-7/">Pind 7</a><a href="/opskrifter/pind-8/">Pind 8</a></div></div></li>
 <li>{a("/gratis/","Gratis","gratis")}</li><li>{a("/garn/","Garn","garn")}</li><li>{a("/garnalternativer/","Alternativer","alternativer")}</li><li>{a("/garn/drops/","DROPS","drops")}</li><li>{a("/guides/","Guides","guides")}</li>
@@ -113,13 +113,17 @@ def explore_html(current, exclude=None):
     paras = "".join(f"<p>{t}</p>" for t in EXPLORE[key])
     return f'<section class="sec explore"><h2>Udforsk mere</h2>{paras}</section>'
 
+def _photo(a):
+    ph = a.get("photo") or ""
+    return ph if ph and os.path.exists(f"{ROOT}{ph}") else ""
 def author_box(kind="guide"):
     a = C.AUTHORS["emil"]; m = C.AUTHORS["mette"]
-    return f'''<section class="authors"><div class="author"><img src="{a['photo']}" alt="{e(a['name'])}" width="56" height="56" loading="lazy"><div><b><a href="/om/{a['slug']}/">{e(a['name'])}</a></b><span>{e(a['short'])}</span></div></div>
-<div class="author"><span class="author-ini" aria-hidden="true">{e(m['name'][0])}</span><div><b><a href="/om/{m['slug']}/">{e(m['name'])}</a></b><span>{e(m['short'])}</span></div></div></section>'''
+    def av(x): return f'<img src="{_photo(x)}" alt="{e(x["name"])}" width="56" height="56" loading="lazy">' if _photo(x) else f'<span class="author-ini" aria-hidden="true">{e(x["name"][0])}</span>'
+    return f'''<section class="authors"><div class="author">{av(a)}<div><b><a href="/om/{a['slug']}/">{e(a['name'])}</a></b><span>{e(a['short'])}</span></div></div>
+<div class="author">{av(m)}<div><b><a href="/om/{m['slug']}/">{e(m['name'])}</a></b><span>{e(m['short'])}</span></div></div></section>'''
 def person_ld(a):
     d = {"@type":"Person","name":a["name"],"jobTitle":a["role"],"url":BASE+"/om/"+a["slug"]+"/"}
-    if a.get("photo"): d["image"] = BASE+a["photo"]
+    if _photo(a): d["image"] = BASE+_photo(a)
     if a["slug"] == "emil-rostgaard": d["worksFor"] = {"@type":"Organization","name":"strikkeopskrifter.dk","url":BASE}
     if a.get("linkedin"): d["sameAs"] = [a["linkedin"]]
     return d
@@ -127,7 +131,7 @@ def author_page(a):
     path = f"/om/{a['slug']}/"
     crumbs, crumb_ld = breadcrumbs([("Forside","/"),("Om siden","/om/"),(a["name"],None)])
     ld = dict(person_ld(a)); ld["@context"] = "https://schema.org"
-    body = f'''{crumbs}<article class="prose" style="max-width:68ch"><div style="display:flex;gap:22px;align-items:center;margin:18px 0 20px">{('<img src="'+a['photo']+'" alt="'+e(a['name'])+'" width="120" height="120" style="border-radius:50%;box-shadow:var(--shadow)">') if a.get('photo') else ''}<div><span class="eyebrow">{e(a['role'])}</span><h1 style="margin:0">{e(a['name'])}</h1>{('<p class="small" style="margin:6px 0 0"><a href="'+a['linkedin']+'" rel="me noopener" target="_blank">LinkedIn</a></p>') if a.get('linkedin') else ''}</div></div>
+    body = f'''{crumbs}<article class="prose" style="max-width:68ch"><div style="display:flex;gap:22px;align-items:center;margin:18px 0 20px">{('<img src="'+_photo(a)+'" alt="'+e(a['name'])+'" width="120" height="120" style="border-radius:50%;box-shadow:var(--shadow)">') if _photo(a) else ('<span class="member-ini" aria-hidden="true">'+e(a['name'][0])+'</span>')}<div><span class="eyebrow">{e(a['role'])}</span><h1 style="margin:0">{e(a['name'])}</h1>{('<p class="small" style="margin:6px 0 0"><a href="'+a['linkedin']+'" rel="me noopener" target="_blank">LinkedIn</a></p>') if a.get('linkedin') else ''}</div></div>
 <p>{e(a['bio'])}</p><h2>Rolle på strikkeopskrifter.dk</h2><p>{e(a['short'])} Du kan skrive til redaktionen på <a href="mailto:hej@strikkeopskrifter.dk">hej@strikkeopskrifter.dk</a>, hvis du finder en fejl i noget, {e(a['name'].split()[0])} har haft ansvar for.</p></article>'''
     return shell(f"{a['name']} – {a['role']}", f"{a['name']}: {a['short']} Læs om rollen på strikkeopskrifter.dk.", path, body, [crumb_ld, ld])
 
@@ -847,7 +851,7 @@ def om_page():
     body = f'''{crumbs}<article class="prose" style="max-width:68ch"><h1 style="margin:12px 0 16px">Om strikkeopskrifter.dk</h1>
 <p>strikkeopskrifter.dk samler danske og nordiske strikkeopskrifter og viser det, opskrifterne selv ikke gør: hvad garnet koster i dag, hvor det er billigst, og hvor mange nøgler du skal bruge til din størrelse.</p>
 <h2>Hvem står bag</h2>
-<div class="team">{"".join(f'<div class="member">' + (f'<img src="{a["photo"]}" alt="{e(a["name"])}" width="96" height="96" loading="lazy">' if a.get("photo") else f'<span class="member-ini" aria-hidden="true">{e(a["name"][0])}</span>') + f'<div><b><a href="/om/{a["slug"]}/">{e(a["name"])}</a></b><span class="muted small" style="display:block">{e(a["role"])}</span><p class="small" style="margin:6px 0 0">{e(a["bio"])}</p></div></div>' for a in C.AUTHORS.values())}</div>
+<div class="team">{"".join(f'<div class="member">' + (f'<img src="{_photo(a)}" alt="{e(a["name"])}" width="96" height="96" loading="lazy">' if _photo(a) else f'<span class="member-ini" aria-hidden="true">{e(a["name"][0])}</span>') + f'<div><b><a href="/om/{a["slug"]}/">{e(a["name"])}</a></b><span class="muted small" style="display:block">{e(a["role"])}</span><p class="small" style="margin:6px 0 0">{e(a["bio"])}</p></div></div>' for a in C.AUTHORS.values())}</div>
 <p class="small muted">Vi skriver åbent, hvem der gør hvad: Emil bygger og vedligeholder data og teknik og skriver teksterne; Mette læser dem igennem og hjælper med spørgsmål om garn og strik. Ingen af os er ansat af eller ejer andele i de butikker, vi sammenligner.</p>
 <h2>Sådan arbejder vi</h2><p>Garndata (løbelængde, strikkefasthed, mængde pr. størrelse) tastes ind manuelt fra opskrifternes materialelister og kontrolleres mod producentens banderole. Priser, lager og farver hentes automatisk hver nat fra butikkernes produktfeeds. Vi ændrer aldrig i priserne, og vi viser altid den billigste butik først – uanset hvad vi tjener på den.</p>
 <h2 id="provision">Sådan tjener vi penge</h2><p>Når du klikker videre til en butik og køber, får vi en lille provision (typisk 5–10 %). Det koster ikke dig noget ekstra, og det påvirker ikke rækkefølgen af butikkerne. Vi har ingen betalte placeringer og ingen annoncer. Hvis vi ikke har en aftale med en butik, kan den mangle i sammenligningen – det skriver vi, når det er tilfældet.</p>
@@ -994,11 +998,13 @@ for rel, cur in STATIC.items():
     t = re.sub(r'<link rel="preconnect" href="https://fonts.googleapis.com">\s*<link href="https://fonts.googleapis.com/css2\?[^"]+" rel="stylesheet">', lambda m: FONT_HEAD, t)
     t = re.sub(r'<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\s*<link rel="preload" as="style"[^>]*>\s*<noscript>.*?</noscript>', lambda m: FONT_HEAD, t, flags=re.S)
     t = re.sub(r'<link rel="stylesheet" href="/assets/style.css">', lambda m: '<style>' + CSS_INLINE + '</style>', t)
-    t = re.sub(r'<style>:root\{\s*--oat.*?</style>', lambda m: '<style>' + CSS_INLINE + '</style>', t, flags=re.S)
+    t = re.sub(r'<style>(?::root\{\s*--oat|/\* strikkeopskrifter\.dk).*?</style>', lambda m: '<style>' + CSS_INLINE + '</style>', t, count=1, flags=re.S)
+    if 'id="nl-popup"' not in t: t = t.replace('<button class="totop" aria-label="Til toppen" hidden>↑</button>', '<button class="totop" aria-label="Til toppen" hidden>↑</button><div id="nl-popup" hidden></div>')
     t = re.sub(r'<script src="/?assets/site.js(?:\?v=\w+)?"( defer)?></script>', f'<script src="/assets/site.js?v={JS_HASH}" defer></script>', t)
-    if 'class="sec explore"' not in t:
-        t = t.replace("</main>", explore_html({"index.html":"opskrifter","opskrifter/index.html":"opskrifter","garn/index.html":"garn"}[rel]) + author_box() + f'<p class="small muted byauthor">Priser opdateret {UPDATED}</p></main>', 1)
-        t = t.replace("</body>", '<button class="totop" aria-label="Til toppen" hidden>↑</button><div id="nl-popup" hidden></div></body>')
+    # Udforsk + redaktion genereres altid frisk på de statiske sider
+    t = re.sub(r'<section class="sec explore">.*?</section>\s*(<section class="authors">.*?</section>\s*)?<p class="small muted byauthor">.*?</p>', '', t, flags=re.S)
+    t = t.replace("</main>", explore_html({"index.html":"opskrifter","opskrifter/index.html":"opskrifter","garn/index.html":"garn"}[rel]) + author_box() + f'<p class="small muted byauthor">Priser opdateret {UPDATED}</p></main>', 1)
+    if 'class="totop"' not in t: t = t.replace("</body>", '<button class="totop" aria-label="Til toppen" hidden>↑</button></body>')
     t2 = re.sub(r"<header class=\"site\">.*?</header>", lambda m: nav(cur), t, flags=re.S)
     t2 = re.sub(r"<footer class=\"site\">.*?</footer>", lambda m: FOOT, t2, flags=re.S)
     if t2 != orig: open(f, "w", encoding="utf-8").write(t2)

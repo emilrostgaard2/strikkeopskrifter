@@ -219,7 +219,7 @@ footer.site .foot-brand p{max-width:34ch;line-height:1.55;margin:0 0 14px;color:
 /* ---------- Mobil ---------- */
 @media (max-width:860px){
   .wrap{padding:0 16px}
-  h1{font-size:clamp(28px,7vw,34px)}h2{font-size:22px}
+  h1{font-size:clamp(28px,7vw,34px);overflow-wrap:anywhere}h2{font-size:22px}
   .burger{display:flex}
   .nav nav{display:none;position:absolute;left:0;right:0;top:100%;background:var(--paper);box-shadow:0 20px 40px -20px rgba(43,37,33,.4);border-bottom:1px solid var(--line);max-height:calc(100vh - 60px);overflow:auto}
   .nav nav.open{display:block}
@@ -227,6 +227,7 @@ footer.site .foot-brand p{max-width:34ch;line-height:1.55;margin:0 0 14px;color:
   .nav ul a{display:block;padding:12px 14px;font-size:17px;border-radius:12px}
   .nav ul a[aria-current]{background:var(--ink);color:#fff}
   .has-sub{display:grid;grid-template-columns:1fr auto;align-items:center}
+  .has-sub > a[aria-current]{background:var(--ink);color:#fff}
   .sub-toggle{display:block;border:0;background:transparent;font-size:20px;padding:8px 14px;color:var(--ink-2)}
   .has-sub .sub,.has-sub:hover .sub,.has-sub:focus-within .sub{display:none;position:static;box-shadow:none;background:var(--oat);border-radius:12px;padding:12px 14px;min-width:0;grid-column:1/-1;flex-direction:column;gap:14px;margin:2px 6px 8px}
   .has-sub.open .sub,.has-sub.open:hover .sub,.has-sub.open:focus-within .sub{display:flex}

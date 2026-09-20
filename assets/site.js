@@ -177,7 +177,7 @@
   b.addEventListener('click',()=>{const o=n.classList.toggle('open'); b.setAttribute('aria-expanded',o?'true':'false');});
   document.querySelectorAll('.sub-toggle').forEach(t=>t.addEventListener('click',e=>{e.preventDefault(); e.stopPropagation(); t.closest('.has-sub').classList.toggle('open');}));
   document.querySelectorAll('.has-sub > a').forEach(a=>a.addEventListener('click',e=>{
-    if(window.matchMedia('(max-width:860px)').matches){ const li=a.closest('.has-sub'); if(!li.classList.contains('open')){ e.preventDefault(); li.classList.add('open'); } }
+    if(window.matchMedia('(max-width:860px)').matches){ e.preventDefault(); a.closest('.has-sub').classList.toggle('open'); }
   }));
   if(document.querySelector('.sticky-cta')) document.body.classList.add('has-sticky');
 })();
