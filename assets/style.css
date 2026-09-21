@@ -338,3 +338,8 @@ body.has-sticky .totop{bottom:82px}
 #nl-popup .fine{font-size:12px;color:var(--ink-2);margin:10px 0 0}
 body.has-sticky #nl-popup{bottom:82px}
 @media (max-width:860px){#nl-popup{right:12px;left:12px;bottom:12px;width:auto;padding:18px 16px 14px}#nl-popup form{flex-direction:column}}
+
+.priceline{margin:-8px 0 16px;font-size:14px;line-height:1.7}
+.priceline a{text-decoration:none;font-weight:600;color:var(--ink);padding:2px 8px;border-radius:999px;background:var(--oat-2)}
+.priceline a.pl-best{background:var(--ink);color:#fff}
+.priceline a:hover{background:var(--denim);color:#fff}

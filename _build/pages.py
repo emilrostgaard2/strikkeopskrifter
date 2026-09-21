@@ -434,6 +434,17 @@ def deep_content(o, yarns, det, tech):
 {('<h3>Garnet: ' + e(g0['fiber']) + '</h3><p>' + e(care) + '</p>') if g0 else ''}
 {links}</section>'''
 
+def priceline(yarns):
+    """'Rito 14,95 · Hobbygarn 15,95 · Kreamok 20,00 kr. pr. nøgle' for det første garn med priser."""
+    for name, slug in yarns:
+        p = PRIS.get(slug) if slug else None
+        if p and p.get("shops"):
+            shops = [v for v in p["shops"].values() if v["price"]][:4]
+            if not shops: continue
+            parts = " · ".join(f'<a href="{e((next((x for x in v["variants"] if x["stock"]=="in_stock" and x.get("cart")), None) or {}).get("cart") or v["url"])}" rel="sponsored nofollow" target="_blank"{" class=\"pl-best\"" if i==0 else ""}>{e(v["shop"])} {kr(v["price"])}</a>' for i, v in enumerate(shops))
+            return f'<p class="priceline"><span class="muted">{e(name)} pr. nøgle:</span> {parts}{" <span class=\"muted\">· " + str(len(p["shops"])) + " butikker</span>" if len(p["shops"])>4 else ""}</p>'
+    return ""
+
 def drops_page(o, related):
     det = DETAILS.get(o.get("page"))
     calc, calc_js = calc_html(o, det)
@@ -493,13 +504,13 @@ def drops_page(o, related):
 .byline{{color:var(--ink-2);margin:10px 0 18px}}.lead{{font-size:17px;max-width:56ch;margin:0 0 24px}}.cta-row{{display:flex;gap:12px;flex-wrap:wrap}}.two{{display:grid;grid-template-columns:7fr 4fr;gap:40px;margin-bottom:48px;align-items:start}}@media(max-width:860px){{.hero,.two{{grid-template-columns:1fr}}}}</style>
 <section class="hero"><div class="swatch" role="img" aria-label="{e(o['name'])}" style="background-image:url('{e(img(o['image']))}')"></div>
 <div><span class="eyebrow">Gratis opskrift · til {tgt}</span><h1>{e(o['name'])}</h1><p class="byline">Design af DROPS Design{(' · Str. '+e(o['sizes'])) if o.get('sizes') else ''} · Niveau: {e(o.get('level','let øvet'))}</p>
-{pricebox}
+{pricebox}{priceline(yarns)}
 <p class="lead">{e(lead)}</p>
 <div class="cta-row"><a class="btn btn-primary" href="#garn">Se garn og pris</a>{('<a class="btn btn-ghost" href="' + e(det['src']) + '" rel="noopener" target="_blank">Hent opskriften gratis hos DROPS</a>') if det and det.get('src') else ('<a class="btn btn-ghost" href="' + e(o['url']) + '" rel="sponsored nofollow" target="_blank">Hent opskriften gratis</a>')}</div>
 <p class="small muted" style="margin-top:12px">Opskriften er gratis fra DROPS Design{' – linket går direkte til garnstudio.com' if det and det.get('src') else ' – du finder PDF-linket på butikkens side'}. Garnet køber du hvor det er billigst, eller som samlet pakke.</p></div></section>
 <div class="sticky-cta"><div><div class="small muted">Garn fra</div><div class="big">{kr(cheapest_total)} kr.</div></div><a class="btn btn-primary btn-sm" href="#garn">Se garn og pris</a></div>
 {calc}
-<section id="garn" class="two"><div><h2 style="margin-bottom:8px">Garnet til {e(o['name'])}</h2><p class="muted" style="margin:0 0 18px;max-width:60ch">{e(TYPE_SENT.get(o['type'],''))} Priser opdateret {UPDATED}.</p>{materials_panel(o, yarns)}{yarn_html}{colors_html}{alternatives_html(yarns)}
+<section id="garn" class="two"><div><h2 style="margin-bottom:12px">Garnet til {e(o['name'])}</h2>{materials_panel(o, yarns)}{yarn_html}{colors_html}<p class="muted" style="margin:18px 0;max-width:60ch">{e(TYPE_SENT.get(o['type'],''))} Priser opdateret {UPDATED}.</p>{alternatives_html(yarns)}
 <p class="disclose">Vi får en lille provision, hvis du køber via vores links. Det ændrer ikke prisen for dig, og det påvirker ikke, hvilken butik vi viser som billigst.</p></div>
 <aside class="panel"><h3 style="margin-bottom:6px">Alt garnet i én pakke</h3><p class="muted small" style="margin:0 0 14px">{e(o['shop_name'])} sælger garnet til {e(o['name'])} som samlet pakke i din størrelse{(' ('+e(o['sizes'])+')') if o.get('sizes') else ''}. Opskriften henter du gratis.</p>
 <div style="font-family:var(--serif);font-size:30px;font-weight:600;margin-bottom:12px">{kr(o['price'])} kr.</div>
@@ -571,15 +582,12 @@ def pattern_page(o, related):
 .byline{{color:var(--ink-2);margin:10px 0 18px}}.lead{{font-size:17px;max-width:56ch;margin:0 0 24px}}.cta-row{{display:flex;gap:12px;flex-wrap:wrap}}.two{{display:grid;grid-template-columns:7fr 4fr;gap:40px;margin-bottom:48px;align-items:start}}@media(max-width:860px){{.hero,.two{{grid-template-columns:1fr}}}}</style>
 <section class="hero"><div class="swatch" role="img" aria-label="{e(o['name'])}" style="background-image:url('{e(img(o['image']))}')"></div>
 <div><span class="eyebrow">Opskrift · {e(o['designer'])}</span><h1>{e(o['name'])}</h1><p class="byline">Design af <a href="/designere/{ds}/">{e(o['designer'])}</a> · Til {tgt} · {e(tl)}{(' · Niveau: '+e(o['level'])) if o.get('level') else ''}</p>
-{pricebox}<p class="lead">{e(lead)}</p>
-<div class="cta-row"><a class="btn btn-primary" href="#garn">Se garn og pris</a><a class="btn btn-ghost" href="{e(o['url'])}" rel="sponsored nofollow" target="_blank">{'Køb opskriften · ' + kr(o['price']) + ' kr.' if not is_kit_only else 'Se kittet hos ' + e(o['shop_name'])}</a></div>
-<p class="small muted" style="margin-top:12px">Opskriften sælges af {e(o['shop_name'])}. Garnet kan købes samme sted – eller løst, hvor det er billigst.</p></div></section>
-<div class="sticky-cta"><div><div class="small muted">{'Opskrift' if not is_kit_only else 'Kit fra'}</div><div class="big">{kr(o['price'])} kr.</div></div><a class="btn btn-primary btn-sm" href="#garn">Se garn og pris</a></div>
+{pricebox}{priceline(yarns)}<p class="lead">{e(lead)}</p>
+{('<div class="cta-row"><a class="btn btn-primary" href="' + e((kits[0].get('cart') or kits[0]['url']) if len(kits)==1 else '#garn') + '"' + ('' if len(kits)!=1 else ' rel="sponsored nofollow" target="_blank"') + '>Opskrift + garn i din størrelse · fra ' + kr(kit_min) + ' kr.</a><a class="btn btn-ghost" href="#garn">Sammenlign garnpriser</a></div><p class="small muted" style="margin-top:12px">Kittet fra ' + e(o['shop_name']) + ' indeholder opskriften og garnet til den valgte størrelse. Vil du kun have opskriften: <a href="' + e(o['url']) + '" rel="sponsored nofollow" target="_blank">køb den som PDF for ' + kr(o['price']) + ' kr.</a></p>') if (kit_min and not is_kit_only) else ('<div class="cta-row"><a class="btn btn-primary" href="#garn">Se garn og pris</a><a class="btn btn-ghost" href="' + e(o['url']) + '" rel="sponsored nofollow" target="_blank">' + ('Køb opskriften · ' + kr(o['price']) + ' kr.' if not is_kit_only else 'Se kittet hos ' + e(o['shop_name'])) + '</a></div><p class="small muted" style="margin-top:12px">Opskriften sælges af ' + e(o['shop_name']) + '. Garnet kan købes samme sted – eller løst, hvor det er billigst.</p>')}</div></section>
+<div class="sticky-cta"><div><div class="small muted">{'Opskrift + garn fra' if (kit_min and not is_kit_only) else ('Opskrift' if not is_kit_only else 'Kit fra')}</div><div class="big">{kr(kit_min if (kit_min and not is_kit_only) else o['price'])} kr.</div></div><a class="btn btn-primary btn-sm" href="#garn">{'Vælg størrelse' if kit_min else 'Se garn og pris'}</a></div>
 <section id="garn" class="two"><div><h2 style="margin-bottom:8px">Garnet til {e(o['name'])}</h2><p class="muted" style="margin:0 0 18px;max-width:60ch">{e(TYPE_SENT.get(o['type'],''))} Priser opdateret {UPDATED}.</p>{kits_html}{yarn_html}{alternatives_html(yarns)}
 <p class="disclose">Vi får en lille provision, hvis du køber via vores links. Det ændrer ikke prisen for dig.</p></div>
-<aside class="panel"><h3 style="margin-bottom:6px">Opskriften</h3><p class="muted small" style="margin:0 0 14px">PDF på dansk{', svensk og norsk' if 'SE' in (o.get('name','') + ' ' + o.get('desc','')) else ''} fra {e(o['shop_name'])}. Sendes på mail efter køb.</p>
-<div style="font-family:var(--serif);font-size:30px;font-weight:600;margin-bottom:12px">{kr(o['price'])} kr.</div>
-<a class="btn btn-primary" style="display:block" href="{e(o['url'])}" rel="sponsored nofollow" target="_blank">{'Køb opskriften' if not is_kit_only else 'Se kittet'} hos {e(o['shop_name'])}</a>
+<aside class="panel">{('<h3 style="margin-bottom:6px">Alt i én pakke</h3><p class="muted small" style="margin:0 0 14px">Opskrift + garn i din størrelse fra ' + e(o['shop_name']) + '. Vælg størrelse i listen til venstre og læg direkte i kurven.</p><div style="font-family:var(--serif);font-size:30px;font-weight:600;margin-bottom:12px">fra ' + kr(kit_min) + ' kr.</div><a class="btn btn-primary" style="display:block" href="#garn">Vælg størrelse</a><p class="small muted" style="margin:14px 0 0">Kun opskriften (PDF): <a href="' + e(o['url']) + '" rel="sponsored nofollow" target="_blank">' + kr(o['price']) + ' kr. hos ' + e(o['shop_name']) + '</a></p>') if (kit_min and not is_kit_only) else ('<h3 style="margin-bottom:6px">Opskriften</h3><p class="muted small" style="margin:0 0 14px">PDF fra ' + e(o['shop_name']) + '. Sendes på mail efter køb.</p><div style="font-family:var(--serif);font-size:30px;font-weight:600;margin-bottom:12px">' + kr(o['price']) + ' kr.</div><a class="btn btn-primary" style="display:block" href="' + e(o['url']) + '" rel="sponsored nofollow" target="_blank">' + ('Køb opskriften' if not is_kit_only else 'Se kittet') + ' hos ' + e(o['shop_name']) + '</a>')}
 <p class="small muted" style="margin:16px 0 0">Ny i strik? Læs <a href="/guides/hvor-mange-noegler/">hvor mange nøgler du skal bruge</a> og <a href="/guides/vaelg-alternativt-garn/">hvordan du vælger et andet garn</a>.</p></aside></section>
 {deep_content(o, yarns, None, techniques(o.get("desc","") + " " + o["name"]))}
 {faq_html}
