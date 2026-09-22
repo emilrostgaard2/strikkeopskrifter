@@ -16,8 +16,12 @@ ops = json.load(open(f"{ROOT}/data/opskrifter.json", encoding="utf-8"))
 urls += [o["image"] for o in ops if o.get("image") and o.get("kind") == "pakke"]
 pris = json.load(open(f"{ROOT}/data/priser.json", encoding="utf-8"))
 urls += [s["image"] for g in pris.values() for s in g["shops"].values() if s.get("image")]
+BADP = f"{ROOT}/data/bad-images.json"
+try: bad = set(json.load(open(BADP, encoding="utf-8")))
+except Exception: bad = set()
 n = 0
 for u in dict.fromkeys(urls):
+    if u in bad: continue
     dst = f"{OUT}/{key(u)}.webp"
     if os.path.exists(dst): continue
     if n >= MAX_NEW: break
@@ -28,4 +32,6 @@ for u in dict.fromkeys(urls):
         im.save(dst, "WEBP", quality=80, method=4); n += 1
     except Exception as ex:
         print("fejl", u[:80], ex)
-print(f"Hentede {n} nye billeder, {len(os.listdir(OUT))} i cache")
+        if "404" in str(ex) or "403" in str(ex) or "410" in str(ex): bad.add(u)
+json.dump(sorted(bad), open(BADP, "w", encoding="utf-8"))
+print(f"Hentede {n} nye billeder, {len(os.listdir(OUT))} i cache, {len(bad)} døde URL'er")

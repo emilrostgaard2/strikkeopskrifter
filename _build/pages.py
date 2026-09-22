@@ -23,6 +23,9 @@ TODAY = _gen_dk.strftime("%Y-%m-%d")
 DETAILS = {}
 try: DETAILS = json.load(open(f"{ROOT}/data/drops-details.json", encoding="utf-8"))
 except Exception: pass
+OVERRIDE = {}
+try: OVERRIDE = {k: v for k, v in json.load(open(f"{ROOT}/data/image-overrides.json", encoding="utf-8")).items() if not k.startswith("_")}
+except Exception: pass
 HIST = {}
 try: HIST = json.load(open(f"{ROOT}/data/prishistorik.json", encoding="utf-8"))
 except Exception: pass
@@ -896,6 +899,7 @@ seen = {}
 for o in pakker:
     s = slugify(o["name"]); n = seen.get(s, 0); seen[s] = n + 1
     o["slug"] = s if n == 0 else f"{s}-{n+1}"; o["page"] = f"/opskrifter/drops/{o['slug']}/"
+    if o["page"] in OVERRIDE: o["image"] = OVERRIDE[o["page"]]
 by_key = {}
 for o in pakker: by_key.setdefault((o["type"], o.get("target")), []).append(o)
 def yarn_key(o): return tuple(sorted(n for n,_ in find_yarns(o.get("desc",""))))
@@ -915,12 +919,21 @@ for o in [o for o in OPS if o.get("kind") in ("opskrift","kit") and o.get("image
     m = merged.get(key)
     if not m:
         m = dict(o); m["name"] = base_name(o["name"]); m["kits"] = list(o.get("kits", [])); m["variants"] = [o]; merged[key] = m
+        m["images"] = [o["image"]] if o.get("image") else []
     else:
         m["kits"] += o.get("kits", []); m["variants"].append(o)
+        if o.get("image") and o["image"] not in m["images"]: m["images"].append(o["image"])
+        if o.get("kind") == "opskrift" and o.get("image"): m["images"].insert(0, m["images"].pop(m["images"].index(o["image"])))
         if o.get("kind") == "opskrift" and m.get("kind") == "kit": m["kind"] = "opskrift"; m["price"] = o["price"]; m["url"] = o["url"]
         if len(o.get("desc","")) > len(m.get("desc","")): m["desc"] = o["desc"]
+BAD = set()
+try: BAD = set(json.load(open(f"{ROOT}/data/bad-images.json", encoding="utf-8")))
+except Exception: pass
+
 paid = []
 for m in merged.values():
+    good = [u for u in m.get("images", []) if u not in BAD]
+    if good: m["image"] = good[0]
     if qualifies(m, kit_yarns(m)): paid.append(m)
     else: skipped["paid"] += 1
 for m in merged.values():   # alle varianter peger på den samlede side (eller ingen)
@@ -929,7 +942,8 @@ seen_p = {}
 for o in paid:
     sl = f"{slugify(o['designer'])}/{slugify(o['name'])}"; n = seen_p.get(sl, 0); seen_p[sl] = n + 1
     o["page"] = f"/opskrifter/{sl}{'' if n==0 else '-'+str(n+1)}/"
-    for v in o["variants"]: v["page"] = o["page"]
+    if o["page"] in OVERRIDE: o["image"] = OVERRIDE[o["page"]]
+    for v in o["variants"]: v["page"] = o["page"]; v["image"] = o["image"]
 # listerne skal vise én post pr. samlet model, ikke pr. variant
 OPS = [o for o in OPS if not (o.get("kind") in ("opskrift","kit") and o.get("merged_into") and o is not o["merged_into"]["variants"][0])]
 for o in OPS:
